@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>infinitfolio | Logged out</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel = 'icon'  href = "{%static 'imgs/infinitfolio.png'%}"  type='image/png'>
+    <link rel="stylesheet" href="{%static 'css/main.css'%}">
+    <style>
+        body{
+                background: #142128;
+                margin: 0;
+                padding: 0;
+                font-family: Roboto, sans-serif;
+            }
+       .main_div{
+                background:#293d76;
+                width:35%;
+                margin-left:35%;
+                padding: 10px;
+                box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+                margin-top:15vh;
+
+            }
+        @media screen and (max-width: 500px){
+            .main_div{
+                margin-left:0;
+                width:100%;
+            }
+        }
+    </style>
+</head>
+<body>
+{% block content %}
+<div class="main_div">
+    <h1 style="color:aliceblue;">Logged out!</h1>
+  <a href="{% url 'login'%}" style="color:white"><div>CLick here to login again</div></a>
+</div>
+
+    {% endblock %}
+</body>
+</html>

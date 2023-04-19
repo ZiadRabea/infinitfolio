@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>infinitfolio | Certificates</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href="/static/imgs/infinitfolio.png" type="image/png">
+    <style>
+      /* Style for the header and tabs */
+      .header {
+        background-color: #333;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+      }
+      .tabs {
+        display: flex;
+        flex-wrap: wrap;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .tab {
+        padding: 10px;
+        cursor: pointer;
+        flex: 1 0 auto;
+        text-align: center;
+      }
+      .tab.active {
+        background-color: #555;
+      }
+      /* Style for the content section */
+      .content {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      .content > div {
+        flex-basis: 100%;
+        padding: 20px;
+      }
+      /* Style for the forms */
+      form {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      form > * {
+        flex-basis: 100%;
+        margin-bottom: 10px;
+      }
+      form input[type="file"],
+      form input[type="email"],
+      form input[type="number"],
+      form textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+      form input[type="submit"] {
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      /* Style for the certificates grid */
+      .certificates {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-gap: 10px;
+      }
+      .certificate {
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+	  .certificate button{
+		width:100%;
+		text-align:center;
+		color:white;
+		background:red;
+		border:none;
+		transition: all .2s ease;
+		cursor:pointer;
+		border-radius:5px;
+	  }
+	  .certificate button:hover{
+		color:red;
+		background:white;
+		border-radius:0px;
+	  }
+      .certificate img {
+        max-width: 100%;
+        height: auto;
+      }
+      
+      /* Responsive styles */
+      @media only screen and (min-width: 480px) {
+        .header {
+          flex-wrap: wrap;
+        }
+        .tabs {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          margin-top: 10px;
+        }
+        .tab {
+          flex: 1 0 auto;
+          text-align: center;
+          margin-right: 10px;
+        }
+      }
+      a{
+        color:white;
+        text-decoration:none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <ul class="tabs">
+        <li><a href = "/{{website.unique_name}}/skills"><div class="tab" data-tab="skills">Skills</div></a></li>
+        <li><a href = "/{{website.unique_name}}/edit"><div class="tab" data-tab="info">Info</div></a></li>
+        <li><a href = "/{{website.unique_name}}/certs"><div class="tab active" data-tab="certificates">Certificates</div></a></li>
+        <li><a href = "/{{website.unique_name}}/projects"><div class="tab" data-tab="projects">Projects</div></a></li>
+        <li><a href = "/{{website.unique_name}}/work"><div class="tab" data-tab="work-experience">Experience</div></a></li>
+      </ul>
+    </div>
+    </div>
+    <div class="content">
+      <div class="skills tab-content active">
+        <h2>Certificates</h2>
+        <form id="add-cert-form" method="post" enctype="multipart/form-data">
+          {%csrf_token%}
+          <label for="certificates">Upload Certificates:</label>
+            {{form.cert}}
+          <input type="submit" value="Add Cert">
+        </form>
+            <div class="certificates">
+                {%for cert in certs%}
+                <div class="certificate">
+                    <img src="{{cert.cert.url}}">
+                    <a href="/certificate/{{cert.id}}/delete"><button> X </button></a>
+                </div>
+              {%endfor%}
+		</div>
+      </div>
+	</div>
+</body>
+</html>

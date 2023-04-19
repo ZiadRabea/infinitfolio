@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>infinitfolio | {{profile.user.username}}</title>
+    <style>
+      /* Style for the header */
+      .header {
+        background-color: #333;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+      }
+      .balance {
+        font-size: 1.2em;
+        margin-right: 20px;
+      }
+      /* Style for the content section */
+      .content {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+      .subscribe-form {
+        flex-basis: 60%;
+        margin-top: 20px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+      .subscribe-form h2 {
+        margin-top: 0;
+      }
+      form {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      form > * {
+        flex-basis: 100%;
+        margin-bottom: 10px;
+      }
+      form input[type="email"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+      form input[type="submit"] {
+        width: 100%;
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      /* Style for the sidebar */
+      .sidebar {
+        flex-basis: 30%;
+        margin-right: 20px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+      .sidebar h2 {
+        margin-top: 0;
+      }
+      .sidebar hr {
+        margin: 20px 0;
+        border: none;
+        border-top: 1px solid #ccc;
+      }
+      .balance-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .balance-section h3 {
+        margin-top: 0;
+        margin-bottom: 10px;
+      }
+      .invite-button {
+        width: 100%;
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+	  /* Style for screens smaller than 768px */
+		@media (max-width: 768px) {
+		  .content {
+			flex-direction: column;
+			align-items: center;
+		  }
+		  .sidebar {
+			width:100%;
+			margin-right: 0;
+			margin-bottom: 20px;
+		  }
+		  .subscribe-form {
+			width:100%;
+			flex-basis: 100%;
+			margin-top: 0;
+			margin-bottom: 20px;
+		  }
+		}
+
+		/* Style for screens larger than 768px */
+		@media (min-width: 769px) {
+		  .content {
+			flex-direction: row;
+		  }
+		  .sidebar {
+			margin-right: 20px;
+			margin-bottom: 0;
+		  }
+		  .subscribe-form {
+			flex-basis: 60%;
+			margin-top: 20px;
+			margin-bottom: 0;
+		  }
+		}
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <div class="logo">{{profile.user.username}}</div>
+      <div class="balance">${%if profile.coins == None%}0{%else%}{{profile.coins}}{%endif%}</div>
+    </div>
+    <div class="content">
+      <div class="sidebar">
+        <h2>Username</h2>
+        <hr>
+        <div class="balance-section">
+          <h3>Balance</h3>
+          <div class="balance">${%if profile.coins == None%}0{%else%}{{profile.coins}}{%endif%}</div>
+        </div>
+        <hr>
+        <button class="invite-button" onclick="copyText()">Invite</button>
+      </div>
+      <div class="subscribe-form">
+        <h2>Subscribe for updates</h2>
+        <form>
+          <input type="email" id="email" name="email">
+		  <input type="submit" value="Subscibe">
+		</form>
+	  </div>
+	</div>
+  <script>
+		function copyText() {
+			// Get the text to copy
+			var text = "website_url/accounts/{{profile.id}}/sign_up";
+
+			// Create a temporary textarea to hold the text
+			var temp = document.createElement("textarea");
+			temp.value = text;
+			document.body.appendChild(temp);
+
+			// Copy the text from the temporary textarea
+			temp.select();
+			document.execCommand("copy");
+
+			// Remove the temporary textarea
+			document.body.removeChild(temp);
+			alert("link copied")
+		}
+	</script>
+</body>
+</html>

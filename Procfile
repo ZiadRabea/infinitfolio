@@ -1,0 +1,1 @@
+web: gunicorn infinitfolio.wsgi --log-file -
