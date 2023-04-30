@@ -1,0 +1,177 @@
+{%load static%}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{store.name}} | All products</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href="{%static 'imgs/infinitfolio.png'%}" type="image/png">
+    <style>
+		/* Reset default styles */
+		body, figure, h1, h2, h3, p, ul {
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			font-family: Arial, sans-serif;
+			font-size: 16px;
+		}
+
+		.container {
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 20px;
+		}
+
+		header {
+			background-color: #333;
+			color: #fff;
+			padding: 20px;
+		}
+
+		header h1 {
+			font-size: 24px;
+		}
+
+		nav ul {
+			list-style-type: none;
+		}
+
+		nav ul li {
+			display: inline-block;
+			margin-right: 20px;
+		}
+
+		nav ul li a {
+			color: #fff;
+			text-decoration: none;
+		}
+
+		section {
+			padding: 40px 0;
+		}
+
+		section h2 {
+			font-size: 24px;
+			margin-bottom: 20px;
+		}
+
+		.product-list {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+			grid-gap: 20px;
+		}
+
+		.product {
+			background-color: #f7f7f7;
+			padding: 20px;
+		}
+
+		.product img {
+			max-width: 100%;
+			height: 200px;
+			width: auto;
+			display:block;
+			margin:0 auto
+		}
+
+		.product h3 {
+			font-size: 18px;
+			margin-top: 10px;
+			margin-bottom: 5px;
+		}
+
+		.product p {
+			font-size: 14px;
+			color: #888;
+			margin-bottom: 10px;
+		}
+
+		.btn {
+			display: inline-block;
+			padding: 10px 20px;
+			background-color: #333;
+			color: #fff;
+			text-decoration: none;
+			font-size: 16px;
+			margin-top: 10px;
+		}
+
+		.btn:hover {
+			background-color: #555;
+		}
+
+		form label, form input, form textarea {
+			display: block;
+			margin-bottom: 10px;
+			width: 100%;
+		}
+
+		form input, form textarea {
+			padding: 10px;
+		}
+
+		footer {
+			color: #fff;
+			text-align: center;
+			padding: 10px;
+			background:#3333339e;
+			position:fixed;
+			bottom:0;
+			left:0;
+			width:100%;
+		}
+
+
+	</style>
+</head>
+<body>
+    {%if not store.approved%}
+    <div style="background:#00e3504f; border: 1px green; border-radius:5px; display:block;margin:0 auto; padding:10px;">
+        Review in progress... {%if user.is_superuser%} <a href="/stores/{{store.name}}/accept">Accept</a> {%endif%}
+    </div>
+    {%elif not store.published%}
+    <div style="background:#e300004f; border: 1px red; border-radius:5px; display:block;margin:0 auto; padding:10px;">
+        Website is not public! <a href="/stores/{{store.name}}/publish">Publish Now</a>
+    </div>
+    {%endif%}
+    <section id="products">
+        <div class="container">
+            <h2 style="text-align:center;background:#3333339e; color:white;">{{store.name}} Products</h2>
+            <div class="product-list">
+                {%for product in products%}
+                    <div class="product">
+                        <img src="{{product.cover_image.url}}" alt="Product 1" height="200px">
+                        <h3>{{product.name}}</h3>
+                        <p>{{product.description}}.</p>
+                        <a href="/stores/{{store.name}}/products/{{product.id}}" class="btn">View Details</a>
+                    </div>
+                {%endfor%}
+
+                {%if store.user == user.profile%}
+                    <div class="product">
+                        <img src="{%static 'imgs/add_product.png'%}" alt="Product 1" height="200px">
+                        <h3>Add Product</h3>
+                        <p>Add new products to your website.</p>
+                        <a href="/stores/{{store.name}}/products/create" class="btn">New Product</a>
+                    </div>
+                {%endif%}
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="container">
+			<section id="about">
+				<div class="container">
+					<h2>About Us</h2>
+					<p>{{store.title}}.</p>
+					<p>{{store.description}}.</p>
+				</div>
+			</section>
+            <p>Contact us.</p>
+			Phone : {{store.phone}}<br>
+			Email : {{store.email}}
+        </div>
+    </footer>
+</body>
+</html>

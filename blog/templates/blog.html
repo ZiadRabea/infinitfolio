@@ -1,0 +1,162 @@
+{%if blog.published or blog.user == user.profile%}
+    {%load static%}
+    <!DOCTYPE html>
+    <html>
+
+    <head>
+        <meta charset="utf-8">
+        <title>{{blog.name}} | All Posts</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="{%static 'imgs/infinitfolio.png'%}" type="image/png">
+        <style>
+            /* Main container */
+            .container {
+                max-width: 960px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            .brand{
+                width:100%;
+                position:fixed;
+                z-index:1;
+            }
+            .brand-container{
+                width:250px;
+                display:flex;
+                margin:0 auto;
+                justify-content:center;
+                background:#f900006b;
+                border-bottom-left-radius:10px;
+                border-bottom-right-radius:10px;
+            }
+            /* Post grid */
+            .post-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+            }
+
+            /* Post container */
+            .post-container {
+                position: relative;
+            }
+
+            /* Post cover image */
+            .post-cover {
+                width: 100%;
+                height: 200px;
+                object-fit: cover;
+                border-radius: 5px;
+            }
+
+            /* Post title */
+            .post-title {
+                margin-top: 10px;
+                font-size: 18px;
+                font-weight: bold;
+            }
+
+            /* Button container */
+            .button-container {
+                position: absolute;
+                bottom: 10px;
+                right: 10px;
+            }
+
+            /* Button with arrow */
+            .arrow-button {
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                padding: 10px;
+                font-size: 24px;
+                cursor: pointer;
+                border-radius: 50%;
+            }
+
+            /* Arrow icon */
+            .arrow-icon {
+                transform: rotate(45deg);
+                margin-left: 3px;
+            }
+            .plus-button {
+                background-color: lightgray;
+                color: #000;
+                border: none;
+                padding: 10px;
+                font-size: 24px;
+                cursor: pointer;
+                border-radius: 10px;
+            }
+
+        </style>
+    </head>
+
+    <body>
+        {%if not blog.published%}
+            <a href="/blogs/{{blog.name}}/publish">
+                <div class="brand">
+                     <div class = "brand-container">
+                         <h2>Not published!</h2>
+                     </div>
+                </div>
+            </a>
+        {%endif%}
+        <div class="container">
+            <div class="post-grid">
+                {%for post in posts%}
+                    {%if post.published%}
+                        <div class="post-container">
+                            <img class="post-cover" src="{{post.cover_img.url}}" alt="{{post.title}} Cover Image">
+                            <div class="post-title">{{post.title}}</div>
+                            <div class="button-container">
+                                <a href="/blogs/{{blog.name}}/posts/{{post.id}}">
+                                    <button class="arrow-button">
+                                        <span class="arrow-icon">&#10148;</span>
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    {%elif not post.published and post.blog.user == user.profile%}
+                        <div class="post-container">
+                            <img class="post-cover" src="{{post.cover_img.url}}" alt="{{post.title}} Cover Image">
+                            <div class="post-title">Saved as draft : {{post.title}}</div>
+                            <div class="button-container">
+                                <a href="/blogs/{{blog.name}}/posts/{{post.id}}">
+                                    <button class="arrow-button" style="background:lightgray;color:black">
+                                        <span class="arrow-icon">🖊</span>
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    {%endif%}
+                {%endfor%}
+                {%if blog.user == user.profile%}
+                <div class="post-container">
+                    <img class="post-cover" src="{%static 'imgs/add.png'%}" alt="Add new post">
+                    <div class="post-title">Add post</div>
+                    <div class="button-container">
+                        <a href="/blogs/{{blog.name}}/posts/create">
+                            <button class="plus-button">
+                                <span class="plus-icon">&plus;</span>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+                {%endif%}
+            </div>
+        </div>
+    </body>
+
+    </html>
+{%else%}
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Not Found</title>
+</head>
+<body>
+  <h1>Not Found</h1><p>The requested resource was not found on this server.</p>
+</body>
+</html>
+{%endif%}

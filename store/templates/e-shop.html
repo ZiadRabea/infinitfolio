@@ -1,0 +1,89 @@
+{%load static%}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>{{product.name}} | Details</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href="{%static 'imgs/infinitfolio.png'%}" type="image/png">
+    <style>
+        /* Main container */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f8f8;
+        }
+
+        /* Product details container */
+        .product-details {
+            width: 600px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        /* Product image */
+        .product-image {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            background-color: #eee;
+            border-radius: 5px;
+        }
+
+        /* Product name */
+        .product-name {
+            margin-top: 10px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Product description */
+        .product-description {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #666;
+        }
+
+        /* Add to Cart button */
+        .add-to-cart-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Add to Cart button hover effect */
+        .add-to-cart-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="product-details">
+            <img src="{{product.cover_image.url}}" class="product-image">
+            <div class="product-name">{{product.name}}</div>
+            <div class="product-description">{{product.description}}</div>
+            <button class="add-to-cart-btn" onclick="addToCart()">Contact seller</button>
+        </div>
+    </div>
+
+    <script>
+        function addToCart() {
+            window.open("https://wa.me/{{store.phone}}")
+        }
+    </script>
+</body>
+
+</html>

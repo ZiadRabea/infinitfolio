@@ -1,0 +1,190 @@
+{%if post.blog.published or post.blog.user == user.profile%}
+    {%load static%}
+    <!DOCTYPE html>
+    <html>
+
+    <head>
+        <meta charset="utf-8">
+        <title>{{post.blog.name}} | {{post.title}}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="{%static 'imgs/infinitfolio.png'%}" type="image/png">
+        <style>
+            /* Main container */
+            .container {
+                max-width: 960px;
+                margin: 0 auto;
+                padding: 20px;
+                box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+            }
+            img{
+                width:100%;
+                height:auto;
+            }
+            h1, h2{
+                text-align:center;
+            }
+            /* Post container */
+            .post-container {
+                margin-bottom: 30px;
+            }
+
+            /* Post content */
+            .post-content {
+                font-size: 16px;
+                color: #666;
+                margin-bottom: 10px;
+            }
+
+            /* Add button container */
+            .add-button-container {
+                margin-top: 10px;
+                position: relative;
+            }
+
+            /* Add button */
+            .add-button {
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                padding: 10px;
+                font-size: 16px;
+                cursor: pointer;
+                width: 100%;
+                border-radius: 50px;
+            }
+
+            /* Options container */
+            .options-container {
+                display: none;
+                margin-top: 10px;
+                position: absolute;
+                top: 40px;
+                left: 0;
+                right: 0;
+                margin-left: auto;
+                margin-right: auto;
+                text-align: center;
+            }
+
+            /* Option buttons */
+            .option-button {
+                background-color: #f8f9fa;
+                color: #333;
+                border: none;
+                padding: 5px;
+                margin-top: 5px;
+                margin-right: 5px;
+                font-size: 14px;
+                cursor: pointer;
+                border-radius: 5px;
+            }
+        </style>
+        <script>
+            // Function to toggle options container visibility
+            function toggleOptions() {
+                var optionsContainer = document.getElementById("optionsContainer");
+                if (optionsContainer.style.display === "none") {
+                    optionsContainer.style.display = "block";
+                } else {
+                    optionsContainer.style.display = "none";
+                }
+            }
+        </script>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="post-container">
+                <div class="post-content">
+                    <h1> {{post.title}} </h1>
+                    <hr>
+                    {%for element in elements%}
+                        {%if element.type == "heading"%}
+                            <h2>{{element.heading.text}}</h2>
+                        {%elif element.type == "paragraph"%}
+                            <p>{{element.p.text}}</p>
+                        {%elif element.type == "image"%}
+                            <img src="{{element.image.src}}">
+                        {%elif element.type == "link"%}
+                            <a href="{{element.link.url}}">{{element.link.text}}</a>
+                        {%elif element.type == "list"%}
+                            {%if element.list.type == "ol"%}
+                                <ol>
+                                    {%for i in element.list.item_set.all%}
+                                    <li>{{i.text}}</li>
+                                    {%endfor%}
+                                    {%if post.blog.user == user.profile%}
+                                        <li><a href="/blogs/{{post.blog.name}}/posts/{{post.id}}/list/{{element.list.id}}/addItem"><button>Add Item</button> </a></li>
+                                    {%endif%}
+                                </ol>
+                            {%elif element.list.type == "ul"%}
+                                <ul>
+                                    {%for i in element.list.item_set.all%}
+                                    <li>{{i.text}}</li>
+                                    {%endfor%}
+                                    {%if post.blog.user == user.profile%}
+                                        <li><a href="/blogs/{{post.blog.name}}/posts/{{post.id}}/list/{{element.list.id}}/addItem"><button>Add Item</button> </a></li>
+                                    {%endif%}
+                                </ul>
+                            {%endif%}
+                        {%elif element.type == "line"%}
+                            <hr>
+                        {%endif%}
+                    {%endfor%}
+                </div>
+                {%if post.blog.user == user.profile%}
+                <div class="add-button-container">
+                    <button class="add-button" onclick="toggleOptions()">+</button>
+                    <div class="options-container" id="optionsContainer">
+                        <button class="option-button" onclick="addParagraph()">Add Paragraph</button>
+                        <button class="option-button" onclick="addHeading()">Add Heading</button>
+                        <button class="option-button" onclick="addLink()">Add Link</button>
+                        <button class="option-button" onclick="addList()">Add List</button>
+                        <button class="option-button" onclick="addImage()">Add Image</button>
+                        <button class="option-button" onclick="addLine()">Line</button>
+                    </div>
+                    <a href="/blogs/{{post.blog.name}}/posts/{{post.id}}/publish"><button class="add-button" style="background:lightgreen;margin-top:50px">Post</button></a>
+                    <a href="/blogs/{{post.blog.name}}/posts/{{post.id}}/delete"><button class="add-button" style="background:red;margin-top:50px">Delete</button></a>
+                </div>
+                {%endif%}
+            </div>
+        </div>
+
+        <script>
+            // Functions to add different content options
+            function addParagraph() {
+                window.open("/blogs/{{post.blog.name}}/posts/{{post.id}}/addParagraph")
+            }
+
+            function addHeading() {
+                window.open("/blogs/{{post.blog.name}}/posts/{{post.id}}/addHeading")
+            }
+
+             function addLink() {
+                window.open("/blogs/{{post.blog.name}}/posts/{{post.id}}/addLink")
+            }
+
+            function addList() {
+                window.open("/blogs/{{post.blog.name}}/posts/{{post.id}}/addList")
+            }
+
+            function addImage() {
+                window.open("/blogs/{{post.blog.name}}/posts/{{post.id}}/addImage")
+            }
+            function addLine() {
+                window.open("/blogs/{{post.blog.name}}/posts/{{post.id}}/addLine")
+            }
+        </script>
+    </body>
+    </html>
+{%else%}
+    <!doctype html>
+    <html lang="en">
+        <head>
+            <title>Not Found</title>
+        </head>
+        <body>
+            <h1>Not Found</h1><p>The requested resource was not found on this server.</p>
+        </body>
+    </html>
+{%endif%}

@@ -14,9 +14,27 @@
         background-position: center;
         position: relative;
       }
+      html, body{
+        margin:0;
+        padding:0;
+      }
       a{
         text-decoration:none;
         color:#000;
+      }
+      .brand{
+        width:100%;
+        position:fixed;
+        z-index:1;
+      }
+      .brand-container{
+        width:250px;
+        display:flex;
+        margin:0 auto;
+        justify-content:center;
+        background:#0085f93d;
+        border-bottom-left-radius:10px;
+        border-bottom-right-radius:10px;
       }
       /* Styling for product grid */
       .product-grid {
@@ -110,6 +128,12 @@
     </style>
   </head>
   <body>
+    <div class="brand">
+      <div class = "brand-container">
+        <img src="{%static 'imgs/infinitfolio.png'%}" width="50" height="50" style="border-radius:10px;margin:10px;">
+        <h2>INFINITFOLIO</h2>
+      </div>
+    </div>
     <div class="cover-image">
 		<a href="/create"><button class="start"> Get started </button></a>
     </div>
@@ -120,10 +144,10 @@
           <h3>WorldLang</h3>
         </div>
       </a>
-      <a href="https://www.youtube.com/@mtf614">
+      <a href="/blogs/create">
         <div class="product-grid-item">
-          <img src="{%static 'imgs/mtf.jpg'%}" alt="Product 2">
-          <h3>MTFuture</h3>
+          <img src="{%static 'imgs/blog.jpg'%}" alt="Product 2">
+          <h3>Create Blog</h3>
         </div>
       </a>
       <a href="https://cszido.github.io/AlienLang">
@@ -132,10 +156,10 @@
           <h3>AlienLang</h3>
         </div>
       </a>
-      <a href="https://cszido.github.io/myportfolio">
+      <a href="/stores/create">
         <div class="product-grid-item">
-          <img src="{%static 'imgs/myself.gif'%}" alt="Product 4">
-          <h3>About Me</h3>
+          <img src="{%static 'imgs/e-shop.jpg'%}" alt="Product 4">
+          <h3>Create E-shop</h3>
         </div>
       </a>
     </div>

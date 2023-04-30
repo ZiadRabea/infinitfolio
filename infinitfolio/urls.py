@@ -40,6 +40,8 @@ urlpatterns = [
     path('<str:slug>/', display),
     path('<str:slug>/VPublish', publish_virtual),
     path('accounts/', include("Accounts.urls")),
+    path('blogs/', include("blog.urls")),
+    path('stores/', include("store.urls")),
     path('accounts/', include('django.contrib.auth.urls')),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

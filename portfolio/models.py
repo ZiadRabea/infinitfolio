@@ -14,6 +14,8 @@ class Website(models.Model):
     about = models.TextField(max_length=2000)
     email = models.EmailField()
     age = models.IntegerField()
+    analytics = models.CharField(max_length=200, null=True, blank=True)
+    adsense = models.CharField(max_length=200, null=True, blank=True)
     phone = models.CharField(max_length=13)
     fb = models.URLField(null=True, blank=True)
     insta = models.URLField(blank=True, null=True)
