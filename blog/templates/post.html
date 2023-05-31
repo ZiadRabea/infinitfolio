@@ -16,9 +16,13 @@
                 padding: 20px;
                 box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
             }
-            img{
+            p, a{
+                display:inline
+            }
+            img, iframe{
                 width:100%;
                 height:auto;
+                min-height:400px;
             }
             h1, h2{
                 text-align:center;
@@ -105,6 +109,8 @@
                             <p>{{element.p.text}}</p>
                         {%elif element.type == "image"%}
                             <img src="{{element.image.src}}">
+                        {%elif element.type == "frame"%}
+                    <iframe src="{{element.frame.src}}"> </iframe>
                         {%elif element.type == "link"%}
                             <a href="{{element.link.url}}">{{element.link.text}}</a>
                         {%elif element.type == "list"%}
@@ -142,8 +148,13 @@
                         <button class="option-button" onclick="addList()">Add List</button>
                         <button class="option-button" onclick="addImage()">Add Image</button>
                         <button class="option-button" onclick="addLine()">Line</button>
+                        <button class="option-button" onclick="addFrame()">Frame</button>
                     </div>
-                    <a href="/blogs/{{post.blog.name}}/posts/{{post.id}}/publish"><button class="add-button" style="background:lightgreen;margin-top:50px">Post</button></a>
+                    {%if post.published%}
+                        <a href="/error"><button disabled class="add-button" style="background:lightgreen;margin-top:50px">Post</button></a>
+                    {%else%}
+                        <a href="/blogs/{{post.blog.name}}/posts/{{post.id}}/publish"><button class="add-button" style="background:lightgreen;margin-top:50px">Post</button></a>
+                    {%endif%}
                     <a href="/blogs/{{post.blog.name}}/posts/{{post.id}}/delete"><button class="add-button" style="background:red;margin-top:50px">Delete</button></a>
                 </div>
                 {%endif%}
@@ -173,6 +184,9 @@
             }
             function addLine() {
                 window.open("/blogs/{{post.blog.name}}/posts/{{post.id}}/addLine")
+            }
+            function addFrame() {
+                window.open("/blogs/{{post.blog.name}}/posts/{{post.id}}/addFrame")
             }
         </script>
     </body>

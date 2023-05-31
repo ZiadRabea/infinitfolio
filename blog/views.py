@@ -147,6 +147,28 @@ def add_link(request, slug, id):
 
 
 @login_required
+def add_frame(request, slug, id):
+    post = Post.objects.get(id=id)
+    if request.user.profile == post.blog.user:
+        if request.method == "POST":
+            form = AddFrame(request.POST, request.FILES)
+            if form.is_valid():
+                myform = form.save()
+                source = Iframe.objects.get(id=myform.id)
+                Element.objects.create(type="frame", post=post, frame=source)
+                return redirect(f"/blogs/{post.blog.name}/posts/{post.id}")
+        else:
+            form = AddFrame()
+
+        context = {
+            "form": form
+        }
+        return render(request, "add_frame.html", context)
+    else:
+        return redirect("/Error")
+
+
+@login_required
 def add_image(request, slug, id):
     post = Post.objects.get(id=id)
     if request.user.profile == post.blog.user:
@@ -264,13 +286,13 @@ def publish(request, slug):
 
 @login_required
 def paymentComplete(request):
-    print('REQUEST BODY:', request.body)
+    #print('REQUEST BODY:', request.body)
     body = json.loads(request.body)
-    print('BODY:', body)
+    #print('BODY:', body)
     website_unique_name = body['site_name']
-    print(website_unique_name)
+    #print(website_unique_name)
     website = Blog.objects.get(name=website_unique_name)
-    print(website.type)
+    #print(website.type)
     website.published = True
     website.save()
     return JsonResponse('Payment completed!', safe=False)

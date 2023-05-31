@@ -19,14 +19,16 @@ class Element(models.Model):
     choices = (
                 ("heading", "heading"), ("list", "list"),
                 ("image", "image"), ("link", "link"),
-                ("paragraph", "paragraph"), ("line", "line")
-               )
+                ("paragraph", "paragraph"), ("line", "line"),
+                ("frame", "frame")
+    )
     type = models.CharField(choices=choices, max_length=10)
     heading = models.ForeignKey("Heading", on_delete=models.CASCADE, null=True, blank=True)
     list = models.ForeignKey("List", on_delete=models.CASCADE, null=True, blank=True)
     link = models.ForeignKey("Link", on_delete=models.CASCADE, null=True, blank=True)
     image = models.ForeignKey("Image", on_delete=models.CASCADE, null=True, blank=True)
     p = models.ForeignKey("Paragraph", on_delete=models.CASCADE, null=True, blank=True)
+    frame = models.ForeignKey("Iframe", on_delete=models.CASCADE, null=True, blank=True)
 
 
 class Post(models.Model):
@@ -59,6 +61,10 @@ class List(models.Model):
         ("ol", "ol")
     )
     type = models.CharField(max_length=2, choices=types)
+
+
+class Iframe(models.Model):
+    src = models.URLField()
 
 
 class Item(models.Model):
