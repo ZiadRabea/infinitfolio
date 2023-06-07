@@ -25,7 +25,7 @@ DEFAULT_CHARSET = 'utf-8'
 SECRET_KEY = 'django-insecure-1%w#r^7%f@!f189@puxnjs=6pekvnivc3sc!1qclsa*5&^mred'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'portfolio',
     'blog',
-    'store'
+    'store',
+    'menu'
 ]
 
 MIDDLEWARE = [
@@ -142,7 +143,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'z-apps',
     'API_KEY': '772947541711259',
