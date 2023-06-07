@@ -20,6 +20,7 @@ def menu(request, id):
     return render(request, "menu.html", context)
 
 
+@login_required
 def user_menus(request):
     menus = Menu.objects.filter(user=request.user.profile)
     context = {
