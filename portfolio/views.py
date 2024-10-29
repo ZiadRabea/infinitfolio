@@ -245,29 +245,22 @@ def delete_website(request, slug):
 
 @login_required
 def publish(request, slug):
-    website = Website.objects.get(unique_name=slug)
-    if website.user != request.user.profile:
-        print("you don't own this website")
-        return redirect("/Error")
-    context = {
-        "website": website
-    }
-    return render(request, "publish.html", context)
+    return redirect("/Error")
 
 
 @login_required
 def paymentComplete(request):
-    print('REQUEST BODY:', request.body)
-    body = json.loads(request.body)
-    print('BODY:', body)
-    website_unique_name = body['site_name']
+    # print('REQUEST BODY:', request.body)
+    # body = json.loads(request.body)
+    # print('BODY:', body)
+    # website_unique_name = body['site_name']
 
-    website = Website.objects.get(unique_name=website_unique_name)
-    print(website.cv_url)
-    website.is_active = True
-    website.save()
-    return JsonResponse('Payment completed!', safe=False)
-
+    # website = Website.objects.get(unique_name=website_unique_name)
+    # print(website.cv_url)
+    # website.is_active = True
+    # website.save()
+    # return JsonResponse('Payment completed!', safe=False)
+    return redirect("/Error")
 
 @login_required
 def publish_virtual(request, slug):

@@ -274,25 +274,27 @@ def add_item(request, slug, id, lid):
 
 @login_required
 def publish(request, slug):
-    blog = Blog.objects.get(name=slug)
-    if blog.user != request.user.profile:
-        print("you don't own this blog")
-        return redirect("/Error")
-    context = {
-        "website": blog
-    }
-    return render(request, "publish_blog.html", context)
+    # blog = Blog.objects.get(name=slug)
+    # if blog.user != request.user.profile:
+    #     print("you don't own this blog")
+    #     return redirect("/Error")
+    # context = {
+    #     "website": blog
+    # }
+    # return render(request, "publish_blog.html", context)
 
+    return redirect("/Error")
 
 @login_required
 def paymentComplete(request):
-    #print('REQUEST BODY:', request.body)
-    body = json.loads(request.body)
-    #print('BODY:', body)
-    website_unique_name = body['site_name']
-    #print(website_unique_name)
-    website = Blog.objects.get(name=website_unique_name)
-    #print(website.type)
-    website.published = True
-    website.save()
-    return JsonResponse('Payment completed!', safe=False)
+    # #print('REQUEST BODY:', request.body)
+    # body = json.loads(request.body)
+    # #print('BODY:', body)
+    # website_unique_name = body['site_name']
+    # #print(website_unique_name)
+    # website = Blog.objects.get(name=website_unique_name)
+    # #print(website.type)
+    # website.published = True
+    # website.save()
+    # return JsonResponse('Payment completed!', safe=False)
+    return redirect("/Error")

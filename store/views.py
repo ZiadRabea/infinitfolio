@@ -125,33 +125,22 @@ def delete_product(request, slug, id):
 
 @login_required
 def publish(request, slug):
-    store = Store.objects.get(name=slug)
-    print(store.description)
-    if store.approved:
-        if store.user != request.user.profile:
-            print("you don't own this store")
-            return redirect("/Error")
-        context = {
-            "website": store
-        }
-        return render(request, "publish_store.html", context)
-    else:
-        return redirect("/Error")
+    return redirect("/Error")
 
 
 @login_required
 def paymentComplete(request):
-    print('REQUEST BODY:', request.body)
-    body = json.loads(request.body)
-    print('BODY:', body)
-    website_unique_name = body['site_name']
-    print(website_unique_name)
-    website = Store.objects.get(name=website_unique_name)
-    print(website.name)
-    website.published = True
-    website.save()
-    return JsonResponse('Payment completed!', safe=False)
-
+    # print('REQUEST BODY:', request.body)
+    # body = json.loads(request.body)
+    # print('BODY:', body)
+    # website_unique_name = body['site_name']
+    # print(website_unique_name)
+    # website = Store.objects.get(name=website_unique_name)
+    # print(website.name)
+    # website.published = True
+    # website.save()
+    # return JsonResponse('Payment completed!', safe=False)
+    return redirect("/Error")
 
 @login_required
 def review_stores(request):

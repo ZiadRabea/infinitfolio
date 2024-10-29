@@ -9,7 +9,7 @@ from.forms import MProduct
 
 @login_required
 def create_menu(request):
-    return render(request, "create_menu.html")
+    return redirect("/Error")
 
 
 def menu(request, id):
@@ -93,12 +93,13 @@ def mark_review(request, id):
 
 @login_required
 def paymentComplete(request):
-    menu = Menu.objects.create(user=request.user.profile)
-    QrRequest.objects.create(menu=menu, user=request.user.profile)
-    response_data = {
-        'message': 'Payment completed!',
-        'status': 'success',
-        'menu_id': menu.id
-    }
+    # menu = Menu.objects.create(user=request.user.profile)
+    # QrRequest.objects.create(menu=menu, user=request.user.profile)
+    # response_data = {
+    #     'message': 'Payment completed!',
+    #     'status': 'success',
+    #     'menu_id': menu.id
+    # }
 
-    return JsonResponse(response_data, safe=False)
+    # return JsonResponse(response_data, safe=False)
+    return redirect("/Error")
