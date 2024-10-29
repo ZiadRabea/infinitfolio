@@ -1,87 +1,126 @@
-{%load static%}
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
-    <title>{{product.name}} | Details</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="icon" href="{%static 'imgs/infinitfolio.png'%}" type="image/png">
+    <title>{{ product.name }} | Details</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static 'imgs/infinitfolio.png' %}" type="image/png">
     <style>
-        /* Main container */
-        .container {
+        /* Main styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212; /* Dark background */
+            color: #e0e0e0; /* Light text color */
+            margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f8f8f8;
         }
 
         /* Product details container */
         .product-details {
-            width: 600px;
+            width: 100%;
+            max-width: 600px; /* Limit max width */
             padding: 20px;
-            background-color: #fff;
-            border-radius: 5px;
+            background-color: #1e1e1e; /* Dark product card */
+            border-radius: 8px;
             text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Subtle shadow */
+            position: relative; /* For absolute positioning of icons */
         }
 
         /* Product image */
         .product-image {
-            width: 200px;
-            height: 200px;
-            margin: 0 auto;
-            background-color: #eee;
+            width: 100%;
+            height: auto;
+            max-height: 300px; /* Limit max height */
             border-radius: 5px;
+            background-color: #444; /* Placeholder color */
         }
 
         /* Product name */
         .product-name {
             margin-top: 10px;
-            font-size: 24px;
+            font-size: 28px; /* Increased font size */
             font-weight: bold;
+            color: #00e350; /* Green color for name */
         }
 
         /* Product description */
         .product-description {
             margin-top: 10px;
             font-size: 16px;
-            color: #666;
+            color: #bbb; /* Lighter description */
+            line-height: 1.5; /* Improved readability */
         }
 
         /* Add to Cart button */
         .add-to-cart-btn {
             margin-top: 20px;
             padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
+            background-color: #00e350; /* Green button */
+            color: #121212; /* Dark text for contrast */
             font-size: 16px;
             font-weight: bold;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s; /* Smooth transition */
+            position: relative; /* For icon positioning */
         }
 
         /* Add to Cart button hover effect */
         .add-to-cart-btn:hover {
-            background-color: #0056b3;
+            background-color: #00b33c; /* Darker green on hover */
+        }
+
+        /* Icons */
+        .product-icons {
+            position: absolute;
+            top: 90%; /* Center vertically */
+            transform: translateY(-90%); /* Adjust vertical alignment */
+            width: 90%;
+            display: flex;
+            justify-content: space-between; /* Space out icons */
+            padding: 0 10px; /* Padding for better spacing */
+            margin:0 auto;
+        }
+
+        .icon {
+            cursor: pointer;
+        }
+
+        a{
+            text-decoration: none;
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="product-details">
-            <img src="{{product.cover_image.url}}" class="product-image">
-            <div class="product-name">{{product.name}}</div>
-            <div class="product-description">{{product.description}}</div>
-            <button class="add-to-cart-btn" onclick="addToCart()">Contact seller</button>
-        </div>
+    <div class="product-details">
+        <img src="{{ product.cover_image.url }}" class="product-image" alt="{{ product.name }}">
+        <div class="product-name">{{ product.name }}</div>
+        <div class="product-description">{{ product.description }}</div>
+        <button class="add-to-cart-btn" onclick="addToCart()">Contact Seller</button>
+        
+        {% if store.user == user.profile %}
+            <div class="product-icons">
+                <a style="color:#bbb; font-size: 30px;" href="{{product.id}}/edit" title="Edit" class="icon">
+                    ✎
+                </a>
+                <a style="color:red; font-size: 30px;" href="{{product.id}}/delete" title="Delete" class="icon" onclick="return confirm('Are you sure you want to delete this product?');">
+                    &#128465;
+                </a>
+            </div>
+        {% endif %}
     </div>
 
     <script>
         function addToCart() {
-            window.open("https://wa.me/{{store.phone}}")
+            window.open("https://wa.me/{{ store.phone }}");
         }
     </script>
 </body>

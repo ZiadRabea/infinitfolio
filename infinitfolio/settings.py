@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-import dj_database_url
 import cloudinary_storage
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -27,7 +26,7 @@ SECRET_KEY = 'django-insecure-1%w#r^7%f@!f189@puxnjs=6pekvnivc3sc!1qclsa*5&^mred
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["*", ".vercel.app"]
 
 
 # Application definition
@@ -48,8 +47,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -80,22 +79,19 @@ WSGI_APPLICATION = 'infinitfolio.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'HOST': 'containers-us-west-170.railway.app',
-        'USER': 'postgres',
-        'PASSWORD':'DQAUD2CykNQjzBHxQuXG',
-        'PORT':'7979'
+        'NAME': 'postgres',
+        'HOST': 'aws-0-eu-central-1.pooler.supabase.com',
+        'USER': 'postgres.uyvnzzkwfaanyvbebgcq',
+        'PASSWORD': 'Zs_2005^1975*',
+        'PORT':'6543'
     }
 }
-
-
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
-db = dj_database_url.config(conn_max_age=600)
-DATABASES['default'].update(db)
 
 
 # Password validation
@@ -142,12 +138,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+"""DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'z-apps',
     'API_KEY': '772947541711259',
     'API_SECRET': 'V5uR3wx19EDd7ts37jKtNMmAe2Q'
-}
+}"""
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'

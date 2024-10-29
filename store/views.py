@@ -26,7 +26,8 @@ def store(request, slug):
 def product(request, slug, id):
     store = Store.objects.get(name=slug)
     product = Product.objects.get(id=id)
-    if product.store.user == request.user.profile or product.store.published or request.user.is_superuser:
+    profile = request.user.profile if request.user.is_authenticated else None
+    if product.store.user == profile or product.store.published or request.user.is_superuser:
         context = {
             "store": store,
             "product": product
@@ -86,6 +87,30 @@ def add_product(request, slug):
     else:
         return redirect("/Error")
 
+@login_required
+def edit_product(request, slug, id):
+    store = Store.objects.get(name=slug)
+    product = Product.objects.get(id=id)
+    if not product.store == store: 
+        return redirect("/Error")
+    if store.user == request.user.profile:
+        if request.method == "POST":
+            form = AddProduct(request.POST, request.FILES, instance=product)
+            if form.is_valid():
+                myform = form.save(commit=False)
+                myform.store = store
+                myform.save()
+                return redirect(f"/stores/{store.name}/products/{myform.id}")
+        else:
+            form = AddProduct(instance=product)
+
+        context = {
+            "form": form,
+            "store": store
+        }
+        return render(request, "add_product.html", context)
+    else:
+        return redirect("/Error")
 
 @login_required
 def delete_product(request, slug, id):
