@@ -1,11 +1,13 @@
 from django.db import models
 from Accounts.models import Profile
+
+from cloudinary_storage.storage import MediaCloudinaryStorage
 # Create your models here.
 
 
 class Menu(models.Model):
     user = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    qr = models.ImageField(null=True, blank=True, upload_to="images")
+    qr = models.ImageField(null=True, blank=True, upload_to="images", storage=MediaCloudinaryStorage)
 
 
 class MenuProduct(models.Model):
