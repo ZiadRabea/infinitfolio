@@ -1,5 +1,6 @@
 from django.db import models
 from Accounts.models import Profile
+from cloudinary_storage.storage import MediaCloudinaryStorage
 # Create your models here.
 
 
@@ -17,7 +18,7 @@ class Store(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=100)
     approved = models.BooleanField(default=False)
-    cover_image = models.ImageField(upload_to="cover_image")
+    cover_image = models.ImageField(upload_to="cover_image", storage=MediaCloudinaryStorage)
     description = models.TextField(max_length=1000)
     price = models.IntegerField()
     store = models.ForeignKey(Store, on_delete=models.CASCADE)
