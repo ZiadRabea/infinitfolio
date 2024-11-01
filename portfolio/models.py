@@ -1,5 +1,6 @@
 from django.db import models
 from Accounts.models import Profile
+from cloudinary_storage.storage import MediaCloudinaryStorage
 # Create your models here.
 
 
@@ -9,7 +10,7 @@ class Website(models.Model):
     is_active = models.BooleanField(default=False)
     cv_url = models.URLField()
     full_name = models.CharField(max_length=100)
-    profile_pic = models.ImageField(upload_to="profile_pictures")
+    profile_pic = models.ImageField(upload_to="profile_pictures", storage=MediaCloudinaryStorage)
     current_job = models.CharField(max_length=500)
     about = models.TextField(max_length=2000)
     email = models.EmailField()
@@ -36,7 +37,7 @@ class Project(models.Model):
 
 
 class Certificate(models.Model):
-    cert = models.ImageField(upload_to="Certificates")
+    cert = models.ImageField(upload_to="Certificates", storage=MediaCloudinaryStorage)
     website = models.ForeignKey(Website, on_delete=models.CASCADE)
 
 
