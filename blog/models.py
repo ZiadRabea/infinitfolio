@@ -1,5 +1,6 @@
 from django.db import models
 from Accounts.models import Profile
+from cloudinary_storage.storage import MediaCloudinaryStorage
 # Create your models here.
 
 
@@ -34,7 +35,7 @@ class Element(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=200)
     published = models.BooleanField(default=False)
-    cover_img = models.ImageField(upload_to="cover_images")
+    cover_img = models.ImageField(upload_to="cover_images", storage=MediaCloudinaryStorage)
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
 
 
