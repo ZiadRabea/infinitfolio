@@ -1,5 +1,5 @@
 import json
-
+from .filters import PostFilter
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
@@ -11,9 +11,12 @@ from .forms import *
 def blog(request, slug):
     blog = Blog.objects.get(name=slug)
     posts = Post.objects.filter(blog=blog)
+    filter = PostFilter(request.GET, queryset=posts)
+    posts = filter.qs
     context = {
         "blog": blog,
-        "posts": posts
+        "posts": posts,
+        "filter": filter
     }
     return render(request, "blog.html", context)
 
@@ -72,14 +75,14 @@ def add_post(request, slug):
     blog = Blog.objects.get(name=slug)
     if request.user.profile == blog.user:
         if request.method == "POST":
-            form = AddPost(request.POST, request.FILES)
+            form = AddPost(request.POST, request.FILES, blog=blog)
             if form.is_valid():
                 myform = form.save(commit=False)
                 myform.blog = blog
                 myform.save()
                 return redirect(f'/blogs/{blog.name}')
         else:
-            form = AddPost()
+            form = AddPost(blog=blog)
 
         context = {
             "blog": blog,
@@ -145,7 +148,27 @@ def add_link(request, slug, id):
     else:
         return redirect("/Error")
 
+@login_required
+def add_topic(request, slug):
+    blog = Blog.objects.get(name=slug)
+    if request.user.profile == blog.user:
+        if request.method == "POST":
+            form = AddClass(request.POST, request.FILES)
+            if form.is_valid():
+                myform = form.save(commit=False)
+                myform.blog = blog
+                myform.save()
+                return redirect(f"/blogs/{blog.name}/posts/create")
+        else:
+            form = AddClass()
 
+        context = {
+            "form": form
+        }
+        return render(request, "add_topic.html", context)
+    else:
+        return redirect("/Error")
+    
 @login_required
 def add_frame(request, slug, id):
     post = Post.objects.get(id=id)

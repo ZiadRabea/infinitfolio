@@ -18,8 +18,11 @@ class Store(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=100)
     approved = models.BooleanField(default=False)
+    date = models.DateTimeField(auto_now_add=True)
     cover_image = models.ImageField(upload_to="cover_image", storage=MediaCloudinaryStorage)
     description = models.TextField(max_length=1000)
     price = models.IntegerField()
     store = models.ForeignKey(Store, on_delete=models.CASCADE)
 
+    class Meta:
+        ordering = ['-date']

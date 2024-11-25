@@ -81,7 +81,7 @@
         border-radius: 4px;
         box-sizing: border-box;
       }
-      form input[type="submit"] {
+      form input[type="submit"], input[type="button"] {
         background-color: #333;
         color: white;
         padding: 10px 20px;
@@ -137,6 +137,10 @@
 
           <label for="tel">*Cover image:</label>
             {{form.cover_img}}
+
+          <label for="tel">*Topic:</label>
+            {{form.cls}}
+          <input type="button" value="+ New Topic" onclick="window.open('/blogs/{{blog.name}}/topics/create')">
           <input type="submit">
         </form>
       </div>

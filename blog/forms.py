@@ -15,6 +15,11 @@ class AddPost(ModelForm):
         fields = '__all__'
         exclude = ['blog']
 
+    def __init__(self, *args, **kwargs):
+        blog = kwargs.pop('blog', None)
+        super(AddPost, self).__init__(*args, **kwargs)
+        self.fields['cls'].queryset = Topic.objects.filter(blog=blog)
+
 
 class AddHeading(ModelForm):
     class Meta:
@@ -57,3 +62,9 @@ class AddFrame(ModelForm):
     class Meta:
         model = Iframe
         fields = '__all__'
+
+class AddClass(ModelForm):
+    class Meta:
+        model = Topic
+        fields = '__all__'
+

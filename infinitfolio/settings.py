@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_filters',
     'portfolio',
     'blog',
     'store',
@@ -79,6 +80,7 @@ WSGI_APPLICATION = 'infinitfolio.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
+
 
 DATABASES = {
     'default': {
@@ -162,11 +164,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'HOST': 'containers-us-west-170.railway.app',
-        'USER': 'postgres',
-        'PASSWORD':'DQAUD2CykNQjzBHxQuXG',
-        'PORT':'7979'
+        'NAME': 'postgres',
+        'HOST': 'aws-0-eu-central-1.pooler.supabase.com',
+        'USER': 'postgres.uyvnzzkwfaanyvbebgcq',
+        'PASSWORD': 'Zs_2005^1975*',
+        'PORT':'6543'
     }
 }
 

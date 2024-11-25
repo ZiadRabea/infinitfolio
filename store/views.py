@@ -6,17 +6,20 @@ from django.shortcuts import render, redirect
 
 from .forms import *
 from .models import *
-
+from .filters import *
 # Create your views here.
 
 
 def store(request, slug):
     store = Store.objects.get(name=slug)
     products = Product.objects.filter(store=store)
+    filter = ProductFilter(request.GET, queryset=products)
+    products = filter.qs
     if store.published or store.user == request.user.profile or request.user.is_superuser:
         context = {
             "store": store,
-            "products": products
+            "products": products,
+            "filter": filter
         }
         return render(request, "store.html", context)
     else:

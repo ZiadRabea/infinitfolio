@@ -34,11 +34,21 @@ class Element(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=200)
+    cls = models.ForeignKey("Topic", on_delete=models.CASCADE, null=True, blank=True)
     published = models.BooleanField(default=False)
+    date = models.DateTimeField(auto_now_add=True)
     cover_img = models.ImageField(upload_to="cover_images", storage=MediaCloudinaryStorage)
-    blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE, null=True, blank=True)
 
-
+    class Meta:
+        ordering=["-date"]
+class Topic(models.Model):
+    title = models.CharField(max_length=200)
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE, null=True, blank=True)
+    
+    def __str__(self):
+        return self.title
+    
 class Heading(models.Model):
     text = models.CharField(max_length=500)
 
