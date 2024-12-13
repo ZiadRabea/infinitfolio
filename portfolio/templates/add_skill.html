@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>infintfolio | skills</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href="/static/imgs/infinitfolio.png" type="image/png">
+    <style>
+      /* Style for the header and tabs */
+      .header {
+        background-color: #333;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+      }
+	  .skills-list{
+		border: 1px solid #ddd;
+		margin:0 auto;
+		padding:20px;
+		width:90%;
+	  }
+	  .skills-list div{
+		margin:0 auto;
+		padding:10px;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		width:90%;
+		margin-bottom:10px;
+	  }
+	  .skills-list div button{
+		border:none;
+		float:right;
+		background:red;
+		color:white;
+		border-radius:5px;
+		transition: all .2s ease-in-out;
+	  }
+	  .skills-list div button:hover{
+		background:white;
+		color:red;
+		cursor:pointer;
+		border-radius:0px;
+	  }
+      .tabs {
+        display: flex;
+        flex-wrap: wrap;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .tab {
+        padding: 10px;
+        cursor: pointer;
+        flex: 1 0 auto;
+        text-align: center;
+      }
+      .tab.active {
+        background-color: #555;
+      }
+      /* Style for the content section */
+      .content {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      .content > div {
+        flex-basis: 100%;
+        padding: 20px;
+      }
+      /* Style for the forms */
+      form {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      form > * {
+        flex-basis: 100%;
+        margin-bottom: 10px;
+      }
+      form input[type="text"],
+      form input[type="email"],
+      form input[type="number"],
+      form textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+      form input[type="submit"] {
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      /* Style for the certificates grid */
+      .certificates {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-gap: 10px;
+      }
+      .certificate {
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+      .certificate img {
+        max-width: 100%;
+        height: auto;
+      }
+      
+      /* Responsive styles */
+      @media only screen and (min-width: 480px) {
+        .header {
+          flex-wrap: wrap;
+        }
+        .tabs {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          margin-top: 10px;
+        }
+        .tab {
+          flex: 1 0 auto;
+          text-align: center;
+          margin-right: 10px;
+        }
+      }
+      a{
+        color:white;
+        text-decoration:none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <ul class="tabs">
+        <li><a href = "/{{website.unique_name}}/skills"><div class="tab active" data-tab="skills">Skills</div></a></li>
+        <li><a href = "/{{website.unique_name}}/edit"><div class="tab" data-tab="info">Info</div></a></li>
+        <li><a href = "/{{website.unique_name}}/certs"><div class="tab" data-tab="certificates">Certificates</div></a></li>
+        <li><a href = "/{{website.unique_name}}/projects"><div class="tab" data-tab="projects">Projects</div></a></li>
+        <li><a href = "/{{website.unique_name}}/work"><div class="tab" data-tab="work-experience">Experience</div></a></li>
+      </ul>
+    </div>
+    </div>
+    <div class="content">
+      <div class="skills tab-content active">
+        <h2>Skills</h2>
+        <form id="add-skill-form" method="post" enctype="multipart/form-data">
+            {%csrf_token%}
+          <label for="skill">Skill:</label>
+            {{form.skill}}
+          <label for="mastery">Mastery:</label>
+            {{form.mastery}}
+          <input type="submit" value="Add Skill">
+        </form>
+        <div class="skills-list">
+			{%for skill in skills%}
+                <div>
+                    {{skill.skill}}
+                    <a href="/skills/{{skill.id}}/delete"> <button> X </button> </a>
+                </div>
+            {%endfor%}
+		</div>
+      </div>
+	</div>
+</body>
+</html>

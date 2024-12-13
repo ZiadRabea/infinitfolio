@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Menu List</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href="/static/imgs/infinitfolio.png" type="image/png">
+    <style>
+        /* CSS styles for the menu list page */
+        body {
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .menu-list {
+            margin: 20px auto;
+            max-width: 500px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+        }
+
+        .menu-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .menu-item h3 {
+            margin: 0;
+        }
+
+        .menu-item p {
+            margin-top: 5px;
+            color: #888;
+        }
+
+        .menu-item:last-child {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Menu List</h1>
+
+    <div class="menu-list">
+        {%for i in menus%}
+        <div class="menu-item">
+            <h3>Menu{{i.id}}</h3>
+            {%if i.qr != ""%}
+                <p style="color:green">Active</p>
+            {%else%}
+                <p style="color:red">in review</p>
+            {%endif%}
+        </div>
+        {%endfor%}
+        <a href="/menus" style="text-decoration:none"><button style="width:90%; display:block; margin:0 auto; padding : 5px; border-radius:5px; background:green; color:white;">+ New menu</button></a>
+    </div>
+</body>
+</html>

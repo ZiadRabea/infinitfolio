@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Support the Project</title>
+	<style type="text/css">
+		/* Center the div in the page */
+		#support-form {
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			padding: 20px;
+			background-color: #fff;
+			border-radius: 5px;
+			box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+		}
+
+		/* Style the input field */
+		input[type=number] {
+			display: block;
+			margin: 10px auto;
+			padding: 10px;
+			font-size: 20px;
+			width: 100px;
+			border-radius: 5px;
+			border: none;
+			box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+			text-align: center;
+		}
+
+		/* Style the submit button */
+		input[type=submit] {
+			display: block;
+			margin: 10px auto;
+			padding: 10px;
+			font-size: 20px;
+			width: 150px;
+			background-color: #007bff;
+			color: #fff;
+			border-radius: 5px;
+			border: none;
+			box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+			cursor: pointer;
+		}
+
+		/* Style the page background */
+		body {
+			background-image: url("https://picsum.photos/2000/1200");
+			background-size: cover;
+			background-position: center center;
+			font-family: sans-serif;
+			color: #333;
+			height: 100vh;
+		}
+	</style>
+</head>
+<body>
+	<div id="support-form">
+		<h1>Support the Project</h1>
+		<p>Enter the amount you want to donate (between 1 and 50):</p>
+		<form>
+			<input type="number" name="amount" min="1" max="50" required>
+			<input type="submit" value="Donate">
+		</form>
+	</div>
+</body>
+</html>

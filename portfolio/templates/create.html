@@ -1,0 +1,156 @@
+{%load static%}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>infinitefolio | Create New</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href="{%static 'imgs/infinitfolio.png' %}" type="image/png">
+    <style>
+      /* Styling for container */
+      *{
+        overflow:hidden
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        width: 60%;
+		height:94vh;
+        margin-left: 30px;
+      }
+	  @media only screen and (max-width: 950px){
+		body{
+			display:block !important;
+		}
+		.container{
+			width:100% !important;
+			margin:0 !important;
+			display:block !important;
+			margin-top:10px;
+		}
+		.form{
+			width:100% !important;
+			display:block !important;
+			float:none !important;
+			margin:0 !important;
+		}
+		.form input, textarea{
+			width:90% !important;
+		}
+	  }
+	  body{
+		display:flex;
+		justify-content:space-between;
+	  }
+      /* Styling for form */
+      .form {
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        width: 30%;
+		height:94vh;
+		overflow-y:scroll;
+        float: left;
+      }
+      .form input,
+      .form textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+      }
+      .form label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      .form button {
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+	<div class="form">
+      <h2>Create New</h2>
+      <form action="#" method="post" enctype="multipart/form-data">
+        {%csrf_token%}
+        <label for="name">Website name</label>
+          {{form.unique_name}}
+
+        <label for="name">Full name</label>
+          {{form.full_name}}
+		
+		<label for="profile_picture">Profile Picture</label>
+          {{form.profile_pic}}
+		
+		<label for="age">Age</label>
+          {{form.age}}
+		
+		<label for="background_image">CV URL</label>
+          {{form.cv_url}}
+		
+		<label for="current_job">Current Job</label>
+          {{form.current_job}}
+		
+        <label for="email">Email</label>
+          {{form.email}}
+
+        <label for="phone">Phone</label>
+          {{form.phone}}
+
+        <label for="intro">Self-Introduction</label>
+          {{form.about}}
+
+        <label for="certificates">Certificates</label>
+        <input type="file" id="certificates" multiple name="certificates" accept=".pdf,.jpg,.jpeg,.png" required>
+
+        <label for="skill1">Skill 1</label>
+        <input type="text" id="skill1" name="skill1" required>
+        <label for="mastery1">Mastery Percentage (%)</label>
+		<input type="number" id="mastery1" name="mastery1" min="0" max="100" required>
+
+        <label for="skill2">Skill 2</label>
+        <input type="text" id="skill2" name="skill2" required>
+        <label for="mastery2">Mastery Percentage (%)</label>
+        <input type="number" id="mastery2" name="mastery2" min="0" max="100" required>
+
+        <label for="skill3">Skill 3</label>
+        <input type="text" id="skill3" name="skill3" required>
+        <label for="mastery3">Mastery Percentage (%)</label>
+        <input type="number" id="mastery3" name="mastery3" min="0" max="100" required>
+
+        <label for="skill4">Skill 4</label>
+        <input type="text" id="skill4" name="skill4" required>
+        <label for="mastery4">Mastery Percentage (%)</label>
+        <input type="number" id="mastery4" name="mastery4" min="0" max="100" required>
+
+        <label for="project1T">Project 1 Title</label>
+        <input type="text" id="project1T" name="project1T" required>
+		<label for="project1">About Project 1</label>
+		<textarea id="Project1" name="Project1" rows="4" required></textarea>
+        <label for="work1T">Work Experience 1 Title</label>
+        <input type="text" id="work1T" name="work1T" required>
+		<label for="work1Y">Years</label>
+        <input type="number" id="work1Y" name="work1Y" required>
+		<label for="work1">About this work</label>
+        <textarea id="work1" name="work1" rows="4" required></textarea>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+    <div class="container">
+      <iframe src="https://cszido.github.io/myportfolio" height="100%" width="100%"></iframe>
+    </div>
+  </body>
+</html>

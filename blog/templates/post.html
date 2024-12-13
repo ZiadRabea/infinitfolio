@@ -1,0 +1,236 @@
+{% if post.blog.published or post.blog.user == user.profile %}
+    {% load static %}
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <title>{{ post.blog.name }} | {{ post.title }}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="{% static 'imgs/infinitfolio.png' %}" type="image/png">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+        <style>
+            /* Global Styles */
+            body {
+                background-color: #121212;
+                color: #fff;
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+            }
+
+            /* Main container */
+            .container {
+                max-width: 960px;
+                margin: 0 auto;
+                padding: 20px;
+                box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+                background-color: #1f1f1f;
+                border-radius: 8px;
+            }
+
+            /* Post container */
+            .post-container {
+                margin-bottom: 30px;
+            }
+
+            /* Heading and title */
+            h1, h2 {
+                text-align: center;
+                color: #fff;
+            }
+
+            /* Post content */
+            .post-content {
+                font-size: 16px;
+                color: #ddd;
+                margin-bottom: 10px;
+            }
+
+            /* Image and iframe styling */
+            img, iframe {
+                width: 100%;
+                height: auto;
+                min-height: 400px;
+                margin-top: 20px;
+                border-radius: 8px;
+            }
+
+            /* Button Styles */
+            .add-button-container {
+                margin-top: 10px;
+                position: relative;
+                text-align: center;
+            }
+
+            .add-button {
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                padding: 12px;
+                font-size: 16px;
+                cursor: pointer;
+                width: 100%;
+                border-radius: 50px;
+                transition: background-color 0.3s ease;
+            }
+
+            .add-button:hover {
+                background-color: #0056b3;
+            }
+
+            /* Options container */
+            .options-container {
+                display: none;
+                margin-top: 10px;
+                position: absolute;
+                top: 40px;
+                left: 0;
+                right: 0;
+                margin-left: auto;
+                margin-right: auto;
+                text-align: center;
+                background-color: #333;
+                border-radius: 8px;
+                padding: 10px;
+                width: 100%;
+            }
+
+            .option-button {
+                background-color: #f8f9fa;
+                color: #333;
+                border: none;
+                padding: 10px;
+                margin-top: 5px;
+                font-size: 14px;
+                cursor: pointer;
+                border-radius: 5px;
+                transition: background-color 0.3s ease;
+            }
+
+            .option-button:hover {
+                background-color: #007bff;
+                color: #fff;
+            }
+
+            /* Post Actions */
+            .post-actions {
+                display: flex;
+                justify-content: center;
+                margin-top: 30px;
+                gap: 10px;
+            }
+
+            .post-actions button {
+                padding: 10px 20px;
+                border-radius: 5px;
+                font-size: 16px;
+                cursor: pointer;
+            }
+
+            .post-actions .publish-btn {
+                background-color: lightgreen;
+            }
+
+            .post-actions .delete-btn {
+                background-color: red;
+            }
+
+            .post-actions button:disabled {
+                background-color: #ccc;
+                cursor: not-allowed;
+            }
+        </style>
+
+        <script>
+            // Function to toggle options container visibility
+            function toggleOptions() {
+                var optionsContainer = document.getElementById("optionsContainer");
+                optionsContainer.style.display = optionsContainer.style.display === "none" ? "block" : "none";
+            }
+        </script>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="post-container">
+                <h1>{{ post.title }}</h1>
+                <hr>
+                <div class="post-content">
+                    {% for element in elements %}
+                        {% if element.type == "heading" %}
+                            <h2>{{ element.heading.text }}</h2>
+                        {% elif element.type == "paragraph" %}
+                            <p>{{ element.p.text }}</p>
+                        {% elif element.type == "image" %}
+                            <img src="{{ element.image.src }}" alt="Image for {{ post.title }}">
+                        {% elif element.type == "frame" %}
+                            <iframe src="{{ element.frame.src }}"></iframe>
+                        {% elif element.type == "link" %}
+                            <a href="{{ element.link.url }}" target="_blank">{{ element.link.text }}</a>
+                        {% elif element.type == "list" %}
+                            {% if element.list.type == "ol" %}
+                                <ol>
+                                    {% for i in element.list.item_set.all %}
+                                    <li>{{ i.text }}</li>
+                                    {% endfor %}
+                                    {% if post.blog.user == user.profile %}
+                                        <li><a href="/blogs/{{ post.blog.name }}/posts/{{ post.id }}/list/{{ element.list.id }}/addItem"><button class="add-button">Add Item</button></a></li>
+                                    {% endif %}
+                                </ol>
+                            {% elif element.list.type == "ul" %}
+                                <ul>
+                                    {% for i in element.list.item_set.all %}
+                                    <li>{{ i.text }}</li>
+                                    {% endfor %}
+                                    {% if post.blog.user == user.profile %}
+                                        <li><a href="/blogs/{{ post.blog.name }}/posts/{{ post.id }}/list/{{ element.list.id }}/addItem"><button class="add-button">Add Item</button></a></li>
+                                    {% endif %}
+                                </ul>
+                            {% endif %}
+                        {% elif element.type == "line" %}
+                            <hr>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+                {% if post.blog.user == user.profile %}
+                    <div class="add-button-container">
+                        <button class="add-button" onclick="toggleOptions()">+</button>
+                        <div class="options-container" id="optionsContainer">
+                            <button class="option-button" onclick="window.location.href='/blogs/{{ post.blog.name }}/posts/{{ post.id }}/addParagraph'">Add Paragraph</button>
+                            <button class="option-button" onclick="window.location.href='/blogs/{{ post.blog.name }}/posts/{{ post.id }}/addHeading'">Add Heading</button>
+                            <button class="option-button" onclick="window.location.href='/blogs/{{ post.blog.name }}/posts/{{ post.id }}/addLink'">Add Link</button>
+                            <button class="option-button" onclick="window.location.href='/blogs/{{ post.blog.name }}/posts/{{ post.id }}/addList'">Add List</button>
+                            <button class="option-button" onclick="window.location.href='/blogs/{{ post.blog.name }}/posts/{{ post.id }}/addImage'">Add Image</button>
+                            <button class="option-button" onclick="window.location.href='/blogs/{{ post.blog.name }}/posts/{{ post.id }}/addLine'">Add Line</button>
+                            <button class="option-button" onclick="window.location.href='/blogs/{{ post.blog.name }}/posts/{{ post.id }}/addFrame'">Add Frame</button>
+                        </div>
+
+                        <div class="post-actions">
+                            {% if post.published %}
+                                <button class="publish-btn" disabled>Published</button>
+                            {% else %}
+                                <a href="/blogs/{{ post.blog.name }}/posts/{{ post.id }}/publish"><button class="publish-btn">Publish</button></a>
+                            {% endif %}
+                            <a href="/blogs/{{ post.blog.name }}/posts/{{ post.id }}/delete"><button class="delete-btn">Delete</button></a>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </body>
+
+    </html>
+{% else %}
+    <html lang="en">
+        <head>
+            <title>Not Found</title>
+        </head>
+        <body>
+            <h1>Not Found</h1>
+            <p>The requested resource was not found on this server.</p>
+        </body>
+    </html>
+{% endif %}

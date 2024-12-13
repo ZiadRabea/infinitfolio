@@ -1,0 +1,312 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ store.name }} | All Products</title>
+    <link rel="icon" href="{% static 'imgs/infinitfolio.png' %}" type="image/png">
+    <!-- Add Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <style>
+        /* Global Styles */
+        body {
+            background-color: #121212;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header Styles */
+        .header {
+            background: #1e1e1e;
+            padding: 20px;
+            text-align: center;
+            color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 36px;
+            margin: 0;
+        }
+
+        .header h2 {
+            font-size: 18px;
+            color: #00e350;
+            margin: 5px 0 0;
+        }
+
+        /* Main container */
+        .container {
+            max-width: 960px;
+            margin: 80px auto 20px;
+            padding: 20px;
+        }
+
+        /* Product grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        /* Product container */
+        .product-container {
+            position: relative;
+            background-color: #1f1f1f;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        /* Product hover effect */
+        .product-container:hover {
+            transform: scale(1.05);
+        }
+
+        /* Product cover image */
+        .product-cover {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 2px solid #333;
+        }
+
+        /* Product title */
+        .product-title {
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #333;
+            margin: 0;
+        }
+
+        /* Button container */
+        .button-container {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+        }
+
+        .arrow-button {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .arrow-button:hover {
+            background-color: #218838;
+        }
+
+        /* Add Product Button */
+        .plus-button {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .plus-button:hover {
+            background-color: #218838;
+        }
+
+        /* Alert and banner */
+        .brand-container {
+            display: flex;
+            justify-content: center;
+            background: #f900006b;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .brand-container h2 {
+            color: white;
+            font-size: 18px;
+        }
+
+        /* Alert container for store status */
+        .alert {
+            background: rgba(0, 227, 80, 0.3);
+            border: 1px solid green;
+            border-radius: 5px;
+            padding: 10px;
+            text-align: center;
+            margin: 20px auto;
+        }
+
+        .alert a {
+            color: green;
+        }
+
+        .alert.red {
+            background: rgba(227, 0, 0, 0.3);
+            border: 1px solid red;
+        }
+
+        /* Empty product state */
+        .empty-products {
+            text-align: center;
+            padding: 50px;
+            background-color: #333;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .empty-products i {
+            font-size: 50px;
+            color: #28a745;
+        }
+
+        .empty-products p {
+            font-size: 18px;
+            margin-top: 15px;
+            color: #bbb;
+        }
+
+        /* Filter form */
+        .filter-form {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #1e1e1e;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .filter-form label {
+            color: #bbb;
+            font-size: 16px;
+        }
+
+        .filter-form select {
+            padding: 5px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            background: #121212;
+            color: white;
+            font-size: 14px;
+        }
+
+        .filter-button {
+            padding: 5px 10px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .filter-button:hover {
+            background: #218838;
+        }
+
+        /* Add Product Button */
+        .add-product-btn {
+            background-color: #28a745;
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+        }
+
+        .add-product-btn:hover {
+            background-color: #218838;
+        }
+
+        /* New product icon */
+        .add-product-btn i {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+        #id_description{
+            padding: 5px; border: 1px solid #333; border-radius: 5px; background: #121212; color: white;
+        }
+    </style>
+</head>
+
+<body>
+    {% if not store.approved %}
+    <div class="alert">
+        Review in progress... {% if user.is_superuser %}<a href="/stores/{{ store.name }}/accept">Accept</a>{% endif %}
+    </div>
+    {% elif not store.published %}
+    <div class="alert red">
+        Website is not public! <a href="/stores/{{ store.name }}/publish">Publish Now</a>
+    </div>
+    {% endif %}
+
+    <div class="header">
+        <h1>{{ store.name }}</h1>
+        <h2>{{ store.description }}</h2>
+    </div>
+
+    <div class="container">
+        <form method="get" class="filter-form" style="margin-bottom: 20px;">
+            <label for="topic">Search Products:</label>
+            {{filter.form.description}}
+            <button type="submit" class="filter-button">
+                Apply Filter
+            </button>
+        </form>
+
+        {% if products %}
+        <div class="product-grid">
+            {% for product in products %}
+            <div class="product-container">
+                <img class="product-cover" src="{{ product.cover_image.url }}" alt="{{ product.name }} Cover Image">
+                <div class="product-title">{{ product.name }}</div>
+                <div class="button-container">
+                    <a href="/stores/{{ store.name }}/products/{{ product.id }}">
+                        <button class="arrow-button">
+                            <span class="arrow-icon">&#10148;</span>
+                        </button>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+
+            {% if store.user == user.profile %}
+            <div class="product-container">
+                <img class="product-cover" src="{% static 'imgs/add_product.png' %}" alt="Add Product">
+                <div class="product-title">Add Product</div>
+                <div class="button-container">
+                    <a href="/stores/{{ store.name }}/products/create">
+                        <button class="plus-button">
+                            <span class="plus-icon">&plus;</span>
+                        </button>
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% else %}
+        <div class="empty-products" onclick="{% if store.user == user.profile %} window.open('/stores/{{ store.name }}/products/create') {% endif %}" style="{% if store.user == user.profile %} cursor:pointer {% endif %}">
+            <i class="fas fa-exclamation-circle"></i>
+            <p>No products available. {% if store.user == user.profile %}Create your first product! {% endif %}</p>
+        </div>
+        {% endif %} 
+    </div>
+    <script>
+        document.getElementById("id_description").placeholder = "Search 🔍"
+    </script>
+</body>
+
+</html>

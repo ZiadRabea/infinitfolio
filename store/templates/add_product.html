@@ -1,0 +1,153 @@
+{%load static%}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{product.store.name}} | Add Product</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href="{%static 'imgs/infinitfolio.png'%}" type="image/png">
+    <style>
+      /* Style for the header and tabs */
+      .header {
+        background-color: #333;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+      }
+      a{
+        color:white;
+        text-decoration:none;
+      }
+      .tabs {
+        display: flex;
+        flex-wrap: wrap;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      button{
+        width:90%;
+        margin:0 auto;
+        display:block;
+        font-size:20px;
+        text-align:center;
+        background:red;
+        color:white;
+        border-radius:20px;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+        border:none;
+        cursor:pointer;
+      }
+      a{
+        text-decoration:none;
+      }
+      .tab {
+        padding: 10px;
+        cursor: pointer;
+        flex: 1 0 auto;
+        text-align: center;
+      }
+      .tab.active {
+        background-color: #555;
+      }
+      /* Style for the content section */
+      .content {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      .content > div {
+        flex-basis: 100%;
+        padding: 20px;
+      }
+      /* Style for the forms */
+      form {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      form > * {
+        flex-basis: 100%;
+        margin-bottom: 10px;
+      }
+      form input[type="text"],
+      form input[type="file"],
+      form input[type="url"],
+      form input[type="email"],
+      form input[type="number"],
+      select,
+      form textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+      form input[type="submit"] {
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      /* Style for the certificates grid */
+      .certificates {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-gap: 10px;
+      }
+      .certificate {
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+      .certificate img {
+        max-width: 100%;
+        height: auto;
+      }
+      
+      /* Responsive styles */
+      @media only screen and (min-width: 480px) {
+        .header {
+          flex-wrap: wrap;
+        }
+        .tabs {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          margin-top: 10px;
+        }
+        .tab {
+          flex: 1 0 auto;
+          text-align: center;
+          margin-right: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <div class="skills tab-content active">
+        <h2>Create Product</h2>
+        <form id="edit-info-form" method="post" enctype="multipart/form-data">
+            {%csrf_token%}
+
+          <label for="Picture">*Product name:</label>
+            {{form.name}}
+
+          <label for="tel">*Cover image:</label>
+            {{form.cover_image}}
+
+          <label for="tel">*Price:</label>
+            {{form.price}}
+
+          <label for="tel">*Description:</label>
+            {{form.description}}
+
+          <input type="submit">
+        </form>
+      </div>
+	</div>
+</body>
+</html>
