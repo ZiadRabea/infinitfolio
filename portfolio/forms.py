@@ -40,6 +40,6 @@ class EditWebsite(ModelForm):
     class Meta:
         model = Website
         fields = '__all__'
-        exclude = ['unique_name', 'full_name', 'age']
+        exclude = ['unique_name', 'full_name', 'age', 'is_active']
 
 

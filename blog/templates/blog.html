@@ -179,8 +179,29 @@
                 padding: 5px 10px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;
             }
 
-            #id_cls{
+            #id_title{
                 padding: 5px; border: 1px solid #333; border-radius: 5px; background: #121212; color: white;
+            }
+            .topics{
+                display:none
+
+            }
+            #posts_btn, #topics_btn{
+                width:40%;
+                cursor: pointer;
+                background:#28a745 ;
+                border: none;
+                box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+                border-radius:5px;
+                padding:5px;
+            }
+            #posts_btn:hover, #topics_btn:hover{
+                background:#218838;
+                box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+            } 
+            #posts_btn{
+                background:#218838;
+                box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
             }
         </style>
         
@@ -200,14 +221,23 @@
         </div>
 
         <div class="container">
-            <form method="get" class="filter-form" style="margin-bottom: 20px;">
+            <form method="get" class="filter-form" style="border-bottom-left-radius:0;border-bottom-right-radius:0;">
                 <label for="topic">Filter by Topic:</label>
-                {{filter.form.cls}}
+                {{filter.form.title}}
         
                 <button type="submit" class="filter-button">
                     Apply Filter
                 </button>
             </form>
+            <div class="filter-form" style="margin-bottom: 20px;border-top-left-radius:0;border-top-right-radius:0;background:#0c0c0c;display:flex;justify-content: center; align-items: center;">
+                <button id="posts_btn">
+                    Posts
+                </button>
+                <button id="topics_btn">
+                    Topics
+                </button>
+            </div>
+            <div class="posts" id="posts">
             {% if posts %}
                 <div class="post-grid">
                     {% for post in posts %}
@@ -259,6 +289,83 @@
                 </div>
             {% endif %}
         </div>
+        <div class="topics" id="topics">
+            {% if topics %}
+            <div class="post-grid">
+            {% for topic in topics %}
+                <div class="post-container random_bg" style="background:aqua;min-height: 100px;">
+                    <div class="post-title">{{topic.title }}</div>
+                    <div class="button-container">
+                        <a href="/blogs/{{ blog.name }}/?cls={{topic.id}}">
+                            <button class="arrow-button">
+                                <span class="arrow-icon">&#10148;</span>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+
+                {%if blog.user == user.profile%}
+                    <div class="post-container">
+                        <img class="post-cover" src="{% static 'imgs/add_topic.png' %}" alt="Add new post">
+                        <div class="post-title">Add a New Topic</div>
+                        <div class="button-container">
+                            <a href="/blogs/{{ blog.name }}/topics/create">
+                                <button class="plus-button">
+                                    <span class="plus-icon">&plus;</span>
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                {% endif %}
+                </div>
+            {% else %}
+                <div class="empty-posts" onclick="{%if blog.user == user.profile%} window.open('/blogs/{{ blog.name }}/posts/create') {%endif%}" style="{%if blog.user == user.profile%} cursor:pointer {%endif%}">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <p>No posts available. {%if blog.user == user.profile%}Create your first Topic! {%endif%}</p>
+                </div>
+            {% endif %}
+        </div>
+        </div>
+        <script>
+            document.getElementById("id_title").placeholder="Search By Title"
+            function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+            }
+
+            // Function to apply random background colors to elements with the class "random_bg"
+            function applyRandomBackgroundColors() {
+            const elements = document.querySelectorAll('.random_bg');
+            elements.forEach(element => {
+                element.style.backgroundColor = getRandomColor();
+            });
+            }
+
+            // Run the function after the DOM has fully loaded
+            document.addEventListener('DOMContentLoaded', applyRandomBackgroundColors);
+        
+        document.getElementById("posts_btn").onclick = function () {
+            document.getElementById("topics").style.display = "none";
+            document.getElementById("posts").style.display = "block";
+            document.getElementById("posts_btn").style.boxShadow = "rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset";
+            document.getElementById("posts_btn").style.background = "#218838";
+            document.getElementById("topics_btn").style.boxShadow = "none";
+            document.getElementById("topics_btn").style.background = "#28a745";
+        }
+        document.getElementById("topics_btn").onclick = function () {
+            document.getElementById("posts").style.display = "none";
+            document.getElementById("topics").style.display = "block";
+            document.getElementById("topics_btn").style.boxShadow = "rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset";
+            document.getElementById("topics_btn").style.background = "#218838";
+            document.getElementById("posts_btn").style.boxShadow = "none";
+            document.getElementById("posts_btn").style.background = "#28a745";
+        }
+        </script>
     </body>
 
     </html>

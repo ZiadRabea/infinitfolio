@@ -176,7 +176,7 @@
 <div class="profile-page" id="main_div">
   <div class="wrapper">
     <div class="page-header page-header-small" filter-color="green">
-      <div class="page-header-image" data-parallax="true" style="background-image: url('{%static 'imgs/bg.jpg'%})"></div>
+      <div class="page-header-image" data-parallax="true" style="background-image: url('https://images.pexels.com/photos/1103970/pexels-photo-1103970.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')"></div>
       <div class="container">
         <div class="content-center">
           <div class="cc-profile-image"><a href="#"><img src="{{website.profile_pic.url}}" alt="Image"/></a></div>
@@ -199,7 +199,7 @@
         <div class="col-lg-6 col-md-12">
           <div class="card-body">
             <div class="h4 mt-0 title">About</div>
-            <pre> {{website.about}} </pre>
+            <p style="text-align:justify"> {{website.about}} </p>
           </div>
         </div>
         <div class="col-lg-6 col-md-12">
@@ -283,82 +283,6 @@
               {%if user.profile == website.user%}
               <a href = "/{{website.unique_name}}/certs" style="text-decoration:none; width:100%;"><button style="width:100%; font-size:25px; border-radius:20px;" class="btn btn-primary smooth-scroll mr-2 aos-init aos-animate">+</button></a>
               {%endif%}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="tab-pane" id="graphic-design" role="tabpanel">
-        <div class="ml-auto mr-auto">
-          <div class="row">
-            <div class="col-md-6">
-              <div class="cc-porfolio-image img-raised" data-aos="fade-up" data-aos-anchor-placement="top-bottom"><a href="#graphic-design">
-                  <figure class="cc-effect"><img src="images/graphic-design-1.jpg" alt="Image"/>
-                    <figcaption>
-                      <div class="h4">Robotics</div>
-                      <p>Programming</p>
-                    </figcaption>
-                  </figure></a></div>
-              <div class="cc-porfolio-image img-raised" data-aos="fade-up" data-aos-anchor-placement="top-bottom"><a href="#graphic-design">
-                  <figure class="cc-effect"><img src="images/graphic-design-2.jpg" alt="Image"/>
-                    <figcaption>
-                      <div class="h4">Web development</div>
-                      <p>Programming</p>
-                    </figcaption>
-                  </figure></a></div>
-            </div>
-            <div class="col-md-6">
-              <div class="cc-porfolio-image img-raised" data-aos="fade-up" data-aos-anchor-placement="top-bottom"><a href="#graphic-design">
-                  <figure class="cc-effect"><img src="images/graphic-design-3.jpg" alt="Image"/>
-                    <figcaption>
-                      <div class="h4">AI / ML</div>
-                      <p>Programming</p>
-                    </figcaption>
-                  </figure></a></div>
-              <div class="cc-porfolio-image img-raised" data-aos="fade-up" data-aos-anchor-placement="top-bottom"><a href="#graphic-design">
-                  <figure class="cc-effect"><img src="images/graphic-design-4.jpg" alt="Image"/>
-                    <figcaption>
-                      <div class="h4">Desktop Apps</div>
-                      <p>Programming</p>
-                    </figcaption>
-                  </figure></a></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="tab-pane" id="Photography" role="tabpanel">
-        <div class="ml-auto mr-auto">
-          <div class="row">
-            <div class="col-md-6">
-              <div class="cc-porfolio-image img-raised" data-aos="fade-up" data-aos-anchor-placement="top-bottom"><a href="#Photography">
-                  <figure class="cc-effect"><img src="images/photography-1.jpg" alt="Image"/>
-                    <figcaption>
-                      <div class="h4">Pic1</div>
-                      <p>Image</p>
-                    </figcaption>
-                  </figure></a></div>
-              <div class="cc-porfolio-image img-raised" data-aos="fade-up" data-aos-anchor-placement="top-bottom"><a href="#Photography">
-                  <figure class="cc-effect"><img src="images/photography-3.jpg" alt="Image"/>
-                    <figcaption>
-                      <div class="h4">Pic2</div>
-                      <p>Image</p>
-                    </figcaption>
-                  </figure></a></div>
-            </div>
-            <div class="col-md-6">
-              <div class="cc-porfolio-image img-raised" data-aos="fade-up" data-aos-anchor-placement="top-bottom"><a href="#Photography">
-                  <figure class="cc-effect"><img src="images/photography-2.jpg" alt="Image"/>
-                    <figcaption>
-                      <div class="h4">pic3</div>
-                      <p>Image</p>
-                    </figcaption>
-                  </figure></a></div>
-              <div class="cc-porfolio-image img-raised" data-aos="fade-up" data-aos-anchor-placement="top-bottom"><a href="#Photography">
-                  <figure class="cc-effect"><img src="images/photography-4.jpg" alt="Image"/>
-                    <figcaption>
-                      <div class="h4">pic4</div>
-                      <p>Image</p>
-                    </figcaption>
-                  </figure></a></div>
             </div>
           </div>
         </div>
@@ -653,9 +577,9 @@
                      width: 100%;
                 }
             }
-            .flashmsg{
+            /* .flashmsg{
 
-            }
+            } */
       </style>
 
     </noscript>
@@ -687,7 +611,7 @@
 <div class="profile-page" id="main_div">
   <div class="wrapper">
     <div class="page-header page-header-small" filter-color="green">
-      <div class="page-header-image" data-parallax="true" style="background-image: url('{%static 'imgs/bg.jpg'%}')"></div>
+      <div class="page-header-image" data-parallax="true" style="background-image: url('https://images.pexels.com/photos/1103970/pexels-photo-1103970.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')"></div>
       <div class="container">
         <div class="content-center">
           <div class="cc-profile-image"><a href="#"><img src="{{website.profile_pic.url}}" alt="Image"/></a></div>

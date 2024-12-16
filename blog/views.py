@@ -11,10 +11,12 @@ from .forms import *
 def blog(request, slug):
     blog = Blog.objects.get(name=slug)
     posts = Post.objects.filter(blog=blog)
+    topics = Topic.objects.filter(blog=blog)
     filter = PostFilter(request.GET, queryset=posts)
     posts = filter.qs
     context = {
         "blog": blog,
+        "topics": topics,
         "posts": posts,
         "filter": filter
     }
