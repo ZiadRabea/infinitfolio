@@ -2,17 +2,34 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from .forms import *
+from .filters import *
 import json
 # Create your views here.
 
 
 def home(request):
-    return render(request, "index.html")
+    if request.method == "POST":
+        form = SubScribe(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+    else:
+        form = SubScribe()
+    return render(request, "index.html", {"form":form})
 
 
 def error(request):
     return render(request, "error.html")
 
+def search(request):
+    cvs = Website.objects.all()
+    filter = WebsiteFilter(request.GET, queryset = cvs)
+    cvs = filter.qs
+
+    context = {
+        "cvs" : cvs,
+        "filter": filter
+    }
+    return render(request, "search.html", context)
 
 @login_required
 def create(request):

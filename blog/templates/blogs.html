@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinitfolio | Blogs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        /* Header */
+        .header {
+            background-color: #28a745;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .header .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .header nav {
+            display: flex;
+            gap: 15px;
+        }
+
+        .header nav a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .header nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* Hamburger Menu for Mobile */
+        .hamburger-menu {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .hamburger-menu div {
+            width: 30px;
+            height: 4px;
+            background-color: #fff;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .hamburger-menu.active div:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger-menu.active div:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-menu.active div:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* Main Content */
+        .main-content {
+            display: flex;
+            width: 100%;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 200px;
+            background-color: #e9f5ee;
+            padding: 20px;
+            height: 100vh;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #28a745;
+            margin-bottom: 10px;
+            text-decoration: none;
+        }
+
+        .sidebar a:hover {
+            text-decoration: underline;
+        }
+
+        /* Blog Grid */
+        .blog-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .blog-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-height: fit-content;
+        }
+
+        .blog-card .content {
+            padding: 10px;
+        }
+
+        .blog-card .content h3 {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .blog-card .content p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Mobile Sidebar */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: -250px;
+                width: 200px;
+                height: 100%;
+                background-color: #e9f5ee;
+                padding: 20px;
+                transition: transform 0.3s ease;
+            }
+
+            .sidebar.show {
+                transform: translateX(250px);
+            }
+
+            .hamburger-menu {
+                display: flex;
+            }
+
+            .blog-grid {
+                padding: 10px;
+            }
+
+            .main-content {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">Blogs</div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/talents/find">Professionals</a>
+            <a href="/blogs/posts">Posts</a>
+        </nav>
+        <!-- Hamburger Menu for Mobile -->
+        <div class="hamburger-menu" onclick="toggleSidebar()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <aside class="sidebar" id="sidebar">
+            <a href="?type=Personal">Personal Blogs</a>
+            <a href="?type=Science">Science</a>
+            <a href="?type=Lifestyle">Lifestyle</a>
+            <a href="?type=Food">Food Blog</a>
+            <a href="?type=Tech">Technology</a>
+            <a href="?type=Educational">Educational</a>
+        </aside>
+        <section class="blog-grid">
+            {% for blog in blogs %}
+            <a href="/blogs/{{blog.name}}" style="color:darkslategray; text-decoration: none;">
+                <div class="blog-card">
+                    <div class="content">
+                        <h3>{{ blog.name }}</h3>
+                        <p>{{ blog.type }}</p>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </section>
+    </div>
+
+    <script>
+        // Toggle sidebar visibility and hamburger menu shape
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const menu = document.querySelector('.hamburger-menu');
+
+            sidebar.classList.toggle('show');
+            menu.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

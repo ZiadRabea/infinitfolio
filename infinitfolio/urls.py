@@ -25,6 +25,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home),
     path('Error/', error),
+    path('blogs/', include("blog.urls")),
+    path('talents/find', search),
     path('menus/', create_menu),
     path('menus/<int:id>', menu),
     path('menus/<int:id>/item/<int:pid>/edit', edit_item),
@@ -48,7 +50,6 @@ urlpatterns = [
     path('<str:slug>/', display),
     path('<str:slug>/VPublish', publish_virtual),
     path('accounts/', include("Accounts.urls")),
-    path('blogs/', include("blog.urls")),
     path('accounts/', include('django.contrib.auth.urls')),
     path('stores/', include("store.urls")),
 ]

@@ -7,13 +7,17 @@ from cloudinary_storage.storage import MediaCloudinaryStorage
 class Blog(models.Model):
     user = models.ForeignKey(Profile, on_delete=models.CASCADE)
     choices = (
-                ("Science & Tech", "Science & Tech"), ("Lifestyle", "Lifestyle "),
-                ("Food", "Food"), ("Personal", "Personal")
+                ("Tech", "Tech"), ("Lifestyle", "Lifestyle "),
+                ("Food", "Food"), ("Personal", "Personal"), ("Science", "Science"),
+                ("YouTuber", "YouTuber"), ("Educational", "Educational"), ("School", "School"),
                )
     type = models.CharField(choices=choices, max_length=100)
     name = models.SlugField(max_length=500)
     published = models.BooleanField(default=False)
+    public = models.BooleanField(default=True)
 
+    def __str__(self):
+        return(self.name)
 
 class Element(models.Model):
     post = models.ForeignKey("Post", on_delete=models.CASCADE)

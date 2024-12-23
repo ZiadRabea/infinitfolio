@@ -5,3 +5,8 @@ class PostFilter(django_filters.FilterSet):
     class Meta:
         model = Post
         fields = ['cls', 'title']
+
+class BlogFilter(django_filters.FilterSet):
+    class Meta:
+        model = Blog
+        fields = ['type',]

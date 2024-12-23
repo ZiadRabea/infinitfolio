@@ -1,11 +1,34 @@
 import json
-from .filters import PostFilter
+from .filters import PostFilter, BlogFilter
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from .models import *
 from .forms import *
 # Create your views here.
+
+
+def blogs(request):
+    blogs = Blog.objects.filter(public=True)
+    filter = BlogFilter(request.GET, queryset = blogs)
+    blogs = filter.qs
+
+    context = {
+        "blogs" : blogs,
+        "filter": filter
+    }
+    return render(request, "blogs.html", context)
+
+def posts(request):
+    posts = Post.objects.filter(blog__public = True)
+    filter = PostFilter(request.GET, queryset = posts)
+    posts = filter.qs
+
+    context = {
+        "posts" : posts,
+        "filter": filter
+    }
+    return render(request, "posts.html", context)
 
 
 def blog(request, slug):

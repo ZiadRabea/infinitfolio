@@ -7,6 +7,10 @@ class CreateWebsite(ModelForm):
         model = Website
         fields = '__all__'
 
+class SubScribe(ModelForm):
+    class Meta:
+        model = newsletter
+        fields = '__all__'
 
 class AddSkill(ModelForm):
     class Meta:
