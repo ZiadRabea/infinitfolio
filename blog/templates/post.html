@@ -176,7 +176,7 @@
                         {% if element.type == "heading" %}
                             <h2>{{ element.heading.text }}</h2>
                         {% elif element.type == "paragraph" %}
-                            <p>{{ element.p.text }}</p>
+                            <pre style="text-wrap:auto; text-align: justify;" class="dynamic-text">{{ element.p.text }}</pre>
                         {% elif element.type == "image" %}
                             <img src="{{ element.image.src }}" alt="Image for {{ post.title }}">
                         {% elif element.type == "frame" %}
@@ -234,6 +234,22 @@
                 {% endif %}
             </div>
         </div>
+        <script>
+            // Function to set direction based on text content
+            function setDirectionBasedOnLanguage(elements) {
+                elements.forEach(element => {
+                    const text = element.textContent.trim();
+                    const isArabic = /[\u0600-\u06FF]/.test(text); // Check if the text contains Arabic characters
+                    element.style.direction = isArabic ? 'rtl' : 'ltr'; // Set direction
+                    element.style.textAlign = isArabic ? 'right' : 'left'; // Optional: Align text accordingly
+                });
+            }
+
+            // Select all elements with the class 'dynamic-text' and apply the function
+            const elements = document.querySelectorAll('.dynamic-text');
+            setDirectionBasedOnLanguage(elements);
+
+        </script>
     </body>
 
     </html>
