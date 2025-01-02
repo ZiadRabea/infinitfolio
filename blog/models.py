@@ -63,7 +63,8 @@ class Link(models.Model):
 
 
 class Image(models.Model):
-    src = models.URLField()
+    src = models.URLField(null=True, blank=True)
+    file = models.ImageField(null=True, blank=True)
 
 
 class Paragraph(models.Model):

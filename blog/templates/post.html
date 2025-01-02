@@ -178,7 +178,11 @@
                         {% elif element.type == "paragraph" %}
                             <pre style="text-wrap:auto; text-align: justify;" class="dynamic-text">{{ element.p.text }}</pre>
                         {% elif element.type == "image" %}
-                            <img src="{{ element.image.src }}" alt="Image for {{ post.title }}">
+                            {%if element.image.file%}
+                                <img src="{{ element.image.file.url }}" alt="Image for {{ post.title }}">
+                            {%else%}
+                                <img src="{{ element.image.src }}" alt="Image for {{ post.title }}">
+                            {%endif%}
                         {% elif element.type == "frame" %}
                             <iframe src="{{ element.frame.src }}"></iframe>
                         {% elif element.type == "link" %}

@@ -9,7 +9,7 @@ from .forms import *
 
 
 def blogs(request):
-    blogs = Blog.objects.filter(public=True)
+    blogs = Blog.objects.filter(public=True, published=True)
     filter = BlogFilter(request.GET, queryset = blogs)
     blogs = filter.qs
 
@@ -20,7 +20,7 @@ def blogs(request):
     return render(request, "blogs.html", context)
 
 def posts(request):
-    posts = Post.objects.filter(blog__public = True)
+    posts = Post.objects.filter(blog__public = True, published=True)
     filter = PostFilter(request.GET, queryset = posts)
     posts = filter.qs
 
@@ -221,19 +221,20 @@ def add_image(request, slug, id):
     post = Post.objects.get(id=id)
     if request.user.profile == post.blog.user:
         if request.method == "POST":
-            form = AddImage(request.POST, request.FILES)
-            if form.is_valid():
-                myform = form.save()
+            try: 
+                file = request.FILES["file"]
+            except:
+                file = None
+            url = request.POST["src"] if request.POST["src"] else None
+            if bool(file) != bool(url):
+                myform = Image.objects.create(file=file, src=url)
                 img = Image.objects.get(id=myform.id)
                 Element.objects.create(type="image", post=post, image=img)
                 return redirect(f"/blogs/{post.blog.name}/posts/{post.id}")
-        else:
-            form = AddImage()
+            else:
+                return redirect(f"/blogs/{post.blog.name}/posts/{post.id}/addImage")
 
-        context = {
-            "form": form
-        }
-        return render(request, "add_image.html", context)
+        return render(request, "add_image.html")
     else:
         return redirect("/Error")
 

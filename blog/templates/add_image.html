@@ -132,8 +132,10 @@
         <form id="edit-info-form" method="post" enctype="multipart/form-data">
             {%csrf_token%}
 
-          <label for="Picture">*Image URL:</label>
-            {{form.src}}
+          <label for="Picture">Image URL:</label>
+            <input type="url" name="src", placeholder="https://Image_URL">
+          <label for="File">Upload From your device:</label>
+            <input type="file" name="file" accept="image/jpeg,">
           <input type="submit" value="Add">
         </form>
       </div>

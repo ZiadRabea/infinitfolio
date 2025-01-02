@@ -255,7 +255,7 @@
         </aside>
         <section class="blog-grid">
             {% for post in posts %}
-            <a href="/blogs/{{ blog.name }}" style="color: darkslategray; text-decoration: none;">
+            <a href="/blogs/{{ post.blog.name }}/posts/{{post.id}}" style="color: darkslategray; text-decoration: none;">
                 <div class="blog-card">
                     <div class="content">
                         <img src="{{post.cover_img.url}}" alt="Video Thumbnail" width="300" height="250">

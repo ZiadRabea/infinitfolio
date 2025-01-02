@@ -21,7 +21,7 @@ def error(request):
     return render(request, "error.html")
 
 def search(request):
-    cvs = Website.objects.all()
+    cvs = Website.objects.filter(is_active=True)
     filter = WebsiteFilter(request.GET, queryset = cvs)
     cvs = filter.qs
 
