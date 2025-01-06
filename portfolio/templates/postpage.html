@@ -58,36 +58,48 @@
         </div>
         <hr>
         <div class="sugestions">
-            <div class="suggestion">
-                <img class="image" src="https://www.voicesofyouth.org/sites/voy/files/images/2022-03/educ.jpg" alt="">Top 10 English Courses</div>
-                <h2 class="title"></h2>
-            </div>
-            <div class="suggestion">
-                <img class="image" src="https://www.voicesofyouth.org/sites/voy/files/images/2022-03/educ.jpg" alt="">Top 10 English Courses</div>
-                <h2 class="title"></h2>
-            </div>
-            <div class="suggestion">
-                <img class="image" src="https://www.voicesofyouth.org/sites/voy/files/images/2022-03/educ.jpg" alt="">Top 10 English Courses</div>
-                <h2 class="title"></h2>
-            </div>
+            <a href="https://ocw.mit.edu/courses/9-13-the-human-brain-spring-2019/">
+                <div class="suggestion">
+                    <img class="image" src="https://ocw.mit.edu/courses/9-13-the-human-brain-spring-2019/6a08eddd73159f17c840c47b8e052a02_MIT9_13S19.jpg" alt="Brain">Neuroscience MIT OCW</div>
+                    <h2 class="title"></h2>
+                </div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=ox0jskq9RLo">
+                <div class="suggestion">
+                    <img class="image" src="https://res.cloudinary.com/z-apps/image/upload/v1/media/posts/%D9%85%D8%B4_%D9%84%D8%A7%D8%B2%D9%85_%D8%AA%D9%83%D9%88%D9%86_%D9%85%D8%A8%D8%B1%D9%85%D8%AC_1_qhvvhs" alt="">Assembly in 1h (Arabic)</div>
+                    <h2 class="title"></h2>
+                </div>
+            </a>
+            <a href="">
+                <div class="suggestion">
+                    <img class="image" src="https://play-lh.googleusercontent.com/zvxb6-R-WBKhlfm0dbQZDUssZ9HnSjrQaUI_zgPOM9mkcAHwYOQjD42Dx7bD_BOvoQ" alt="">Stanford RL Course</div>
+                    <h2 class="title"></h2>
+                </div>
+            </a>
         </div><br>
         <hr>
         <div class="sugestions">
-            <div class="suggestion">
-                <i class="fas fa-chart-line"></i> Suggestion 2
-            </div>
-            <div class="suggestion">
-                <i class="fas fa-cogs"></i> Suggestion 3
-            </div>
+            <a href="https://ziadrabea.github.io/infinitfolio-frontend/">
+                <div class="suggestion">
+                    <i class="fas fa-info"></i> About US
+                </div>
+            </a>
+            <a href="mailto:infinitfolio.gmail.com">
+                <div class="suggestion">
+                    <i class="fas fa-phone"></i> Contact US
+                </div>
+            </a>
         </div>
     </aside>
 
     <section class="home">
         <div class="post">
-            <div class="post-header">
-                <img src="{%if post.profile.profile_pic%}{{post.profile.profile_pic.url}}{%else%}https://th.bing.com/th/id/OIP.hmLglIuAaL31MXNFuTGBgAHaHa?rs=1&pid=ImgDetMain{%endif%}" alt="" class="profilepic">
-                <h2 class="username">{{post.profile.full_name}}</h2>
-            </div>
+            <a href="/{{post.profile.unique_name}}">
+                <div class="post-header">
+                    <img src="{%if post.profile.profile_pic%}{{post.profile.profile_pic.url}}{%else%}https://th.bing.com/th/id/OIP.hmLglIuAaL31MXNFuTGBgAHaHa?rs=1&pid=ImgDetMain{%endif%}" alt="" class="profilepic">
+                    <h2 class="username">{{post.profile.full_name}}</h2>
+                </div>
+            </a>
             <div class="content">
                 <pre>{{post.text}}</pre>
             </div>
