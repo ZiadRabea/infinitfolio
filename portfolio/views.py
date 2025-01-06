@@ -338,7 +338,7 @@ def dislike(request, id):
 @login_required
 def post(request, id):
     post = Post.objects.get(id=id)
-    notifications = Notification.objects.filter(receiver=request.user.profile.website, read=False)
+    notifications = Notification.objects.filter(receiver=request.user.profile.website, read=False) if request.user.is_authenticatd else None
     if request.method == "POST":
         try: 
             profile = Website.objects.get(user=request.user.profile)
