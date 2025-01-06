@@ -9,7 +9,7 @@ import json
 
 def home(request):
     posts = Post.objects.all()
-    notifications = Notification.objects.filter(receiver=request.user.profile.website, read=False)
+    notifications = Notification.objects.filter(receiver=request.user.profile.website, read=False) if request.user.is_authenticatd else None
     if request.method == "POST":
         try: 
             profile = Website.objects.get(user=request.user.profile)
