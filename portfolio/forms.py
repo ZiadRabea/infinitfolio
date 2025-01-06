@@ -47,3 +47,14 @@ class EditWebsite(ModelForm):
         exclude = ['unique_name', 'full_name', 'age', 'is_active']
 
 
+class CreateCommnunityPost(ModelForm):
+    class Meta: 
+        model = Post
+        fields = "__all__"
+        exclude = ["profile", ]
+
+class AddComment(ModelForm):
+    class Meta: 
+        model = Comment
+        fields = "__all__"
+        exclude = ["profile", "post"]

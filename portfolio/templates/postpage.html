@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Infinitfolio | Home</title>
+    <title>Infinitfolio | Post</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="icon" href="{% static 'imgs/infinitfolio.png' %}" type="image/png">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-N37B2KNWMJ"></script>
@@ -21,7 +22,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7827616110280134"
     crossorigin="anonymous"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{%static 'css/style.css'%}">
+    <link rel="stylesheet" href="{%static 'css/style.css'%}?v=1.0.1">
 </head>
 <body>
     <section class="header">
@@ -82,44 +83,52 @@
     </aside>
 
     <section class="home">
-        <div class="add-post">
-            <div class="add">
-                <a href="{%if user.is_authenticated%}{{user.profile.website.unique_name}}{%else%}/accounts/login{%endif%}"><img src="{%if user.profile.website.profile_pic%}{{user.profile.website.profile_pic.url}}{%else%}https://th.bing.com/th/id/OIP.hmLglIuAaL31MXNFuTGBgAHaHa?rs=1&pid=ImgDetMain{%endif%}" alt=""></a>
-                <div class="post-form">
-                    Go ahead! Go Shine ✨
-                </div>
+        <div class="post">
+            <div class="post-header">
+                <img src="{%if post.profile.profile_pic%}{{post.profile.profile_pic.url}}{%else%}https://th.bing.com/th/id/OIP.hmLglIuAaL31MXNFuTGBgAHaHa?rs=1&pid=ImgDetMain{%endif%}" alt="" class="profilepic">
+                <h2 class="username">{{post.profile.full_name}}</h2>
             </div>
+            <div class="content">
+                <pre>{{post.text}}</pre>
+            </div>
+            <div class="image">
+                {%if post.image%} <img src="{{post.image.url}}" alt=""> {%endif%}
+            </div>
+            <div class="actions" style="border-radius: 0;">
+                <a href="/posts/{{post.id}}/like"><div class="like" style="{%if user.profile.website in post.likes.all%}color:green{%else%}color:#fff;{%endif%}"><i class="fas fa-thumbs-up"></i> | {{post.likes.count}} </div></a>
+                <a href="/posts/{{post.id}}/dislike"><div class="dislike" style="{%if user.profile.website in post.dislikes.all%}color:red{%else%}color:#fff;{%endif%}"><i class="fas fa-thumbs-down"></i> | {{post.dislikes.count}}</div></a>
+                <a href="/posts/{{post.id}}"><div class="comment" style="color:burlywood"><i class="fas fa-comment"></i> | {{post.comment_set.count}}</div></a>
+                <!-- <div class="repost"><i class="fas fa-retweet"></i></div> -->
+                <div class="share" id="sharebtn"><i class="fas fa-share-alt"></i></div>
+            </div>
+            <div class="actions" style="background:#0c0c0c">
+                <form method="post" enctype="multipart/form-data" class="comment-form">
+                    {%csrf_token%}
+                    <input required name="text" type="text" class="comment-input" placeholder="Comment!">
+                    <button type="submit"><i class="fas fa-upload"></i></button>
+                </form>
+            </div>
+            <div class="comment-section">
+                {%for comment in post.comment_set.all%}
+                <div class="comment">
+                    <div class="comment-header">
+                        <img src="{%if comment.profile.profile_pic%}{{comment.profile.profile_pic.url}}{%else%}https://th.bing.com/th/id/OIP.hmLglIuAaL31MXNFuTGBgAHaHa?rs=1&pid=ImgDetMain{%endif%}" alt="" class="profilepic">
+                        <h3>{{comment.profile.full_name}}</h3>
+                    </div>
+                    <div class="text">
+                        {{comment.text}}
+                    </div>
+                </div>
+                {%endfor%}
         </div>
-        {%for post in posts%}
-            <div class="post">
-                <div class="post-header">
-                    <img src="{%if post.profile.profile_pic%}{{post.profile.profile_pic.url}}{%else%}https://th.bing.com/th/id/OIP.hmLglIuAaL31MXNFuTGBgAHaHa?rs=1&pid=ImgDetMain{%endif%}" alt="" class="profilepic">
-                    <h2 class="username">{{post.profile.full_name}}</h2>
-                </div>
-                <div class="content">
-                    <pre>{{post.text}}</pre>
-                </div>
-                <div class="image">
-                    {%if post.image%} <img src="{{post.image.url}}" alt=""> {%endif%}
-                </div>
-                <div class="actions">
-                    <a href="/posts/{{post.id}}/like"><div class="like" style="{%if user.profile.website in post.likes.all%}color:green{%else%}color:#fff;{%endif%}"><i class="fas fa-thumbs-up"></i> | {{post.likes.count}} </div></a>
-                    <a href="/posts/{{post.id}}/dislike"><div class="dislike" style="{%if user.profile.website in post.dislikes.all%}color:red{%else%}color:#fff;{%endif%}"><i class="fas fa-thumbs-down"></i> | {{post.dislikes.count}}</div></a>
-                    <a href="/posts/{{post.id}}"><div class="comment" style="color:burlywood"><i class="fas fa-comment"></i> | {{post.comment_set.count}}</div></a>
-                    <!-- <div class="repost"><i class="fas fa-retweet"></i></div> -->
-                    <div class="share" id="sharebtn"><i class="fas fa-share-alt"></i></div>
-                </div>
-            </div>
-        {%endfor%}
     </section>
     <div id="postModal" class="modal">
-        <form method="post" enctype="multipart/form-data" class="modal-content">
-            {%csrf_token%}
+        <div class="modal-content">
             <span class="close-btn">&times;</span>
             <h2>Create a Post</h2>
-            <textarea placeholder="What's on your mind?" id="postContent" name="text"></textarea>
+            <textarea placeholder="What's on your mind?" id="postContent"></textarea>
             <div class="relative">
-                <input type="file" class="hidden-upload" accept="image/*" name="image">
+                <input type="file" class="hidden-upload" accept="image/*">
                 <div class="upload-overlay">
                     <i class="fa-solid fa-upload"></i>
                     <h3 class="center">Upload</h3>
@@ -297,17 +306,6 @@
                 console.error('Failed to copy text: ', error);
             });
         });
-
-        function copy(text){
-            const text_to_copy = text;
-            navigator.clipboard.writeText(text_to_copy)
-            .then(function() {
-                alert('Post copied to clipboard!');
-            })
-            .catch(function(error) {
-                console.error('Failed to copy text: ', error);
-            });
-        }
     </script>
 </body>
 </html>

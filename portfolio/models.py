@@ -6,7 +6,7 @@ from cloudinary_storage.storage import MediaCloudinaryStorage
 
 class Website(models.Model):
     unique_name = models.SlugField(max_length=500)
-    user = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True)
+    user = models.OneToOneField(Profile, on_delete=models.CASCADE, blank=True)
     is_active = models.BooleanField(default=False)
     cv_url = models.URLField()
     full_name = models.CharField(max_length=100)
@@ -51,4 +51,41 @@ class Experience(models.Model):
 class newsletter(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
+
+class Post(models.Model):
+    profile = models.ForeignKey(Website, on_delete=models.CASCADE, null=True, blank=True, related_name="post_profile")
+    text = models.TextField(max_length=10000, null=True, blank=True)
+    date = models.DateTimeField(auto_now_add=True)
+    likes = models.ManyToManyField(Website, blank=True, related_name="likes")
+    dislikes = models.ManyToManyField(Website, blank=True, related_name="dislikes")
+    image = models.ImageField(upload_to="posts", storage=MediaCloudinaryStorage)
+
+    class Meta:
+        ordering = ["-date"]
     
+    def __str__(self):
+        return f"{self.text}"[:30] + " ..." if len(self.text) > 10 else self.text
+    
+class Comment(models.Model):
+    profile = models.ForeignKey(Website, on_delete=models.CASCADE, null=True, blank=True, related_name="comment_profile")
+    text = models.TextField(max_length=10000)
+    date = models.DateTimeField(auto_now_add=True)
+    likes = models.ManyToManyField(Website, blank=True, related_name="comment_likes")
+    dislikes = models.ManyToManyField(Website, blank=True, related_name="comment_dislikes")
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True, blank=True)
+
+    class Meta:
+        ordering = ["-date"]
+    
+    def __str__(self):
+        return f"{self.text}"[:30] + " ..." if len(self.text) > 10 else self.text
+
+class Notification(models.Model):
+    sender = models.ForeignKey(Website, on_delete=models.CASCADE, related_name="sender")
+    content = models.TextField(max_length=1000)
+    url = models.CharField(max_length=100)
+    read = models.BooleanField(default=False)
+    receiver = models.ForeignKey(Website, on_delete=models.CASCADE, related_name="receiver")
+
+    def __str__(self):
+        return f"{self.content} | {str(self.reciever.full_name)}"

@@ -8,13 +8,28 @@ import json
 
 
 def home(request):
+    posts = Post.objects.all()
+    notifications = Notification.objects.filter(receiver=request.user.profile.website, read=False)
     if request.method == "POST":
-        form = SubScribe(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
+        try: 
+            profile = Website.objects.get(user=request.user.profile)
+            form = CreateCommnunityPost(request.POST, request.FILES)
+            if form.is_valid():
+                myform = form.save(commit=False)
+                myform.profile = profile
+                myform.save()
+                return redirect("/")
+        except Exception:
+            return redirect('/create')
     else:
-        form = SubScribe()
-    return render(request, "index.html", {"form":form})
+        form = CreateCommnunityPost()
+    
+    context = {
+        "posts": posts,
+        "form": form,
+        "notifications": notifications
+    }
+    return render(request, "index.html", context)
 
 
 def error(request):
@@ -33,6 +48,11 @@ def search(request):
 
 @login_required
 def create(request):
+    try:
+        website = request.user.profile.website
+    except Exception:
+        website = None
+    if website : return redirect("/Error") 
     if request.method == "POST":
         form = CreateWebsite(request.POST, request.FILES)
         if form.errors:
@@ -295,3 +315,135 @@ def publish_virtual(request, slug):
     else:
         print("you don't have enough credits")
         return redirect("/Error")
+
+@login_required
+def like(request, id):
+    post = Post.objects.get(id=id)
+    if request.user.profile.website in post.likes.all():
+        post.likes.remove(request.user.profile.website)
+    else:
+        post.likes.add(request.user.profile.website)
+        Notification.objects.create(receiver=post.profile, sender=request.user.profile.website, content=f"liked your post : {str(post)}", url=f"/posts/{post.id}")
+    return redirect(f"/posts/{id}")
+
+@login_required
+def dislike(request, id):
+    post = Post.objects.get(id=id)
+    if request.user.profile.website in post.dislikes.all():
+        post.dislikes.remove(request.user.profile.website)
+    else:
+        post.dislikes.add(request.user.profile.website)
+    return redirect(f"/posts/{id}")
+
+@login_required
+def post(request, id):
+    post = Post.objects.get(id=id)
+    notifications = Notification.objects.filter(receiver=request.user.profile.website, read=False)
+    if request.method == "POST":
+        try: 
+            profile = Website.objects.get(user=request.user.profile)
+            form = AddComment(request.POST, request.FILES)
+            if form.is_valid():
+                myform = form.save(commit=False)
+                myform.profile = profile
+                myform.post = post
+                myform.save()
+                if request.user.profile.website == post.profile:
+                    pass
+                else:
+                    Notification.objects.create(receiver=post.profile, sender=request.user.profile.website, content=f"has commented on your post : {myform.text}", url=f"/posts/{post.id}")
+                return redirect(f"/posts/{post.id}")
+        except Exception:
+            return redirect('/create')
+    else:
+        form = AddComment()
+    
+    context = {
+        "post": post,
+        "form": form,
+        "notifications": notifications
+    }
+    return render(request, "postpage.html", context)
+
+@login_required
+def like_comment(request, id):
+    comment = Comment.objects.get(id=id)
+    if request.user.profile.website in comment.likes.all():
+        comment.likes.remove(request.user.profile.website)
+    else:
+        comment.likes.add(request.user.profile.website)
+    return redirect(f"/posts/{comment.post.id}")
+
+@login_required
+def dislike_comment(request, id):
+    comment = Comment.objects.get(id=id)
+    if request.user.profile.website in comment.dislikes.all():
+        comment.dislikes.remove(request.user.profile.website)
+    else:
+        comment.dislikes.add(request.user.profile.website)
+    return redirect(f"/posts/{comment.post.id}")
+
+@login_required
+def repost():
+    pass
+
+@login_required
+def delete_post(request, id):
+    post = Post.objects.get(id=id)
+    if request.user.profile.website == post.profile:
+        post.delete()
+        return redirect("/")
+    else:
+        return redirect("/Error")
+    
+@login_required
+def edit_post(request, id):
+    post = Post.objects.get(id=id)
+    if request.user.profile.website == post.profile:
+        if request.method == "POST":
+            form = CreateCommnunityPost(request.POST, request.FILES, instance=post)
+            if form.is_valid:
+                form.save()
+        else:
+            form = CreateCommnunityPost(instance=post)
+        
+        context = {
+            "post": post,
+            "form": form
+        }
+        return render(request, "edit_post.html", context)
+    else:
+        return redirect("/Error")
+
+@login_required
+def delete_comment(request, id):
+    comment = Comment.objects.get(id=id)
+    if request.user.profile.website == comment.profile:
+        comment.delete()
+        return redirect("/")
+    else:
+        return redirect("/Error")
+
+@login_required
+def edit_comment(request, id):
+    comment = Comment.objects.get(id=id)
+    if request.user.profile.website == comment.profile:
+        if request.method == "POST":
+            form = AddComment(request.POST, request.FILES, instance=post)
+            if form.is_valid:
+                form.save()
+        else:
+            form = AddComment(instance=post)
+        
+        context = {
+            "comment": comment,
+            "form": form
+        }
+        return render(request, "edit_comment.html", context)
+    else:
+        return redirect("/Error")
+
+@login_required
+def notifications(request):
+    Notification.objects.filter(receiver=request.user.profile.website).update(read=True)
+    return render(request, "notifications.html")
