@@ -151,7 +151,29 @@ aside{
     display: flex;
     align-items: center;
     color: white;
+    position: relative;
 }
+.options{
+    position: absolute;
+    right: 20px;
+    font-size:20px;
+}
+.trash-icon{
+    color:red;
+    transition: all 1s ease in out;
+}
+.edit-icon{
+    color:#e0e0e0;
+    transition: all 1s ease in out;
+    margin-right: 5px;
+}
+.trash-icon:hover{
+    color:white;
+}
+.edit-icon:hover{
+    color:#fff;
+}
+
 .post-header img{
     border-radius: 25%;
     width: 50px;
@@ -280,6 +302,7 @@ aside{
     color: #fff;
     padding: 10px;
     font-size: 16px;
+    resize: none;
 }
 
 .modal-content .relative {

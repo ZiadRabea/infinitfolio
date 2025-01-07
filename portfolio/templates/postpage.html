@@ -22,7 +22,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7827616110280134"
     crossorigin="anonymous"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{%static 'css/style.css'%}?v=1.0.1">
+    <link rel="stylesheet" href="{%static 'css/style.css'%}">
 </head>
 <body>
     <section class="header">
@@ -94,12 +94,22 @@
 
     <section class="home">
         <div class="post">
-            <a href="/{{post.profile.unique_name}}">
-                <div class="post-header">
+            <div class="post-header">
+                <a href="/{{post.profile.unique_name}}" style="color:aliceblue;display: flex; align-items: center;" >
                     <img src="{%if post.profile.profile_pic%}{{post.profile.profile_pic.url}}{%else%}https://th.bing.com/th/id/OIP.hmLglIuAaL31MXNFuTGBgAHaHa?rs=1&pid=ImgDetMain{%endif%}" alt="" class="profilepic">
                     <h2 class="username">{{post.profile.full_name}}</h2>
+                </a>
+                {%if post.profile == user.profile.website%}
+                <div class="options">
+                    <a href="/posts/{{post.id}}/edit"><i class="fas fa-edit edit-icon"></i></a>
+                    <a href="/posts/{{post.id}}/delete" onclick="return confirm('Are you sure you want to delete this post?');"><i class="fa-solid fa-trash trash-icon"></i></a>
                 </div>
-            </a>
+                {%else%}
+                <div class="options">
+                    <i class="fas fa-copy edit-icon" onclick="copy('{{post.text}}')"></i>
+                </div>
+                {%endif%}
+            </div>
             <div class="content">
                 <pre>{{post.text}}</pre>
             </div>
@@ -107,8 +117,8 @@
                 {%if post.image%} <img src="{{post.image.url}}" alt=""> {%endif%}
             </div>
             <div class="actions" style="border-radius: 0;">
-                <a href="/posts/{{post.id}}/like"><div class="like" style="{%if user.profile.website in post.likes.all%}color:green{%else%}color:#fff;{%endif%}"><i class="fas fa-thumbs-up"></i> | {{post.likes.count}} </div></a>
-                <a href="/posts/{{post.id}}/dislike"><div class="dislike" style="{%if user.profile.website in post.dislikes.all%}color:red{%else%}color:#fff;{%endif%}"><i class="fas fa-thumbs-down"></i> | {{post.dislikes.count}}</div></a>
+                <a href="/posts/{{post.id}}/like"><div class="like" {%if user.profile.website in post.likes.all%} onclick="this.style.color = '#fff'" {%else%}  onclick="this.style.color = '#0f0'" {%endif%} style="{%if user.profile.website in post.likes.all%}color:green{%else%}color:#fff;{%endif%}"><i class="fas fa-thumbs-up"></i> | {{post.likes.count}} </div></a>
+                <a href="/posts/{{post.id}}/dislike"><div class="dislike"  {%if user.profile.website in post.dislikes.all%} onclick="this.style.color = '#fff'" {%else%}  onclick="this.style.color = '#f00'" {%endif%} style="{%if user.profile.website in post.dislikes.all%}color:red{%else%}color:#fff;{%endif%}"><i class="fas fa-thumbs-down"></i> | {{post.dislikes.count}}</div></a>
                 <a href="/posts/{{post.id}}"><div class="comment" style="color:burlywood"><i class="fas fa-comment"></i> | {{post.comment_set.count}}</div></a>
                 <!-- <div class="repost"><i class="fas fa-retweet"></i></div> -->
                 <div class="share" id="sharebtn"><i class="fas fa-share-alt"></i></div>

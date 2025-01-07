@@ -63,6 +63,7 @@ def create(request):
         if form.is_valid():
             myform = form.save(commit=False)
             myform.user = request.user.profile
+            myform.is_active = True
             myform.save()
             website = Website.objects.get(id=myform.id)
             certs = request.FILES.getlist("certificates")
@@ -407,6 +408,7 @@ def edit_post(request, id):
             form = CreateCommnunityPost(request.POST, request.FILES, instance=post)
             if form.is_valid:
                 form.save()
+                return redirect(f"/posts/{post.id}")
         else:
             form = CreateCommnunityPost(instance=post)
         
@@ -414,7 +416,7 @@ def edit_post(request, id):
             "post": post,
             "form": form
         }
-        return render(request, "edit_post.html", context)
+        return render(request, "edit-post.html", context)
     else:
         return redirect("/Error")
 
