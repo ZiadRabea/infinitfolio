@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from .forms import *
@@ -9,6 +10,9 @@ import json
 
 def home(request):
     posts = Post.objects.all()
+    paginator = Paginator(posts, 1)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(receiver=request.user.profile.website, read=False)
     else:
@@ -28,7 +32,7 @@ def home(request):
         form = CreateCommnunityPost()
     
     context = {
-        "posts": posts,
+        "posts": page_obj,
         "form": form,
         "notifications": notifications
     }
@@ -343,6 +347,9 @@ def dislike(request, id):
 def post(request, id):
     post = Post.objects.get(id=id)
     notifications = Notification.objects.filter(receiver=request.user.profile.website, read=False)
+    paginator = Paginator(post.comment_set.all(), 2)
+    page_number = request.GET.get("page")
+    comments = paginator.get_page(page_number)
     if request.method == "POST":
         try: 
             profile = Website.objects.get(user=request.user.profile)
@@ -365,7 +372,8 @@ def post(request, id):
     context = {
         "post": post,
         "form": form,
-        "notifications": notifications
+        "notifications": notifications,
+        "comments": comments
     }
     return render(request, "postpage.html", context)
 
@@ -376,6 +384,7 @@ def like_comment(request, id):
         comment.likes.remove(request.user.profile.website)
     else:
         comment.likes.add(request.user.profile.website)
+        Notification.objects.create(receiver=comment.profile, sender=request.user.profile.website, content=f"liked your comment : {str(comment)}", url=f"/posts/{comment.post.id}")
     return redirect(f"/posts/{comment.post.id}")
 
 @login_required
@@ -425,30 +434,41 @@ def delete_comment(request, id):
     comment = Comment.objects.get(id=id)
     if request.user.profile.website == comment.profile:
         comment.delete()
-        return redirect("/")
+        return redirect(f"/posts/{comment.post.id}")
     else:
         return redirect("/Error")
 
 @login_required
 def edit_comment(request, id):
     comment = Comment.objects.get(id=id)
+    notifications = Notification.objects.filter(receiver=request.user.profile.website, read=False)
+    paginator = Paginator(comment.post.comment_set.all(), 2)
+    page_number = request.GET.get("page")
+    comments = paginator.get_page(page_number)
     if request.user.profile.website == comment.profile:
         if request.method == "POST":
-            form = AddComment(request.POST, request.FILES, instance=post)
+            form = AddComment(request.POST, request.FILES, instance=comment)
             if form.is_valid:
                 form.save()
+                return redirect(f"/posts/{comment.post.id}")
         else:
-            form = AddComment(instance=post)
+            form = AddComment(instance=comment)
         
         context = {
-            "comment": comment,
-            "form": form
+            "post": comment.post,
+            "form": form,
+            "comments":comments,
+            "notifications": notifications
         }
-        return render(request, "edit_comment.html", context)
+        return render(request, "postpage.html", context)
     else:
         return redirect("/Error")
 
 @login_required
 def notifications(request):
-    Notification.objects.filter(receiver=request.user.profile.website).update(read=True)
-    return render(request, "notifications.html")
+    notifications = Notification.objects.filter(receiver=request.user.profile.website)
+    notifications.update(read=True)
+    paginator = Paginator(notifications, 8)
+    page_number = request.GET.get("page")
+    notifications = paginator.get_page(page_number)
+    return render(request, "notifications.html", {"notifications": notifications})

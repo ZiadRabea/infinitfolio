@@ -84,8 +84,13 @@ class Notification(models.Model):
     sender = models.ForeignKey(Website, on_delete=models.CASCADE, related_name="sender")
     content = models.TextField(max_length=1000)
     url = models.CharField(max_length=100)
+    date = models.DateTimeField(auto_now_add=True)
     read = models.BooleanField(default=False)
     receiver = models.ForeignKey(Website, on_delete=models.CASCADE, related_name="receiver")
+    
+    class Meta:
+        ordering = ["-date"]
 
     def __str__(self):
         return f"{self.content} | {str(self.reciever.full_name)}"
+    

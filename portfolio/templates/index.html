@@ -21,7 +21,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7827616110280134"
     crossorigin="anonymous"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{%static 'css/style.css'%}">
+    <link rel="stylesheet" href="{%static 'css/style.css'%}?v=1.0.4">
 </head>
 <body>
     <section class="header">
@@ -133,6 +133,21 @@
                 </div>
             </div>
         {%endfor%}
+        <div class="paginator">
+            <span class="step-links">
+                {% if posts.has_previous %}
+                    <a href="?page={{ posts.previous_page_number }}"><li class="fas fa-arrow-left"></li></a>
+                {% endif %}
+        
+                <span class="current">
+                    Post {{ posts.number }}
+                </span>
+        
+                {% if posts.has_next %}
+                    <a href="?page={{ posts.next_page_number }}"><li class="fas fa-arrow-right"></li></a>
+                {% endif %}
+            </span>
+        </div>
     </section>
     <div id="postModal" class="modal">
         <form method="post" enctype="multipart/form-data" class="modal-content">
@@ -153,7 +168,7 @@
     <script>
         function startTimer(durationInSeconds, timerKey) {
             const timerElement = document.getElementById('timer');
-            const alarmSound = new Audio("audio/ringing.mp3")
+            const alarmSound = new Audio("{%static 'audio/ringing.mp3'%}")
 
             // Retrieve saved time from localStorage
             const savedTime = localStorage.getItem(timerKey);

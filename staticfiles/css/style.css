@@ -173,6 +173,7 @@ aside{
 .edit-icon:hover{
     color:#fff;
 }
+
 .post-header img{
     border-radius: 25%;
     width: 50px;
@@ -301,6 +302,7 @@ aside{
     color: #fff;
     padding: 10px;
     font-size: 16px;
+    resize: none;
 }
 
 .modal-content .relative {
@@ -352,6 +354,9 @@ aside{
     width:80%;
     padding:10px;
     color: #fff;
+    resize: none;
+    height: 45px;
+
 }
 .comment-form button{
     background: #61f461;
@@ -443,6 +448,13 @@ aside{
 a{
     color:none;
     text-decoration: none;
+}
+.paginator{
+    text-align: center;
+    padding: 10px;
+    color: white;
+    background: #0c0c0c;
+    margin-top: 10px;
 }
 @media (max-width: 768px) {
     aside {
