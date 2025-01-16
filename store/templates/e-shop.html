@@ -18,31 +18,31 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            overflow: hidden;
+            padding: 10px;
         }
 
         /* Product details container */
         .product-details {
             width: 100%;
-            max-width: 500px;
+            max-width: 450px;
             padding: 20px;
-            background-color: #1f1f1f; /* Transparent card */
+            background-color: #1f1f1f;
             border-radius: 12px;
             text-align: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             transition: transform 0.3s, box-shadow 0.3s;
         }
 
         .product-details:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.9);
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
         }
 
         /* Product image */
         .product-image {
             width: 100%;
             height: auto;
-            max-height: 280px;
+            max-height: 250px;
             border-radius: 8px;
             margin-bottom: 15px;
             border: 2px solid #444;
@@ -50,7 +50,7 @@
 
         /* Product name */
         .product-name {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: bold;
             color: #00e350;
             margin: 10px 0;
@@ -58,18 +58,35 @@
 
         /* Product description */
         .product-description {
-            font-size: 18px;
+            font-size: 16px;
             color: #bbb;
             line-height: 1.6;
             margin: 10px 0 20px;
         }
 
+        /* Price section */
+        .product-price {
+            margin: 15px 0;
+            font-size: 20px;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: #ff5c5c;
+            margin-right: 10px;
+        }
+
+        .discounted-price {
+            color: #00e350;
+            font-weight: bold;
+        }
+
         /* Button styling */
         .add-to-cart-btn {
-            padding: 12px 25px;
+            padding: 12px 20px;
             background-color: #00e350;
             color: #121212;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             border: none;
             border-radius: 8px;
@@ -94,7 +111,7 @@
         }
 
         .icon {
-            font-size: 30px;
+            font-size: 24px;
             color: #bbb;
             transition: color 0.3s, transform 0.3s;
         }
@@ -115,16 +132,20 @@
             }
 
             .product-name {
-                font-size: 28px;
+                font-size: 24px;
             }
 
             .product-description {
-                font-size: 16px;
+                font-size: 14px;
             }
 
             .add-to-cart-btn {
-                font-size: 16px;
-                padding: 10px 20px;
+                font-size: 14px;
+                padding: 10px 18px;
+            }
+
+            .product-price {
+                font-size: 18px;
             }
         }
     </style>
@@ -134,9 +155,21 @@
     <div class="product-details">
         <img src="{{ product.cover_image.url }}" class="product-image" alt="{{ product.name }}">
         <div class="product-name">{{ product.name }}</div>
+        <div class="product-price">
+            {% if product.original_price %}
+                <span class="original-price">${{product.original_price}}</span>
+                <span class="discounted-price">${{ product.price }}</span>
+            {% else %}
+                <span class="discounted-price">${{ product.price }}</span>
+            {% endif %}
+        </div>
         <div class="product-description">{{ product.description }}</div>
-        <button class="add-to-cart-btn" onclick="addToCart()">Contact Seller</button>
+        {%if not product.affiliate_link%}
+            <button class="add-to-cart-btn" onclick="addToCart()">Contact Seller</button>
+        {%else%}
+            <button class="add-to-cart-btn" onclick="window.open('{{product.affiliate_link}}')">Get Now</button>
         
+        {%endif%}
         {% if store.user == user.profile %}
             <div class="product-icons">
                 <a href="{{ product.id }}/edit" title="Edit" class="icon">✎</a>
@@ -147,7 +180,7 @@
 
     <script>
         function addToCart() {
-            window.open("https://wa.me/{{ store.phone }}");
+            window.open("https://wa.me/{{ store.phone }}?text=Hi, I am interested in {{product.name}} | infinitfolio.site/stores/{{product.store.name}}/products/{{product.id}}");
         }
     </script>
 </body>

@@ -94,7 +94,7 @@
 
         /* Product title */
         .product-title {
-            padding: 15px;
+            padding: 15px;zzz
             font-size: 18px;
             font-weight: bold;
             color: #fff;
@@ -253,6 +253,29 @@
         #id_description{
             padding: 5px; border: 1px solid #333; border-radius: 5px; background: #121212; color: white;
         }
+        .topics{
+            display:none
+        }
+        #products_btn, #affiliates_btn{
+            width:40%;
+            cursor: pointer;
+            background:#28a745 ;
+            border: none;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+            border-radius:5px;
+            padding:5px;
+        }
+        #products_btn:hover, #affiliates_btn:hover{
+            background:#218838;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+        } 
+        #products_btn{
+            background:#218838;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+        }
+        #affiliates{
+            display: none;
+        }
     </style>
 </head>
 
@@ -273,14 +296,22 @@
     </div>
 
     <div class="container">
-        <form method="get" class="filter-form" style="margin-bottom: 20px;">
+        <form method="get" class="filter-form" style="border-bottom-left-radius:0;border-bottom-right-radius:0;">
             <label for="topic">Search Products:</label>
             {{filter.form.description}}
             <button type="submit" class="filter-button">
                 Apply Filter
             </button>
         </form>
-
+        <div class="filter-form" style="margin-bottom: 20px;border-top-left-radius:0;border-top-right-radius:0;background:#0c0c0c;display:flex;justify-content: center; align-items: center;">
+            <button id="products_btn">
+                Products
+            </button>
+            <button id="affiliates_btn">
+                Affiliate Products
+            </button>
+        </div>
+        <div  id="products">
         {% if products %}
         <div class="product-grid">
             {% for product in products %}
@@ -295,8 +326,7 @@
                     </a>
                 </div>
             </div>
-            {% endfor %}
-
+            {%endfor%}
             {% if store.user == user.profile %}
             <div class="product-container">
                 <img class="product-cover" src="{% static 'imgs/add_product.png' %}" alt="Add Product">
@@ -318,8 +348,63 @@
         </div>
         {% endif %} 
     </div>
+        <div id="affiliates">
+        {%if affiliate_products%}
+            <div class="product-grid">
+                {% for product in affiliate_products%}
+                <div class="product-container">
+                    <img class="product-cover" src="{{ product.cover_image.url }}" alt="{{ product.name }} Cover Image">
+                    <div class="product-title">{{ product.name }}</div>
+                    <div class="button-container">
+                        <a href="/stores/{{ store.name }}/products/{{ product.id }}">
+                            <button class="arrow-button">
+                                <span class="arrow-icon">&#10148;</span>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+                {%endfor%}
+                {% if store.user == user.profile %}
+                <div class="product-container">
+                    <img class="product-cover" src="{% static 'imgs/add_product.png' %}" alt="Add Product">
+                    <div class="product-title">Add Product</div>
+                    <div class="button-container">
+                        <a href="/stores/{{ store.name }}/products/create">
+                            <button class="plus-button">
+                                <span class="plus-icon">&plus;</span>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            {% else %}
+            <div class="empty-products" onclick="{% if store.user == user.profile %} window.open('/stores/{{ store.name }}/products/create') {% endif %}" style="{% if store.user == user.profile %} cursor:pointer {% endif %}">
+                <i class="fas fa-exclamation-circle"></i>
+                <p>No products available. {% if store.user == user.profile %}Create your first product! {% endif %}</p>
+            </div>
+            {% endif %}
+        </div>
+    </div> 
     <script>
         document.getElementById("id_description").placeholder = "Search 🔍"
+
+        document.getElementById("products_btn").onclick = function () {
+            document.getElementById("affiliates").style.display = "none";
+            document.getElementById("products").style.display = "grid";
+            document.getElementById("products_btn").style.boxShadow = "rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset";
+            document.getElementById("products_btn").style.background = "#218838";
+            document.getElementById("affiliates_btn").style.boxShadow = "none";
+            document.getElementById("affiliates_btn").style.background = "#28a745";
+        }
+        document.getElementById("affiliates_btn").onclick = function () {
+            document.getElementById("products").style.display = "none";
+            document.getElementById("affiliates").style.display = "grid";
+            document.getElementById("affiliates_btn").style.boxShadow = "rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset";
+            document.getElementById("affiliates_btn").style.background = "#218838";
+            document.getElementById("products_btn").style.boxShadow = "none";
+            document.getElementById("products_btn").style.background = "#28a745";
+        }
     </script>
 </body>
 

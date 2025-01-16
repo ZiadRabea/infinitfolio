@@ -142,12 +142,45 @@
           <label for="tel">*Price:</label>
             {{form.price}}
 
+          <label for="tel">Before Discount:</label>
+            {{form.original_price}}
+
           <label for="tel">*Description:</label>
             {{form.description}}
+
+          <label for="tel"> Is Affiliate : </label>
+            {{form.affiliate_product}}
+          
+          <label for="tel"> Is Affiliate : </label>
+            {{form.affiliate_link}}
 
           <input type="submit">
         </form>
       </div>
 	</div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Get references to the affiliate checkbox and the affiliate link input field
+      const isAffiliateCheckbox = document.querySelector("input[name='affiliate_product']");
+      const affiliateLinkInput = document.querySelector("input[name='affiliate_link']");
+      
+      // Function to toggle the disabled state of the affiliate link input
+      function toggleAffiliateLink() {
+        if (isAffiliateCheckbox.checked) {
+          affiliateLinkInput.disabled = false; // Enable the affiliate link input
+        } else {
+          affiliateLinkInput.disabled = true; // Disable the affiliate link input
+          affiliateLinkInput.value = ""; // Optionally clear the value
+        }
+      }
+  
+      // Initialize the state on page load
+      toggleAffiliateLink();
+  
+      // Attach event listener to the checkbox
+      isAffiliateCheckbox.addEventListener("change", toggleAffiliateLink);
+    });
+  </script>
+  
 </body>
 </html>

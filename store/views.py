@@ -12,13 +12,15 @@ from .filters import *
 
 def store(request, slug):
     store = Store.objects.get(name=slug)
-    products = Product.objects.filter(store=store)
+    products = Product.objects.filter(store=store, affiliate_product=False)
+    affiliate_products = Product.objects.filter(store=store, affiliate_product=True)
     filter = ProductFilter(request.GET, queryset=products)
     products = filter.qs
     if store.published or store.user == request.user.profile or request.user.is_superuser:
         context = {
             "store": store,
             "products": products,
+            "affiliate_products": affiliate_products,
             "filter": filter
         }
         return render(request, "store.html", context)

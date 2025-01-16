@@ -92,5 +92,5 @@ class Notification(models.Model):
         ordering = ["-date"]
 
     def __str__(self):
-        return f"{self.content} | {str(self.reciever.full_name)}"
+        return f"{self.content} | {str(self.receiver.full_name)}"
     
