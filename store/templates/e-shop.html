@@ -8,66 +8,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{% static 'imgs/infinitfolio.png' %}" type="image/png">
     <style>
-        /* Main styles */
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Roboto', Arial, sans-serif;
             background-color: #121212;
             color: #e0e0e0;
-            margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            padding: 10px;
-        }
-
-        /* Product details container */
-        .product-details {
-            width: 100%;
-            max-width: 450px;
+            min-height: 100vh;
             padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Product card */
+        .product-card {
             background-color: #1f1f1f;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease-in-out;
         }
 
-        .product-details:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+        .product-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 16px 50px rgba(0, 0, 0, 0.3);
         }
 
-        /* Product image */
+        /* Image */
         .product-image {
             width: 100%;
             height: auto;
-            max-height: 250px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            border: 2px solid #444;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .product-image:hover {
+            transform: scale(1.05);
         }
 
         /* Product name */
         .product-name {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: bold;
             color: #00e350;
-            margin: 10px 0;
+            margin-bottom: 10px;
         }
 
-        /* Product description */
+        /* Description */
         .product-description {
-            font-size: 16px;
+            font-size: 14px;
             color: #bbb;
-            line-height: 1.6;
-            margin: 10px 0 20px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            flex-grow: 1;
         }
 
-        /* Price section */
+        /* Price */
         .product-price {
-            margin: 15px 0;
-            font-size: 20px;
+            margin-bottom: 20px;
+            font-size: 18px;
         }
 
         .original-price {
@@ -81,9 +102,9 @@
             font-weight: bold;
         }
 
-        /* Button styling */
-        .add-to-cart-btn {
-            padding: 12px 20px;
+        /* Button */
+        .cta-button {
+            padding: 12px 25px;
             background-color: #00e350;
             color: #121212;
             font-size: 16px;
@@ -91,91 +112,111 @@
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s;
+            text-align: center;
+            transition: background-color 0.3s, transform 0.3s ease;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
 
-        .add-to-cart-btn:hover {
+        .cta-button:hover {
             background-color: #00b33c;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
         }
 
-        /* Icons */
-        .product-icons {
-            margin-top: 20px;
+        /* Icon Section */
+        .admin-icons {
             display: flex;
             justify-content: space-between;
-            width: 100px;
-            margin: 20px auto 0;
+            margin-top: 20px;
         }
 
         .icon {
-            font-size: 24px;
+            font-size: 20px;
             color: #bbb;
             transition: color 0.3s, transform 0.3s;
         }
 
         .icon:hover {
             color: #fff;
-            transform: scale(1.2);
-        }
-
-        a {
-            text-decoration: none;
+            transform: scale(1.1);
         }
 
         /* Responsive Design */
-        @media (max-width: 600px) {
-            .product-details {
+        @media (max-width: 768px) {
+            .product-card {
+                max-width: 100%;
                 padding: 15px;
             }
 
             .product-name {
-                font-size: 24px;
+                font-size: 20px;
             }
 
             .product-description {
-                font-size: 14px;
+                font-size: 13px;
             }
 
-            .add-to-cart-btn {
+            .cta-button {
                 font-size: 14px;
-                padding: 10px 18px;
+                padding: 10px 20px;
             }
 
             .product-price {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .product-card {
+                padding: 10px;
+            }
+
+            .product-name {
                 font-size: 18px;
+            }
+
+            .product-description {
+                font-size: 12px;
+            }
+
+            .cta-button {
+                font-size: 12px;
+                padding: 8px 16px;
             }
         }
     </style>
 </head>
 
 <body>
-    <div class="product-details">
-        <img src="{{ product.cover_image.url }}" class="product-image" alt="{{ product.name }}">
-        <div class="product-name">{{ product.name }}</div>
-        <div class="product-price">
-            {% if product.original_price %}
-                <span class="original-price">${{product.original_price}}</span>
-                <span class="discounted-price">${{ product.price }}</span>
+    <div class="container">
+        <div class="product-card">
+            {% if product.cover_image %}
+                <img class="product-image" src="{{ product.cover_image.url }}" alt="{{ product.name }} Cover Image">
             {% else %}
-                <span class="discounted-price">${{ product.price }}</span>
+                <img class="product-image" src="{{ product.image_link }}" alt="{{ product.name }} Cover Image">
+            {% endif %}
+            <div class="product-name">{{ product.name }}</div>
+            <div class="product-price">
+                {% if product.original_price %}
+                    <span class="original-price">${{ product.original_price }}</span>
+                    <span class="discounted-price">${{ product.price }}</span>
+                {% else %}
+                    <span class="discounted-price">${{ product.price }}</span>
+                {% endif %}
+            </div>
+            <div class="product-description">{{ product.description }}</div>
+            {% if not product.affiliate_link %}
+                <button class="cta-button" onclick="addToCart()">Contact Seller</button>
+            {% else %}
+                <button class="cta-button" onclick="window.open('{{ product.affiliate_link }}')">Get Now</button>
+            {% endif %}
+            {% if store.user == user.profile %}
+                <div class="admin-icons">
+                    <a href="{{ product.id }}/edit" title="Edit" class="icon">✎</a>
+                    <a href="{{ product.id }}/delete" title="Delete" class="icon" onclick="return confirm('Are you sure you want to delete this product?');">🗑️</a>
+                </div>
             {% endif %}
         </div>
-        <div class="product-description">{{ product.description }}</div>
-        {%if not product.affiliate_link%}
-            <button class="add-to-cart-btn" onclick="addToCart()">Contact Seller</button>
-        {%else%}
-            <button class="add-to-cart-btn" onclick="window.open('{{product.affiliate_link}}')">Get Now</button>
-        
-        {%endif%}
-        {% if store.user == user.profile %}
-            <div class="product-icons">
-                <a href="{{ product.id }}/edit" title="Edit" class="icon">✎</a>
-                <a href="{{ product.id }}/delete" title="Delete" class="icon" onclick="return confirm('Are you sure you want to delete this product?');">🗑️</a>
-            </div>
-        {% endif %}
     </div>
 
     <script>

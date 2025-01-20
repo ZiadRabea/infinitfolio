@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magic Upload</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        input[type="url"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .error-message {
+            color: #f44336;
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Magic Upload</h1>
+        <form id="magicUploadForm">
+            <div class="form-group">
+                <input type="url" id="urlInput" placeholder="Enter a URL" required>
+            </div>
+            <button type="submit">Upload</button>
+        </form>
+        <p class="error-message" id="errorMessage">Please enter a valid URL that starts with https://</p>
+    </div>
+
+    <script>
+        document.getElementById('magicUploadForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const urlInput = document.getElementById('urlInput').value;
+            const errorMessage = document.getElementById('errorMessage');
+
+            if (urlInput.trim() === '' || !urlInput.startsWith('https://')) {
+                errorMessage.style.display = 'block';
+            } else {
+                errorMessage.style.display = 'none';
+                window.open("/stores/{{store.name}}/magic/"+urlInput, '_blank');
+            }
+        });
+    </script>
+</body>
+</html>

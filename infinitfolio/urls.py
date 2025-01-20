@@ -24,6 +24,7 @@ from menu.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('blogs/', include("blog.urls")),
+    path('stores/', include("store.urls")),
     path('', home),
     path('notifications/', notifications),
     path('posts/<int:id>', post),
@@ -61,7 +62,6 @@ urlpatterns = [
     path('<str:slug>/VPublish', publish_virtual),
     path('accounts/', include("Accounts.urls")),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('stores/', include("store.urls")),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

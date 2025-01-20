@@ -1,5 +1,7 @@
 import json
-
+import requests
+from bs4 import BeautifulSoup
+from urllib.parse import urlencode, urlparse, parse_qs
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
@@ -190,3 +192,60 @@ def accept_product(request, slug, id):
         product.save()
     else:
         return redirect("/Error")
+
+@login_required
+def magic_upload(request, slug, url):
+    store = Store.objects.get(name=slug)
+    if store.user != request.user.profile:
+        return redirect("/Error")
+    else:
+        # try:
+            # Send an HTTP request to the URL
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+                'Accept-Encoding': 'gzip, deflate, br',
+                'Accept-Language': 'en-US,en;q=0.9',
+                'Connection': 'keep-alive',
+                'Referer': url,
+            }
+            response = requests.get(url, headers=headers)
+            response.raise_for_status()  # Check for successful response (status code 200)
+
+            # Parse the HTML content using BeautifulSoup
+            soup = BeautifulSoup(response.content, 'html.parser')
+
+            # Extract product details
+            product = {}
+
+            # Extract the product title
+            title = soup.find('span', {'id': 'productTitle'})
+            product['title'] = title.get_text(strip=True) if title else 'Title not found'
+
+            # Extract the product price
+            price = soup.find('span', {'class': 'a-price-whole'})
+            product['price'] = price.get_text(strip=True) if price else 'Price not found'
+
+            # Extract the product image URL
+            img_tag = soup.find('img', {'id': 'landingImage'})
+            product['image_url'] = img_tag['src'] if img_tag else 'Image not found'
+
+            # Modify the URL to include the affiliate store ID
+            parsed_url = urlparse(url)
+            affiliate_link = parsed_url._replace(
+                netloc=f"www.amazon.com",
+                path=f"/dp/{parsed_url.path.split('/')[2]}",
+                query=urlencode({'tag': store.amazon_affiliate_id})
+            ).geturl()
+
+            product['affiliate_link'] = affiliate_link
+
+            Product.objects.create(store=store, cover_image=None, approved=True, image_link=product["image_url"], affiliate_link=product['affiliate_link'], affiliate_product=True, name=product["title"], price=int(str(product['price']).replace(".","")), description=product['title'])
+            return redirect(f"/stores/{store.name}")
+        # except:
+        #     return redirect('/Error')
+
+@login_required 
+def m_upload(request, slug):
+    store = Store.objects.get(name=slug)
+    return render(request, "magic_upload.html", {"store":store})

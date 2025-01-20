@@ -73,12 +73,11 @@
             position: relative;
             background-color: #1f1f1f;
             border-radius: 8px;
-            overflow: hidden;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
             text-align: center;
             transition: transform 0.3s ease;
+            padding: 15px; /* Add padding for better spacing */
         }
-
         /* Product hover effect */
         .product-container:hover {
             transform: scale(1.05);
@@ -117,6 +116,9 @@
             font-size: 24px;
             cursor: pointer;
             border-radius: 50%;
+            position: absolute;
+            bottom:-20px;
+            right:-20px;
         }
 
         .arrow-button:hover {
@@ -316,7 +318,11 @@
         <div class="product-grid">
             {% for product in products %}
             <div class="product-container">
-                <img class="product-cover" src="{{ product.cover_image.url }}" alt="{{ product.name }} Cover Image">
+                {%if product.cover_image%}
+                    <img class="product-cover" src="{{ product.cover_image.url }}" alt="{{ product.name }} Cover Image">
+                {%else%}
+                    <img class="product-cover" src="{{ product.image_link }}" alt="{{ product.name }} Cover Image">
+                {%endif%}
                 <div class="product-title">{{ product.name }}</div>
                 <div class="button-container">
                     <a href="/stores/{{ store.name }}/products/{{ product.id }}">
@@ -353,7 +359,11 @@
             <div class="product-grid">
                 {% for product in affiliate_products%}
                 <div class="product-container">
+                    {%if product.cover_image%}
                     <img class="product-cover" src="{{ product.cover_image.url }}" alt="{{ product.name }} Cover Image">
+                    {%else%}
+                        <img class="product-cover" src="{{ product.image_link }}" alt="{{ product.name }} Cover Image">
+                    {%endif%}
                     <div class="product-title">{{ product.name }}</div>
                     <div class="button-container">
                         <a href="/stores/{{ store.name }}/products/{{ product.id }}">
