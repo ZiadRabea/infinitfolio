@@ -83,7 +83,8 @@
                 errorMessage.style.display = 'block';
             } else {
                 errorMessage.style.display = 'none';
-                window.open("/stores/{{store.name}}/magic/" + urlInput, '_blank');
+                const encodedUrl = encodeURIComponent(urlInput);
+                window.open(`/stores/{{store.name}}/magic/` + encodedUrl, '_blank');
             }
         });
     </script>
