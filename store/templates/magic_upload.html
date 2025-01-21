@@ -79,11 +79,11 @@
             const urlInput = document.getElementById('urlInput').value;
             const errorMessage = document.getElementById('errorMessage');
 
-            if (urlInput.trim() === '' || !urlInput.startsWith('https://')) {
+            if (urlInput.trim() === '' || !/^https:\/\//.test(urlInput)) {
                 errorMessage.style.display = 'block';
             } else {
                 errorMessage.style.display = 'none';
-                window.open("/stores/{{store.name}}/magic/"+urlInput, '_blank');
+                window.open(urlInput, '_blank');
             }
         });
     </script>
