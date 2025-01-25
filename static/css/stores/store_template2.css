@@ -285,6 +285,12 @@ a{
     }
 }
 
+@media (max-width: 600px) {
+    .desktop-500{
+        display: none;
+    }
+}
+
 @media (max-width: 480px) {
     .search-bar input {
         width: 100%;

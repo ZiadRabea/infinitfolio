@@ -236,7 +236,7 @@ def magic_upload(request, slug, url, category):
 
             # Extract the product price
             price = soup.find('span', {'class': 'a-price-whole'})
-            product['price'] = price.get_text(strip=True) if price else 'Price not found'
+            product['price'] = price.get_text(strip=True) if price else None
 
             # Extract the product image URL
             img_tag = soup.find('img', {'id': 'landingImage'})
