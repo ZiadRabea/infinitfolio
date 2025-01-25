@@ -1,0 +1,122 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N37B2KNWMJ"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-N37B2KNWMJ');
+    </script>
+
+    <!-- Adsense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7827616110280134"
+    crossorigin="anonymous"></script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ store.name }} | All Products</title>
+    <link rel="icon" href="{% static 'imgs/infinitfolio.png' %}" type="image/png">
+    <!-- Add Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{%static 'css/stores/store_template2.css'%}?v=1.0.1">
+</head>
+
+<body>
+    <!-- Header -->
+    <div class="header desktop-header">
+        <div class="logo">
+            <img src="https://cdn.pixabay.com/photo/2020/04/17/19/48/city-5056657_1280.png" alt="ZSChool Logo">
+            <h1>Saved</h1>
+        </div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/blogs">Blogs</a>
+            <a href="/{{user.profile.website.unique_name}}">Profile</a>
+        </nav>
+        <form method="get" enctype="multipart/form-data" class="search-bar desktop">
+            {%csrf_token%}
+            <input name = "description" type="text" placeholder="Search Products...">
+            <button>Search</button>
+        </form>
+    </div>
+
+    <div class="header search-header">
+        <form method="get" enctype="multipart/form-data" class="search-bar">
+            {%csrf_token%}
+            <input type="text" placeholder="Search Products...">
+            <button>Search</button>
+        </form>
+    </div>
+    <!-- Main Content -->
+    <div class="container">
+        <div class="product-grid">
+            <!-- Sample Product -->
+             {%for product in products%}
+            <div class="product-container">
+                <span class="price">
+                    ${{product.price}}
+                </span>
+                {%if product.cover_image%}
+                    <img class="product-cover" src="{{product.cover_image.url}}" width="250px" height="250px" alt="Product Image">
+                {%else%}
+                    <img class="product-cover" src="{{product.image_link}}" width="250px" height="250px" alt="Product Image">
+                {%endif%}
+                <div style="display: flex; justify-content: space-evenly;">
+                    <div class="button-container">
+                        <div class="button-container">
+                            <a href="#"><button>Get now</button></a>
+                        </div>
+                    </div>
+                    <div class="button-container">
+                        {%if not user.profile in product.savers.all%}
+                        <div class="button-container">
+                            <a href="/stores/{{store.name}}/products/{{product.id}}/save"><button><i class="fas fa-save"></i></button></a>
+                        </div>
+                        {%else%}
+                        <div class="button-container">
+                            <a href="/stores/{{store.name}}/products/{{product.id}}/save"><button style="background:orange"><i class="fas fa-save"></i></button></a>
+                        </div>
+                        {%endif%}
+                    </div>
+                </div>
+                <div class="product-title collapsible">
+                    {{product.name}}
+                </div>
+                
+                <!-- <div class="product-description collapsible">
+                    <p>{{product.description}}</p>
+                </div> -->
+                {%if product.affiliate_product%}
+                    <span style="font-size: 10px; color:rgb(255, 166, 0); position: absolute;right:10px;bottom:10px;">Affiliate</span>
+                {%endif%}
+                {%if user.profile == store.user%}
+                    <div class="admin-icons" style="margin-bottom:10px;">
+                        <a href="products/{{ product.id }}/edit" title="Edit" class="icon">✎</a>
+                        <a href="products/{{ product.id }}/delete" title="Delete" class="icon" onclick="return confirm('Are you sure you want to delete this product?');">🗑️</a>
+                    </div>
+                {%endif%}
+            </div>
+            {%endfor%}
+            <!-- Repeat similar product containers here -->
+        </div>  
+    </div>  
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer-links">
+            <a href="#">About us</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Home</a>
+            <a href="#">Contact US</a>
+        </div>
+        <div class="footer-info">
+            <p>&copy; 2025 infinitfolio. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -46,6 +46,7 @@ class Post(models.Model):
 
     class Meta:
         ordering=["-date"]
+        
 class Topic(models.Model):
     title = models.CharField(max_length=200)
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE, null=True, blank=True)

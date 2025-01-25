@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>{{product.store.name}} | Add Product</title>
+    <title>{{post.title}} | addHeading</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" href="{%static 'imgs/infinitfolio.png'%}" type="image/png">
     <style>
@@ -74,7 +74,6 @@
       form input[type="url"],
       form input[type="email"],
       form input[type="number"],
-      select,
       form textarea {
         width: 100%;
         padding: 10px;
@@ -129,62 +128,14 @@
   <body>
     <div class="content">
       <div class="skills tab-content active">
-        <h2>Create Product</h2>
+        <h2>Add a new category</h2>
         <form id="edit-info-form" method="post" enctype="multipart/form-data">
             {%csrf_token%}
-
-          <label for="Picture">*Product name:</label>
-            {{form.name}}
-
-          <label for="tel">*Cover image:</label>
-            {{form.cover_image}}
-
-          <label for="tel">*Price:</label>
-            {{form.price}}
-
-          <label for="tel">Before Discount : </label>
-            {{form.original_price}}
-
-          <label for="tel">*Description : </label>
-            {{form.description}}
-
-          <label for="tel"> Is Affiliate : </label>
-            {{form.affiliate_product}}
-          
-          <label for="tel"> Affiliate link : </label>
-            {{form.affiliate_link}}
-
-          <label for="tel"> Category : </label>
-            {{form.cls}} <a href="/stores/{{store.name}}/categories/add"><button type="button" style="background:#4CAF50">+ add category</button></a>
-          <input type="submit">
+          <label for="Picture">*Title:</label>
+            {{form.title}}
+          <input type="submit" value="Add">
         </form>
       </div>
 	</div>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      // Get references to the affiliate checkbox and the affiliate link input field
-      const isAffiliateCheckbox = document.querySelector("input[name='affiliate_product']");
-      const affiliateLinkInput = document.querySelector("input[name='affiliate_link']");
-      
-      // Function to toggle the disabled state of the affiliate link input
-      function toggleAffiliateLink() {
-        if (isAffiliateCheckbox.checked) {
-          affiliateLinkInput.disabled = false;
-          affiliateLinkInput.style.cursor = "text" // Enable the affiliate link input
-        } else {
-          affiliateLinkInput.disabled = true; 
-          affiliateLinkInput.style.cursor = "not-allowed" // Disable the affiliate link input
-          affiliateLinkInput.value = ""; // Optionally clear the value
-        }
-      }
-  
-      // Initialize the state on page load
-      toggleAffiliateLink();
-  
-      // Attach event listener to the checkbox
-      isAffiliateCheckbox.addEventListener("change", toggleAffiliateLink);
-    });
-  </script>
-  
 </body>
 </html>

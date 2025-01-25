@@ -14,18 +14,20 @@ from .filters import *
 
 def store(request, slug):
     store = Store.objects.get(name=slug)
-    products = Product.objects.filter(store=store, affiliate_product=False)
-    affiliate_products = Product.objects.filter(store=store, affiliate_product=True)
+    products = Product.objects.filter(store=store)
     filter = ProductFilter(request.GET, queryset=products)
     products = filter.qs
+    has_affiliate_products = products.filter(affiliate_product=True).exists()
+    not_affiliate = products.filter(affiliate_product=False).exists
     if store.published or store.user == request.user.profile or request.user.is_superuser:
         context = {
             "store": store,
             "products": products,
-            "affiliate_products": affiliate_products,
-            "filter": filter
+            "filter": filter,
+            "is_affiliate": has_affiliate_products,
+            "not_affiliate": not_affiliate
         }
-        return render(request, "store.html", context)
+        return render(request, "store_templates/store_template2.html", context)
     else:
         return redirect("/Error")
 
@@ -77,14 +79,14 @@ def add_product(request, slug):
     store = Store.objects.get(name=slug)
     if store.user == request.user.profile:
         if request.method == "POST":
-            form = AddProduct(request.POST, request.FILES)
+            form = AddProduct(request.POST, request.FILES, store=store)
             if form.is_valid():
                 myform = form.save(commit=False)
                 myform.store = store
                 myform.save()
                 return redirect(f"/stores/{store.name}/products/{myform.id}")
         else:
-            form = AddProduct()
+            form = AddProduct(store=store)
 
         context = {
             "form": form,
@@ -102,14 +104,14 @@ def edit_product(request, slug, id):
         return redirect("/Error")
     if store.user == request.user.profile:
         if request.method == "POST":
-            form = AddProduct(request.POST, request.FILES, instance=product)
+            form = AddProduct(request.POST, request.FILES, instance=product, store=store)
             if form.is_valid():
                 myform = form.save(commit=False)
                 myform.store = store
                 myform.save()
                 return redirect(f"/stores/{store.name}/products/{myform.id}")
         else:
-            form = AddProduct(instance=product)
+            form = AddProduct(instance=product, store=store)
 
         context = {
             "form": form,
@@ -194,12 +196,22 @@ def accept_product(request, slug, id):
         return redirect("/Error")
 
 @login_required
-def magic_upload(request, slug, url):
+def magic_upload(request, slug, url, category):
     store = Store.objects.get(name=slug)
+    category = Category.objects.get(id=category)
+    if not category.store == store:
+        return redirect('/Error')
+           
     if store.user != request.user.profile:
         return redirect("/Error")
     else:
         # try:
+            #Check the url : 
+            if not "https://" in url:
+                try: 
+                    url = url.replace("https:/", "https://")
+                except:
+                    return redirect("/Error")
             # Send an HTTP request to the URL
             headers = {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
@@ -240,7 +252,7 @@ def magic_upload(request, slug, url):
 
             product['affiliate_link'] = affiliate_link
 
-            Product.objects.create(store=store, cover_image=None, approved=True, image_link=product["image_url"], affiliate_link=product['affiliate_link'], affiliate_product=True, name=product["title"], price=int(str(product['price']).replace(".","")), description=product['title'])
+            Product.objects.create(store=store, cover_image=None, approved=True, image_link=product["image_url"], affiliate_link=product['affiliate_link'], affiliate_product=True, name=product["title"], price=int(str(product['price']).replace(".","")), description=product['title'], cls=category)
             return redirect(f"/stores/{store.name}")
         # except:
         #     return redirect('/Error')
@@ -249,3 +261,45 @@ def magic_upload(request, slug, url):
 def m_upload(request, slug):
     store = Store.objects.get(name=slug)
     return render(request, "magic_upload.html", {"store":store})
+
+@login_required
+def add_category(request, slug):
+    store = Store.objects.get(name=slug)
+    if request.user.profile == store.user:
+        if request.method == "POST":
+            form = AddCategory(request.POST, request.FILES)
+            if form.is_valid():
+                myform = form.save(commit=False)
+                myform.store = store
+                myform.save()
+                return redirect(f"/stores/{store.name}/products/create")
+        else:
+            form = AddCategory()
+
+        context = {
+            "form": form
+        }
+        return render(request, "add_category.html", context)
+    else:
+        return redirect("/Error")
+    
+def save_product(request, slug, id):
+    store = Store.objects.get(name=slug)
+    product = Product.objects.get(id=id)
+
+    if request.user.profile in product.savers.all():
+        product.savers.remove(request.user.profile)
+    else:
+        product.savers.add(request.user.profile)
+
+    return redirect(f"/stores/{store.name}")
+
+def saved_products(request):
+    products = request.user.profile.savers.all()
+    filter = ProductFilter(request.GET, queryset=products)
+    products = filter.qs
+
+    context = {
+        "products":products
+    }
+    return render(request, "store_templates/saved_items.html", context=context)

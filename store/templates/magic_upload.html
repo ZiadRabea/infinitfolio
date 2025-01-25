@@ -40,6 +40,15 @@
             font-size: 16px;
             box-sizing: border-box;
         }
+        select, button[type="button"]{
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+            margin-top:5px 
+        }
         button {
             background-color: #4CAF50;
             color: white;
@@ -66,6 +75,14 @@
         <form id="magicUploadForm">
             <div class="form-group">
                 <input type="url" id="urlInput" placeholder="Enter a URL" required>
+                <select id="categorySelect">
+                    {% for i in store.category_set.all %}
+                        <option value="{{i.id}}">
+                            {{ i.title }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <a href="/stores/{{store.name}}/categories/add"><button style="margin-top: 5px;" type="button">Add Category</button></a>
             </div>
             <button type="submit">Upload</button>
         </form>
@@ -77,14 +94,21 @@
             event.preventDefault();
 
             const urlInput = document.getElementById('urlInput').value;
+            const categorySelect = document.getElementById('categorySelect');
+            const selectedCategoryId = categorySelect.value;
             const errorMessage = document.getElementById('errorMessage');
 
-            if (urlInput.trim() === '' || !/^https:\/\//.test(urlInput)) {
+            // Check if URL is valid
+            if (urlInput.trim() === '' || !urlInput.startsWith('https://')) {
                 errorMessage.style.display = 'block';
             } else {
                 errorMessage.style.display = 'none';
-                const encodedUrl = encodeURIComponent(urlInput);
-                window.open(`/stores/{{store.name}}/magic/` + encodedUrl, '_blank');
+
+                // Create the URL with the category ID
+                const finalUrl = `/stores/{{store.name}}/magic/${encodeURIComponent(urlInput)}/${selectedCategoryId}`;
+                
+                // Open the final URL in a new tab
+                window.open(finalUrl, '_blank');
             }
         });
     </script>

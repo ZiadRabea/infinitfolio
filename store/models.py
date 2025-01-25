@@ -14,6 +14,9 @@ class Store(models.Model):
     phone = models.CharField(max_length=12)
     email = models.EmailField()
     approved = models.BooleanField(default=False)
+    logo = models.ImageField(upload_to="store_logos", storage=MediaCloudinaryStorage, null=True)
+    app = models.CharField(max_length=1000, null=True, blank=True)
+    template = models.ForeignKey('Template', null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.title} | {self.description}"
@@ -23,12 +26,14 @@ class Product(models.Model):
     approved = models.BooleanField(default=False)
     date = models.DateTimeField(auto_now_add=True)
     cover_image = models.ImageField(upload_to="cover_image", storage=MediaCloudinaryStorage, null=True)
-    image_link = models.CharField(max_length=1000, null=True, blank=True)
+    image_link = models.CharField(max_length=5000, null=True, blank=True)
     original_price = models.IntegerField(null=True, blank=True)
-    affiliate_link = models.CharField(max_length=1000, null=True, blank=True)
+    affiliate_link = models.CharField(max_length=5000, null=True, blank=True)
     affiliate_product = models.BooleanField(default=False)
-    description = models.TextField(max_length=1000)
+    savers = models.ManyToManyField(Profile, null=True, blank=True, related_name="savers")
+    description = models.TextField(max_length=5000)
     price = models.IntegerField()
+    cls = models.ForeignKey("Category", on_delete=models.CASCADE, null=True, blank=True)
     store = models.ForeignKey(Store, on_delete=models.CASCADE)
 
     class Meta:
@@ -36,3 +41,26 @@ class Product(models.Model):
 
     def __str__(self):
         return f"{self.name} | {self.store}"
+
+
+class Template(models.Model):
+    date = models.DateTimeField(auto_now_add=True)
+    cover_image = models.ImageField(upload_to="templates", storage=MediaCloudinaryStorage)
+    url = models.URLField(max_length=1000)
+    types = (("store", "store"), ("blog", "blog"), ("portfolio", "portfolio"))
+    typ = models.CharField(max_length=100, choices=types)
+    template = models.CharField(max_length=1000)
+
+    class Meta:
+        ordering = ['-date']
+    
+
+    def __str__(self):
+        return f"{self.template} | {self.url}"
+
+class Category(models.Model):
+    title = models.CharField(max_length=200)
+    store = models.ForeignKey(Store, on_delete=models.CASCADE, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.title}"
