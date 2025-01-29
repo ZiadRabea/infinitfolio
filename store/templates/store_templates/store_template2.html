@@ -88,7 +88,7 @@
              {%for product in products%}
             <div class="product-container">
                 <span class="price">
-                    ${{product.price}}
+                    {{product.price}}
                 </span>
                 {%if product.cover_image%}
                     <img class="product-cover" src="{{product.cover_image.url}}" width="250px" height="250px" alt="Product Image">

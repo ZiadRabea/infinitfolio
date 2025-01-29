@@ -198,10 +198,10 @@
             <div class="product-name">{{ product.name }}</div>
             <div class="product-price">
                 {% if product.original_price %}
-                    <span class="original-price">${{ product.original_price }}</span>
-                    <span class="discounted-price">${{ product.price }}</span>
+                    <span class="original-price">{{ product.original_price }}</span>
+                    <span class="discounted-price">{{ product.price }}</span>
                 {% else %}
-                    <span class="discounted-price">${{ product.price }}</span>
+                    <span class="discounted-price">{{ product.price }}</span>
                 {% endif %}
             </div>
             <div class="product-description">{{ product.description }}</div>
