@@ -195,72 +195,72 @@ def accept_product(request, slug, id):
     else:
         return redirect("/Error")
 
-@login_required
-def magic_upload(request, slug, url, category):
-    store = Store.objects.get(name=slug)
-    category = Category.objects.get(id=category)
-    if not category.store == store:
-        return redirect('/Error')
+# @login_required
+# def magic_upload(request, slug, url, category):
+#     store = Store.objects.get(name=slug)
+#     category = Category.objects.get(id=category)
+#     if not category.store == store:
+#         return redirect('/Error')
            
-    if store.user != request.user.profile:
-        return redirect("/Error")
-    else:
-        # try:
-            #Check the url : 
-            if not "https://" in url:
-                try: 
-                    url = url.replace("https:/", "https://")
-                except:
-                    return redirect("/Error")
-            # Send an HTTP request to the URL
-            headers = {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-                'Accept-Encoding': 'gzip, deflate, br',
-                'Accept-Language': 'en-US,en;q=0.9',
-                'Connection': 'keep-alive',
-                'Referer': url,
-            }
-            response = requests.get(url, headers=headers)
-            response.raise_for_status()  # Check for successful response (status code 200)
+#     if store.user != request.user.profile:
+#         return redirect("/Error")
+#     else:
+#         # try:
+#             #Check the url : 
+#             if not "https://" in url:
+#                 try: 
+#                     url = url.replace("https:/", "https://")
+#                 except:
+#                     return redirect("/Error")
+#             # Send an HTTP request to the URL
+#             headers = {
+#                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
+#                 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+#                 'Accept-Encoding': 'gzip, deflate, br',
+#                 'Accept-Language': 'en-US,en;q=0.9',
+#                 'Connection': 'keep-alive',
+#                 'Referer': url,
+#             }
+#             response = requests.get(url, headers=headers)
+#             response.raise_for_status()  # Check for successful response (status code 200)
 
-            # Parse the HTML content using BeautifulSoup
-            soup = BeautifulSoup(response.content, 'html.parser')
+#             # Parse the HTML content using BeautifulSoup
+#             soup = BeautifulSoup(response.content, 'html.parser')
 
-            # Extract product details
-            product = {}
+#             # Extract product details
+#             product = {}
 
-            # Extract the product title
-            title = soup.find('span', {'id': 'productTitle'})
-            product['title'] = title.get_text(strip=True) if title else 'Title not found'
+#             # Extract the product title
+#             title = soup.find('span', {'id': 'productTitle'})
+#             product['title'] = title.get_text(strip=True) if title else 'Title not found'
 
-            # Extract the product price
-            price = soup.find('span', {'class': 'a-price-whole'})
-            product['price'] = price.get_text(strip=True) if price else None
+#             # Extract the product price
+#             price = soup.find('span', {'class': 'a-price-whole'})
+#             product['price'] = price.get_text(strip=True) if price else None
 
-            # Extract the product image URL
-            img_tag = soup.find('img', {'id': 'landingImage'})
-            product['image_url'] = img_tag['src'] if img_tag else 'Image not found'
+#             # Extract the product image URL
+#             img_tag = soup.find('img', {'id': 'landingImage'})
+#             product['image_url'] = img_tag['src'] if img_tag else 'Image not found'
 
-            # Modify the URL to include the affiliate store ID
-            parsed_url = urlparse(url)
-            affiliate_link = parsed_url._replace(
-                netloc=f"www.amazon.com",
-                path=f"/dp/{parsed_url.path.split('/')[2]}",
-                query=urlencode({'tag': store.amazon_affiliate_id})
-            ).geturl()
+#             # Modify the URL to include the affiliate store ID
+#             parsed_url = urlparse(url)
+#             affiliate_link = parsed_url._replace(
+#                 netloc=f"www.amazon.com",
+#                 path=f"/dp/{parsed_url.path.split('/')[2]}",
+#                 query=urlencode({'tag': store.amazon_affiliate_id})
+#             ).geturl()
 
-            product['affiliate_link'] = affiliate_link
+#             product['affiliate_link'] = affiliate_link
 
-            Product.objects.create(store=store, cover_image=None, approved=True, image_link=product["image_url"], affiliate_link=product['affiliate_link'], affiliate_product=True, name=product["title"], price=int(str(product['price']).replace(".","")), description=product['title'], cls=category)
-            return redirect(f"/stores/{store.name}")
-        # except:
-        #     return redirect('/Error')
+#             Product.objects.create(store=store, cover_image=None, approved=True, image_link=product["image_url"], affiliate_link=product['affiliate_link'], affiliate_product=True, name=product["title"], price=int(str(product['price']).replace(".","")), description=product['title'], cls=category)
+#             return redirect(f"/stores/{store.name}")
+#         # except:
+#         #     return redirect('/Error')
 
-@login_required 
-def m_upload(request, slug):
-    store = Store.objects.get(name=slug)
-    return render(request, "magic_upload.html", {"store":store})
+# @login_required 
+# def m_upload(request, slug):
+#     store = Store.objects.get(name=slug)
+#     return render(request, "magic_upload.html", {"store":store})
 
 @login_required
 def add_category(request, slug):
@@ -282,7 +282,8 @@ def add_category(request, slug):
         return render(request, "add_category.html", context)
     else:
         return redirect("/Error")
-    
+
+@login_required 
 def save_product(request, slug, id):
     store = Store.objects.get(name=slug)
     product = Product.objects.get(id=id)
@@ -294,6 +295,7 @@ def save_product(request, slug, id):
 
     return redirect(f"/stores/{store.name}")
 
+@login_required
 def saved_products(request):
     products = request.user.profile.savers.all()
     filter = ProductFilter(request.GET, queryset=products)

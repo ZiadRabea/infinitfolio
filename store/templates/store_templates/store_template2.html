@@ -39,7 +39,7 @@
         </div>
         <nav>
             <a href="/stores/{{store.name}}">Home</a>
-            <a href="/stores/{{store.name}}/magic">Magic</a>
+            <a href="/stores/products/saved">Saved</a>
             <a href="{{store.app}}">App</a>
         </nav>
         <form method="get" enctype="multipart/form-data" class="search-bar desktop">
@@ -104,11 +104,11 @@
                     <div class="button-container">
                         {%if not user.profile in product.savers.all%}
                         <div class="button-container">
-                            <a href="/stores/{{store.name}}/products/{{product.id}}/save"><button><i class="fas fa-save"></i></button></a>
+                            <a href="/stores/{{store.name}}/products/{{product.id}}/save"  onclick="this.style.background = 'orange'"><button><i class="fas fa-save"></i></button></a>
                         </div>
                         {%else%}
                         <div class="button-container">
-                            <a href="/stores/{{store.name}}/products/{{product.id}}/save"><button style="background:orange"><i class="fas fa-save"></i></button></a>
+                            <a href="/stores/{{store.name}}/products/{{product.id}}/save"><button style="background:orange" onclick="this.style.background = '#28a745'"><i class="fas fa-save"></i></button></a>
                         </div>
                         {%endif%}
                     </div>

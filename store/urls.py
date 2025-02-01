@@ -1,10 +1,10 @@
 from django.urls import path
 from.views import create_store, add_product, store, product, delete_store, delete_product, publish, paymentComplete, \
-    review_stores, review_products, accept_store, accept_product, edit_product, magic_upload, m_upload, add_category, save_product, saved_products
+    review_stores, review_products, accept_store, accept_product, edit_product, add_category, save_product, saved_products
 urlpatterns = [
     path('create/', create_store),
-    path('<str:slug>/magic', m_upload),
-    path('<str:slug>/magic/<path:url>/<int:category>', magic_upload),
+    # path('<str:slug>/magic', m_upload),
+    # path('<str:slug>/magic/<path:url>/<int:category>', magic_upload),
     path('<str:slug>/', store),
     path('products/saved', saved_products),
     path('<str:slug>/categories/add', add_category),
