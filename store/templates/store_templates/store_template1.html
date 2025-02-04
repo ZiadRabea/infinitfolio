@@ -144,6 +144,11 @@
             </div>
             {% endif %}
         </div>
+        {%if user.profile == store.user%}
+            <a href="templates" class="floating-btn" title="Switch Template">
+                <i class="fas fa-paint-brush"></i>
+            </a>
+        {%endif%}
     </div> 
     <script>
         document.getElementById("id_description").placeholder = "Search 🔍"

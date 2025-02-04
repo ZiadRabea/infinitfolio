@@ -89,7 +89,6 @@ body {
 .cart-icon i {
     font-size: 24px;
 }
-
 .cart-count {
     background-color: #ff9900;
     color: white;
@@ -295,4 +294,20 @@ a{
     .search-bar input {
         width: 100%;
     }
+}
+.floating-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #007bff;
+    color: white;
+    padding: 15px;
+    border-radius: 50%;
+    font-size: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    transition: 0.3s;
+}
+.floating-btn:hover {
+    background: #0056b3;
 }

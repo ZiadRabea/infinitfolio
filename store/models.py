@@ -45,9 +45,8 @@ class Product(models.Model):
 class Template(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     cover_image = models.ImageField(upload_to="templates", storage=MediaCloudinaryStorage)
+    gif = models.ImageField(upload_to="tempgifs", storage=MediaCloudinaryStorage)
     url = models.URLField(max_length=1000)
-    types = (("store", "store"), ("blog", "blog"), ("portfolio", "portfolio"))
-    typ = models.CharField(max_length=100, choices=types)
     template = models.CharField(max_length=1000)
 
     class Meta:

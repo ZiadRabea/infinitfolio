@@ -14,7 +14,8 @@ from .filters import *
 
 def store(request, slug):
     store = Store.objects.get(name=slug)
-    products = Product.objects.filter(store=store)
+    products = Product.objects.filter(store=store)    
+    template = store.template.template if store.template else "store_templates/store_template2.html"
     filter = ProductFilter(request.GET, queryset=products)
     products = filter.qs
     has_affiliate_products = products.filter(affiliate_product=True).exists()
@@ -27,7 +28,7 @@ def store(request, slug):
             "is_affiliate": has_affiliate_products,
             "not_affiliate": not_affiliate
         }
-        return render(request, "store_templates/store_template2.html", context)
+        return render(request, f"{template}", context)
     else:
         return redirect("/Error")
 
@@ -305,3 +306,30 @@ def saved_products(request):
         "products":products
     }
     return render(request, "store_templates/saved_items.html", context=context)
+
+@login_required
+def select_temp(request, slug):
+    store = Store.objects.get(name=slug)
+    if not request.user.profile == store.user:
+        return redirect("/Error")
+    else:
+        templates = Template.objects.all()
+
+        context = {
+            "templates": templates,
+            "store": store
+        }
+
+        return render(request, "temps.html", context)
+
+@login_required
+def select(request, slug, id):
+    store = Store.objects.get(name=slug)
+    if request.user.profile == store.user:
+        template = Template.objects.get(id=id)
+        store.template = template
+        store.save()
+        return redirect(f"/stores/{store.name}")
+    else :
+        return redirect("/Error")
+

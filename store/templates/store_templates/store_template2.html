@@ -23,7 +23,7 @@
     <link rel="icon" href="{% static 'imgs/infinitfolio.png' %}" type="image/png">
     <!-- Add Font Awesome for icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{%static 'css/stores/store_template2.css'%}?v=1.0.2">
+    <link rel="stylesheet" href="{%static 'css/stores/store_template2.css'%}?2.0.0">
 </head>
 
 <body>
@@ -40,7 +40,11 @@
         <nav>
             <a href="/stores/{{store.name}}">Home</a>
             <a href="/stores/products/saved">Saved</a>
-            <a href="{{store.app}}">App</a>
+            {%if user.profile == store.user%}
+                <a href="templates">Templates</a>
+            {%else%}
+                <a href="{{store.app}}">App</a>
+            {%endif%}
         </nav>
         <form method="get" enctype="multipart/form-data" class="search-bar desktop">
             {%csrf_token%}
@@ -98,7 +102,11 @@
                 <div style="display: flex; justify-content: space-evenly;">
                     <div class="button-container">
                         <div class="button-container">
-                            <a href="#"><button>Get now</button></a>
+                            {%if product.affiliate_product%}
+                            <a href="{{product.affiliate_link}}"><button>Buy Now</button></a> 
+                            {%else%}
+                                <a href="https://wa.me/{{store.phone}}"><button>Contact Seller</button></a>
+                            {%endif%}
                         </div>
                     </div>
                     <div class="button-container">
@@ -144,13 +152,18 @@
                 </div>
             </div>
         </div>  
-    </div>  
+    </div> 
+    {%if user.profile == store.user%}
+    <a href="templates" class="floating-btn" title="Switch Template">
+        <i class="fas fa-paint-brush"></i>
+    </a>
+    {%endif%} 
     <!-- Footer -->
     <div class="footer">
         <div class="footer-links">
             <a href="#">About us</a>
             <a href="#">Privacy Policy</a>
-            <a href="#">Home</a>
+            <a href="/">Home</a>
             <a href="#">Contact US</a>
         </div>
         <div class="footer-info">
