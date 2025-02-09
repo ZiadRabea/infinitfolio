@@ -27,6 +27,7 @@ urlpatterns = [
     path('stores/', include("store.urls")),
     path('', home),
     path('notifications/', notifications),
+    path('productivity/', organiser),
     path('posts/<int:id>', post),
     path('posts/<int:id>/delete', delete_post),
     path('posts/<int:id>/edit', edit_post),

@@ -39,6 +39,10 @@ def home(request):
     return render(request, "index.html", context)
 
 
+def organiser(request):
+    return render(request, "mylife.html")
+
+
 def error(request):
     return render(request, "error.html")
 
