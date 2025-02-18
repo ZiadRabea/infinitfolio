@@ -10,7 +10,7 @@ import json
 
 def home(request):
     posts = Post.objects.all()
-    paginator = Paginator(posts, 1)
+    paginator = Paginator(posts, 5)
     try: 
         store = request.user.profile.store
     except:
@@ -365,6 +365,14 @@ def dislike(request, id):
 @login_required
 def post(request, id):
     post = Post.objects.get(id=id)
+    try: 
+        store = request.user.profile.store
+    except:
+        store = None
+    try: 
+        blog = request.user.profile.blog
+    except:
+        blog = None
     notifications = Notification.objects.filter(receiver=request.user.profile.website, read=False)
     paginator = Paginator(post.comment_set.all(), 2)
     page_number = request.GET.get("page")
@@ -391,6 +399,8 @@ def post(request, id):
     context = {
         "post": post,
         "form": form,
+        "store":store,
+        "blog": blog,
         "notifications": notifications,
         "comments": comments
     }
