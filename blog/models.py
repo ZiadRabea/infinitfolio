@@ -5,7 +5,7 @@ from cloudinary_storage.storage import MediaCloudinaryStorage
 
 
 class Blog(models.Model):
-    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    user = models.OneToOneField(Profile, on_delete=models.CASCADE)
     choices = (
                 ("Tech", "Tech"), ("Lifestyle", "Lifestyle "),
                 ("Food", "Food"), ("Personal", "Personal"), ("Science", "Science"),

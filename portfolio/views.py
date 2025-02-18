@@ -11,6 +11,14 @@ import json
 def home(request):
     posts = Post.objects.all()
     paginator = Paginator(posts, 1)
+    try: 
+        store = request.user.profile.store
+    except:
+        store = None
+    try: 
+        blog = request.user.profile.blog
+    except:
+        blog = None
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
     if request.user.is_authenticated:
@@ -34,6 +42,8 @@ def home(request):
     context = {
         "posts": page_obj,
         "form": form,
+        "store": store,
+        "blog": blog,
         "notifications": notifications
     }
     return render(request, "index.html", context)

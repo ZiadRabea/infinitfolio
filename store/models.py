@@ -5,7 +5,7 @@ from cloudinary_storage.storage import MediaCloudinaryStorage
 
 
 class Store(models.Model):
-    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    user = models.OneToOneField(Profile, on_delete=models.CASCADE)
     published = models.BooleanField(default=False)
     name = models.SlugField()
     title = models.CharField(max_length=500)
