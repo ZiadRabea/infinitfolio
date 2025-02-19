@@ -409,8 +409,30 @@
         document.getElementById("defaultOpen").click();
 
         // Store Chart
-        var storeXValues = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-        var storeYValues = [55, 49, 44, 24, 15, 60, 70, 80, 90, 100, 110, 120];
+        var all_months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+        // Array to hold view counts (this will be populated by data from Django)
+        var storeXValues = [];
+        var storeYValues = [];
+
+        // Loop to populate storeYValues with the data passed from the Django template
+        {% for chart in store.chart_set.all %}
+        // Push the views for each month into storeYValues
+            storeXValues.push("{{ chart.date|date:'b' }}");
+            storeYValues.push({{ chart.views|default:0 }});
+        {% endfor %}
+
+        // Padding with zeroes for the remaining months (if not all months are filled)
+        // while (storeYValues.length < 12) {
+        //     storeYValues.push(0);  // Add 0 for missing months
+        // }
+        //console.log(storeYValues)
+        all_months.forEach(function(month) {
+        if (!storeXValues.includes(month)) {
+            storeXValues.push(month);  // Add missing month names
+            storeYValues.push(0);  // Add 0 views for missing months
+        }
+        });
         var storeBarColors = ["red", "green","blue","orange","brown", "red", "green","blue","orange","brown", "red", "green"];
 
         new Chart("storeChart", {

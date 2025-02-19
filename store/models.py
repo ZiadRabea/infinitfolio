@@ -1,6 +1,8 @@
 from django.db import models
 from Accounts.models import Profile
+import datetime
 from cloudinary_storage.storage import MediaCloudinaryStorage
+
 # Create your models here.
 
 
@@ -17,7 +19,7 @@ class Store(models.Model):
     logo = models.ImageField(upload_to="store_logos", storage=MediaCloudinaryStorage, null=True)
     app = models.CharField(max_length=1000, null=True, blank=True)
     template = models.ForeignKey('Template', null=True, blank=True, on_delete=models.CASCADE)
-
+    views = models.IntegerField(default=0)
     def __str__(self):
         return f"{self.title} | {self.description}"
 
@@ -34,6 +36,14 @@ class Product(models.Model):
     price = models.CharField(max_length=9)
     cls = models.ForeignKey("Category", on_delete=models.CASCADE, null=True, blank=True)
     store = models.ForeignKey(Store, on_delete=models.CASCADE)
+    views = models.IntegerField(default=0)
+
+    def increment_views(self):
+        """Increment views for this product"""
+        self.views += 1
+        self.store.views += 1
+        self.save()
+        self.store.save()
 
     class Meta:
         ordering = ['-date']
@@ -41,6 +51,20 @@ class Product(models.Model):
     def __str__(self):
         return f"{self.name} | {self.store}"
 
+class Chart(models.Model):
+    store = models.ForeignKey(Store, on_delete=models.CASCADE)
+    views = models.IntegerField()
+    date = models.DateField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        """Override save to ensure only one record per month for each store."""
+        if self.id is None:
+            # Remove existing records for the same month before saving the new one
+            Chart.objects.filter(store=self.store, date__year=datetime.datetime.now().year, date__month=datetime.datetime.now().month).delete()
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.store.name} - {self.date.strftime('%b %Y')}"
 
 class Template(models.Model):
     date = models.DateTimeField(auto_now_add=True)

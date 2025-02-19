@@ -1,29 +1,39 @@
 import json
 import requests
-from bs4 import BeautifulSoup
+from django.core.paginator import Paginator
 from urllib.parse import urlencode, urlparse, parse_qs
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
-
+import random
 from .forms import *
 from .models import *
+from django.utils import timezone
+from datetime import timedelta
 from .filters import *
 # Create your views here.
 
 
 def store(request, slug):
     store = Store.objects.get(name=slug)
-    products = Product.objects.filter(store=store)    
-    template = store.template.template if store.template else "store_templates/store_template2.html"
+    products = Product.objects.filter(store = store)
     filter = ProductFilter(request.GET, queryset=products)
     products = filter.qs
+    paginator = Paginator(products, 10)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    productslst = []
+    for p in page_obj:
+        p.increment_views()
+        productslst.append(p)
+    template = store.template.template if store.template else "store_templates/store_template2.html"
+    Chart.objects.create(store=store, views=store.views)
     has_affiliate_products = products.filter(affiliate_product=True).exists()
     not_affiliate = products.filter(affiliate_product=False).exists
     if store.published or store.user == request.user.profile or request.user.is_superuser:
         context = {
             "store": store,
-            "products": products,
+            "products": productslst,
             "filter": filter,
             "is_affiliate": has_affiliate_products,
             "not_affiliate": not_affiliate
@@ -32,6 +42,34 @@ def store(request, slug):
     else:
         return redirect("/Error")
 
+def store_views_data(request):
+    # Get the store (assuming one store)
+    store = Store.objects.first()
+
+    # Define the range for the last 12 months
+    end_date = timezone.now()
+    start_date = end_date - timedelta(days=365)  # 12 months back
+
+    # Fetch all monthly view data for the store over the past 12 months
+    monthly_views = Chart.objects.filter(store=store, month__gte=start_date).order_by('month')
+
+    # Prepare data for the chart (labels for months, values for views)
+    labels = []
+    data = []
+    current_month = start_date.replace(day=1)
+
+    for i in range(12):
+        # Get the views for the current month, or set to 0 if no data exists
+        month_data = monthly_views.filter(month=current_month).first()
+        labels.append(current_month.strftime('%b'))  # Store month name (e.g., 'Jan', 'Feb')
+        data.append(month_data.views if month_data else 0)
+
+        # Move to the next month
+        current_month = current_month + timedelta(days=32)
+        current_month = current_month.replace(day=1)
+
+    # Return data in a JSON response
+    return JsonResponse({'labels': labels, 'data': data})
 
 def product(request, slug, id):
     store = Store.objects.get(name=slug)

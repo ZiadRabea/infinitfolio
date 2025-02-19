@@ -1,9 +1,8 @@
 from django.urls import path
-from.views import create_store, add_product, store, product, delete_store, delete_product, publish, paymentComplete, \
-    review_stores, review_products, accept_store, accept_product, edit_product, add_category, save_product, saved_products, select_temp, select
+from.views import *
 urlpatterns = [
     path('create/', create_store),
-    # path('<str:slug>/magic', m_upload),
+    path('api/store-views-data', store_views_data),
     # path('<str:slug>/magic/<path:url>/<int:category>', magic_upload),
     path('<str:slug>/', store),
     path('<str:slug>/templates', select_temp),
