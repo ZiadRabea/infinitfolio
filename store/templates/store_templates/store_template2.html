@@ -1,4 +1,4 @@
-{%load static%}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,43 +23,47 @@
     <link rel="icon" href="{% static 'imgs/infinitfolio.png' %}" type="image/png">
     <!-- Add Font Awesome for icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{%static 'css/stores/store_template2.css'%}?2.0.0">
+    <link rel="stylesheet" href="{% static 'css/stores/store_template2.css' %}?2.0.0">
 </head>
 
 <body>
     <!-- Header -->
     <div class="header desktop-header">
         <div class="logo">
-        {%if store.logo%}
-            <img src="{{store.logo.url}}" alt="ZSChool Logo">
-        {%else%}
-            <img src="https://cdn.pixabay.com/photo/2020/04/17/19/48/city-5056657_1280.png" alt="ZSChool Logo">
-        {%endif%}
-            <h1 class="desktop-500">{{store.name}}</h1>
+            {% if store.logo %}
+                <img src="{{ store.logo.url }}" alt="ZSChool Logo">
+            {% else %}
+                <img src="https://cdn.pixabay.com/photo/2020/04/17/19/48/city-5056657_1280.png" alt="ZSChool Logo">
+            {% endif %}
+            <h1 class="desktop-500">{{ store.name }}</h1>
+            <!-- Store view count added below store name -->
         </div>
         <nav>
-            <a href="/stores/{{store.name}}">Home</a>
+            <a href="/stores/{{ store.name }}">Home</a>
             <a href="/stores/products/saved">Saved</a>
-            {%if user.profile == store.user%}
+            {% if user.profile == store.user %}
                 <a href="templates">Templates</a>
-            {%else%}
-                <a href="{{store.app}}">App</a>
-            {%endif%}
+            {% else %}
+                <a href="{{ store.app }}">App</a>
+            {% endif %}
         </nav>
         <form method="get" enctype="multipart/form-data" class="search-bar desktop">
-            {%csrf_token%}
-            <input name = "description" type="text" placeholder="Search Products...">
+            {% csrf_token %}
+            <input name="description" type="text" placeholder="Search Products...">
             <button>Search</button>
         </form>
+        {%if user.profile == store.user%}
+            <p class="store-views"> <i class="fas fa-eye"></i> : {{ store.views }}</p>
+        {%endif%}
         <div class="cart-icon" onclick="window.open('/stores/products/saved')">
             <i class="fas fa-shopping-cart"></i>
-            <div class="cart-count">{{user.profile.savers.count}}</div>
+            <div class="cart-count">{{ user.profile.savers.count }}</div>
         </div>
     </div>
 
     <div class="header search-header">
         <form method="get" enctype="multipart/form-data" class="search-bar">
-            {%csrf_token%}
+            {% csrf_token %}
             <input type="text" placeholder="Search Products...">
             <button>Search</button>
         </form>
@@ -69,14 +73,14 @@
         <div class="filter-form">
             <label for="category">Category:</label>
             <select id="category">
-                {%for i in store.category_set.all%}
-                <option value="">
-                   All
-                </option>
-                <option value="{{i.id}}">
-                    {{i.title}}
-                </option>
-                {%endfor%}
+                {% for i in store.category_set.all %}
+                    <option value="">
+                       All
+                    </option>
+                    <option value="{{ i.id }}">
+                        {{ i.title }}
+                    </option>
+                {% endfor %}
             </select>
             <!-- <label for="sort">Sort by:</label>
             <select id="sort">
@@ -88,63 +92,63 @@
         </div>
 
         <div class="product-grid">
-            <!-- Sample Product -->
-             {%for product in products%}
+            <!-- Product Loop -->
+            {% for product in products %}
             <div class="product-container">
                 <span class="price">
-                    {{product.price}}
+                    {{ product.price }}
                 </span>
-                {%if product.cover_image%}
-                    <img class="product-cover" src="{{product.cover_image.url}}" width="250px" height="250px" alt="Product Image">
-                {%else%}
-                    <img class="product-cover" src="{{product.image_link}}" width="250px" height="250px" alt="Product Image">
-                {%endif%}
+                {% if product.cover_image %}
+                    <img class="product-cover" src="{{ product.cover_image.url }}" width="250px" height="250px" alt="Product Image">
+                {% else %}
+                    <img class="product-cover" src="{{ product.image_link }}" width="250px" height="250px" alt="Product Image">
+                {% endif %}
                 <div style="display: flex; justify-content: space-evenly;">
                     <div class="button-container">
                         <div class="button-container">
-                            {%if product.affiliate_product%}
-                            <a href="{{product.affiliate_link}}"><button>Buy Now</button></a> 
-                            {%else%}
-                                <a href="https://wa.me/{{store.phone}}"><button>Contact Seller</button></a>
-                            {%endif%}
+                            {% if product.affiliate_product %}
+                                <a href="{{ product.affiliate_link }}"><button>Buy Now</button></a> 
+                            {% else %}
+                                <a href="https://wa.me/{{ store.phone }}"><button>Contact Seller</button></a>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="button-container">
-                        {%if not user.profile in product.savers.all%}
-                        <div class="button-container">
-                            <a href="/stores/{{store.name}}/products/{{product.id}}/save"  onclick="this.style.background = 'orange'"><button><i class="fas fa-save"></i></button></a>
-                        </div>
-                        {%else%}
-                        <div class="button-container">
-                            <a href="/stores/{{store.name}}/products/{{product.id}}/save"><button style="background:orange" onclick="this.style.background = '#28a745'"><i class="fas fa-save"></i></button></a>
-                        </div>
-                        {%endif%}
+                        {% if not user.profile in product.savers.all %}
+                            <div class="button-container">
+                                <a href="/stores/{{ store.name }}/products/{{ product.id }}/save" onclick="this.style.background = 'orange'"><button><i class="fas fa-save"></i></button></a>
+                            </div>
+                        {% else %}
+                            <div class="button-container">
+                                <a href="/stores/{{ store.name }}/products/{{ product.id }}/save"><button style="background:orange" onclick="this.style.background = '#28a745'"><i class="fas fa-save"></i></button></a>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="product-title collapsible">
-                    {{product.name}}
+                    {{ product.name }}
                 </div>
+                <!-- Product view count added below the product title -->
+                <div class="product-view-count"><i class="fas fa-eye"></i> : {{ product.views }}</div>
+
                 
-                <!-- <div class="product-description collapsible">
-                    <p>{{product.description}}</p>
-                </div> -->
-                {%if product.affiliate_product%}
-                    <span style="font-size: 10px; color:rgb(255, 166, 0); position: absolute;right:10px;bottom:10px;">Affiliate</span>
-                {%endif%}
-                {%if user.profile == store.user%}
+                {% if product.affiliate_product %}
+                    <span style="font-size: 10px; color:rgb(255, 166, 0); position: absolute; right:10px; bottom:10px;">Affiliate</span>
+                {% endif %}
+                {% if user.profile == store.user %}
                     <div class="admin-icons" style="margin-bottom:10px;">
                         <a href="products/{{ product.id }}/edit" title="Edit" class="icon">✎</a>
                         <a href="products/{{ product.id }}/delete" title="Delete" class="icon" onclick="return confirm('Are you sure you want to delete this product?');">🗑️</a>
                     </div>
-                {%endif%}
+                {% endif %}
             </div>
-            {%endfor%}
-            <!-- Repeat similar product containers here -->
+            {% endfor %}
+            <!-- Add Product Container -->
             <div class="product-container">
                 <img class="product-cover" src="/static/imgs/add_product.png" alt="Add Product">
                 <div class="product-title">Add Product</div>
                 <div class="button-container">
-                    <a href="/stores/{{store.name}}/products/create">
+                    <a href="/stores/{{ store.name }}/products/create">
                         <button class="plus-button">
                             <span class="plus-icon">&plus;</span>
                         </button>
@@ -153,11 +157,11 @@
             </div>
         </div>  
     </div> 
-    {%if user.profile == store.user%}
+    {% if user.profile == store.user %}
     <a href="templates" class="floating-btn" title="Switch Template">
         <i class="fas fa-paint-brush"></i>
     </a>
-    {%endif%} 
+    {% endif %} 
     <!-- Footer -->
     <div class="footer">
         <div class="footer-links">

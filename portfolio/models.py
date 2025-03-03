@@ -58,7 +58,7 @@ class Post(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     likes = models.ManyToManyField(Website, blank=True, related_name="likes")
     dislikes = models.ManyToManyField(Website, blank=True, related_name="dislikes")
-    image = models.ImageField(upload_to="posts", storage=MediaCloudinaryStorage)
+    image = models.ImageField(upload_to="posts", storage=MediaCloudinaryStorage, null="true", blank="true")
 
     class Meta:
         ordering = ["-date"]

@@ -105,10 +105,10 @@
             </div>
         </div>
         <br>
-        <div class="container last" style="padding-top: 10px;">
+        <div class="container last" style="position:relative; padding-top: 10px;">
             <div class="tabs">
-                <button class="tablink active" onclick="openTab('Store', this)" id="defaultOpen">Store</button>
-                <button class="tablink" onclick="openTab('Blog', this)" id="blogchart">Blog</button>
+                <button style="opacity: 0;position:absolute" class="tablink active" onclick="openTab('Store', this)" id="defaultOpen">Store</button>
+                <!-- <button class="tablink" onclick="openTab('Blog', this)" id="blogchart">Blog</button> -->
             </div>
             <div id="Store" class="tabcontent" style="position: relative;">
                 <canvas id="storeChart" style="width:100%;max-width:600px"></canvas>
@@ -118,14 +118,14 @@
                 </div>
                 {%endif%}
             </div>
-            <div id="Blog" class="tabcontent" style="position:relative">
+            <!-- <div id="Blog" class="tabcontent" style="position:relative">
                 <canvas id="blogChart" style="width:100%;max-width:600px"></canvas>
                 {%if not blog%}
                     <div class="overlay">
                         Request a blog
                     </div>
                 {%endif%}
-            </div>
+            </div> -->
         </div>
     </aside>
     <section class="home">
@@ -408,9 +408,6 @@
         // Get the element with id="defaultOpen" and click on it
         document.getElementById("defaultOpen").click();
 
-        // Store Chart
-        var all_months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
         // Array to hold view counts (this will be populated by data from Django)
         var storeXValues = [];
         var storeYValues = [];
@@ -427,12 +424,6 @@
         //     storeYValues.push(0);  // Add 0 for missing months
         // }
         //console.log(storeYValues)
-        all_months.forEach(function(month) {
-        if (!storeXValues.includes(month)) {
-            storeXValues.push(month);  // Add missing month names
-            storeYValues.push(0);  // Add 0 views for missing months
-        }
-        });
         var storeBarColors = ["red", "green","blue","orange","brown", "red", "green","blue","orange","brown", "red", "green"];
 
         new Chart("storeChart", {
@@ -448,7 +439,7 @@
                 legend: {display: false},
                 title: {
                     display: true,
-                    text: "Store Views 2024"
+                    text: "Store Views : " + new Date().getFullYear()
                 }
             }
         });

@@ -26,14 +26,19 @@ def home(request):
     else:
         notifications = ""
     if request.method == "POST":
+        #print(bool(request.POST["text"]), bool(request.FILES["image"]))
         try: 
             profile = Website.objects.get(user=request.user.profile)
             form = CreateCommnunityPost(request.POST, request.FILES)
-            if form.is_valid():
-                myform = form.save(commit=False)
-                myform.profile = profile
-                myform.save()
-                return redirect("/")
+            
+            if not (bool(request.POST["text"]) or bool(request.FILES["image"])):
+                    return redirect("/Error")
+            else:
+                if form.is_valid():
+                    myform = form.save(commit=False)
+                    myform.profile = profile
+                    myform.save()
+                    return redirect("/")
         except Exception:
             return redirect('/create')
     else:

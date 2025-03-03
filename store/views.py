@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 import random
+from django.db.models import Sum
 from .forms import *
 from .models import *
 from django.utils import timezone
@@ -26,8 +27,23 @@ def store(request, slug):
     for p in page_obj:
         p.increment_views()
         productslst.append(p)
+    current_month = timezone.now().month
+    current_year = timezone.now().year
     template = store.template.template if store.template else "store_templates/store_template2.html"
-    Chart.objects.create(store=store, views=store.views)
+    
+    previous_views = Chart.objects.filter(
+    store=store
+    ).exclude(
+        date__year=current_year,
+        date__month=current_month
+    ).aggregate(Sum('views'))['views__sum'] or 0
+    print(previous_views)
+    
+    Chart.objects.create(
+        store=store,
+        views=store.views - previous_views  # Subtract previous views from the new views
+    )
+    
     has_affiliate_products = products.filter(affiliate_product=True).exists()
     not_affiliate = products.filter(affiliate_product=False).exists
     if store.published or store.user == request.user.profile or request.user.is_superuser:

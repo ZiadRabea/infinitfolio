@@ -23,7 +23,7 @@
     <link rel="icon" href="{% static 'imgs/infinitfolio.png' %}" type="image/png">
     <!-- Add Font Awesome for icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{%static 'css/stores/store_template1.css'%}">
+    <link rel="stylesheet" href="{% static 'css/stores/store_template1.css' %}">
 </head>
 
 <body>
@@ -40,12 +40,16 @@
     <div class="header">
         <h1>{{ store.name }}</h1>
         <h2>{{ store.description }}</h2>
+        <!-- Store view count added -->
+        {%if user.profile == store.user%}
+            <p class="store-view-count"><i class="fas fa-eye"></i> : {{ store.views }}</p>
+        {%endif%}
     </div>
 
     <div class="container">
         <form method="get" class="filter-form" style="border-bottom-left-radius:0;border-bottom-right-radius:0;">
             <label for="topic">Search Products:</label>
-            {{filter.form.description}}
+            {{ filter.form.description }}
             <button type="submit" class="filter-button">
                 Apply Filter
             </button>
@@ -58,61 +62,21 @@
                 Affiliate Products
             </button>
         </div>
-        <div  id="products">
-        {% if not_affiliate %}
-        <div class="product-grid">
-            {% for product in products %}
-            {%if not product.affiliate_product%}
-            <div class="product-container">
-                {%if product.cover_image%}
-                    <img class="product-cover" src="{{ product.cover_image.url }}" alt="{{ product.name }} Cover Image">
-                {%else%}
-                    <img class="product-cover" src="{{ product.image_link }}" alt="{{ product.name }} Cover Image">
-                {%endif%}
-                <div class="product-title">{{ product.name }}</div>
-                <div class="button-container">
-                    <a href="/stores/{{ store.name }}/products/{{ product.id }}">
-                        <button class="arrow-button">
-                            <span class="arrow-icon">&#10148;</span>
-                        </button>
-                    </a>
-                </div>
-            </div>
-            {%endif%}
-            {%endfor%}
-            {% if store.user == user.profile %}
-            <div class="product-container">
-                <img class="product-cover" src="{% static 'imgs/add_product.png' %}" alt="Add Product">
-                <div class="product-title">Add Product</div>
-                <div class="button-container">
-                    <a href="/stores/{{ store.name }}/products/create">
-                        <button class="plus-button">
-                            <span class="plus-icon">&plus;</span>
-                        </button>
-                    </a>
-                </div>
-            </div>
-            {% endif %}
-        </div>
-        {% else %}
-        <div class="empty-products" onclick="{% if store.user == user.profile %} window.open('/stores/{{ store.name }}/products/create') {% endif %}" style="{% if store.user == user.profile %} cursor:pointer {% endif %}">
-            <i class="fas fa-exclamation-circle"></i>
-            <p>No products available. {% if store.user == user.profile %}Create your first product! {% endif %}</p>
-        </div>
-        {% endif %} 
-    </div>
-        <div id="affiliates">
-        {%if is_affiliate%}
+        <div id="products">
+            {% if not_affiliate %}
             <div class="product-grid">
-                {% for product in products%}
-                {%if product.affiliate_product%}
+                {% for product in products %}
+                {% if not product.affiliate_product %}
                 <div class="product-container">
-                    {%if product.cover_image%}
-                    <img class="product-cover" src="{{ product.cover_image.url }}" alt="{{ product.name }} Cover Image">
-                    {%else%}
+                    {% if product.cover_image %}
+                        <img class="product-cover" src="{{ product.cover_image.url }}" alt="{{ product.name }} Cover Image">
+                    {% else %}
                         <img class="product-cover" src="{{ product.image_link }}" alt="{{ product.name }} Cover Image">
-                    {%endif%}
+                    {% endif %}
                     <div class="product-title">{{ product.name }}</div>
+                    <!-- Product view count added -->
+                    <div class="product-view-count" style="margin-top:5px"><i class="fas fa-eye"></i> : {{ product.views }}</div>
+                    
                     <div class="button-container">
                         <a href="/stores/{{ store.name }}/products/{{ product.id }}">
                             <button class="arrow-button">
@@ -121,8 +85,8 @@
                         </a>
                     </div>
                 </div>
-                {%endif%}
-                {%endfor%}
+                {% endif %}
+                {% endfor %}
                 {% if store.user == user.profile %}
                 <div class="product-container">
                     <img class="product-cover" src="{% static 'imgs/add_product.png' %}" alt="Add Product">
@@ -144,12 +108,59 @@
             </div>
             {% endif %}
         </div>
-        {%if user.profile == store.user%}
+        <div id="affiliates">
+            {% if is_affiliate %}
+            <div class="product-grid">
+                {% for product in products %}
+                {% if product.affiliate_product %}
+                <div class="product-container">
+                    {% if product.cover_image %}
+                        <img class="product-cover" src="{{ product.cover_image.url }}" alt="{{ product.name }} Cover Image">
+                    {% else %}
+                        <img class="product-cover" src="{{ product.image_link }}" alt="{{ product.name }} Cover Image">
+                    {% endif %}
+                    <div class="product-title">{{ product.name }}</div>
+                    <!-- Product view count added -->
+                    <div class="product-view-count" style="margin-top:5px"><i class="fas fa-eye"></i> : {{ product.views }}</div>
+
+                    <div class="button-container">
+                        <a href="/stores/{{ store.name }}/products/{{ product.id }}">
+                            <button class="arrow-button">
+                                <span class="arrow-icon">&#10148;</span>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+                {% if store.user == user.profile %}
+                <div class="product-container">
+                    <img class="product-cover" src="{% static 'imgs/add_product.png' %}" alt="Add Product">
+                    <div class="product-title">Add Product</div>
+                    <div class="button-container">
+                        <a href="/stores/{{ store.name }}/products/create">
+                            <button class="plus-button">
+                                <span class="plus-icon">&plus;</span>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            {% else %}
+            <div class="empty-products" onclick="{% if store.user == user.profile %} window.open('/stores/{{ store.name }}/products/create') {% endif %}" style="{% if store.user == user.profile %} cursor:pointer {% endif %}">
+                <i class="fas fa-exclamation-circle"></i>
+                <p>No products available. {% if store.user == user.profile %}Create your first product! {% endif %}</p>
+            </div>
+            {% endif %}
+        </div>
+        {% if user.profile == store.user %}
             <a href="templates" class="floating-btn" title="Switch Template">
                 <i class="fas fa-paint-brush"></i>
             </a>
-        {%endif%}
+        {% endif %}
     </div> 
+
     <script>
         document.getElementById("id_description").placeholder = "Search 🔍"
 

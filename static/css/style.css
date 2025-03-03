@@ -136,7 +136,7 @@ aside .container.middle {
 }
 
 .profile_description {
-    font-size: 10px;
+    font-size: 12px;
     color: var(--text-color);
     text-align: justify;
 }
@@ -261,6 +261,7 @@ aside .container.middle {
     border-bottom-right-radius: 25px;
     border-bottom-left-radius: 25px;
     display: flex;
+    margin-bottom: 10px;
     align-items: center;
     justify-content: space-around;
     color: var(--text-color);
@@ -385,7 +386,21 @@ aside .container.middle {
 .modal-content .submit-post:hover {
     background-color: #2563eb;
 }
-
+.overlay{
+    background:#7e7e7e8a;
+    opacity: 1;
+    position: absolute;
+    display: flex;
+    font-size:20px;
+    justify-content: center;
+    align-items: center;
+    font-size: 15;
+    color:var(--text-color);
+    top:5px;
+    left:0;
+    width:100%;
+    height:100%;
+}
 .close-btn {
     color: #aaa;
     float: right;
@@ -529,19 +544,28 @@ a {
     background: var(--post-body-bg);
     margin-top: 10px;
 }
-
+@media (max-width: 1000px){
+    .desktop{
+        display:none;
+    }
+    .home {
+        width: calc(100% - 260px);
+        margin: 0;
+        float: left;
+    }
+}
 @media (max-width: 768px) {
     aside {
         right: -300px;
         width: 250px;
         margin-top: 0;
-        background: var(--header-bg);
+        background: var(--header-bg) !important;
         transition: transform 0.3s ease;
         height: 100vh;
         padding-top: 20px;
     }
     aside .container{
-        background: var(--header-bg);
+        background: var(--header-bg) !important;
     }
     aside.show {
         transform: translateX(-300px);
@@ -604,7 +628,9 @@ body.dark-mode .trash-icon:hover {
 body.dark-mode .edit-icon:hover {
     color: #4CAF50;
 }
-
+body.dark-mode aside .container{
+    background:#0c0c0c
+}
 body.dark-mode .comment-form button {
     background: #2e7d32;
 }
@@ -672,7 +698,9 @@ textarea:focus {
 body.dark-mode .post .image img {
     filter: brightness(0.8) contrast(1.2);
 }
-
+body.dark-mode aside{
+    background: transparent;
+}
 /* Loading State for Buttons */
 button.loading {
     position: relative;
@@ -696,3 +724,15 @@ button.loading::after {
 @keyframes spin {
     to { transform: rotate(360deg); }
 }
+.tablink{
+    background:#61f461;
+    width: 49%;
+    padding: 2px;
+    border: none;
+    border-radius: 5px;
+    /* margin: 5px; */
+}
+.tablink:hover{
+    background: #1fe629;
+}
+.tablink.active{background: #1fe629 !important;}
