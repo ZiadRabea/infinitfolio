@@ -97,26 +97,26 @@ def create(request):
             myform.is_active = True
             myform.save()
             website = Website.objects.get(id=myform.id)
-            certs = request.FILES.getlist("certificates")
+            # certs = request.FILES.getlist("certificates")
 
-            if certs:
-                for i in certs:
-                    Certificate.objects.create(cert=i, website=website)
-                for i in range(4):
-                    skill = request.POST[f"skill{i+1}"]
-                    mastery = request.POST[f"mastery{i+1}"]
-                    if skill and mastery:
-                        Skill.objects.create(skill=skill, mastery=mastery, website=website)
-            project = request.POST["project1T"]
-            about_project = request.POST["Project1"]
-            if project and about_project:
-                Project.objects.create(title=project, about=about_project, website=website)
+            # if certs:
+            #     for i in certs:
+            #         Certificate.objects.create(cert=i, website=website)
+            #     for i in range(4):
+            #         skill = request.POST[f"skill{i+1}"]
+            #         mastery = request.POST[f"mastery{i+1}"]
+            #         if skill and mastery:
+            #             Skill.objects.create(skill=skill, mastery=mastery, website=website)
+            # project = request.POST["project1T"]
+            # about_project = request.POST["Project1"]
+            # if project and about_project:
+            #     Project.objects.create(title=project, about=about_project, website=website)
 
-            work = request.POST["work1T"]
-            years = request.POST["work1Y"]
-            about_work = request.POST["work1"]
-            if work and years and about_work:
-                Experience.objects.create(job=work, years=years, about=about_work, website=website)
+            # work = request.POST["work1T"]
+            # years = request.POST["work1Y"]
+            # about_work = request.POST["work1"]
+            # if work and years and about_work:
+            #     Experience.objects.create(job=work, years=years, about=about_work, website=website)
 
             return redirect(f"/{website.unique_name}")
 

@@ -111,10 +111,10 @@
             </div>
         </div>
         <br>
-        <div class="container last" style="padding-top: 10px;">
+        <div class="container last" style="position:relative; padding-top: 10px;">
             <div class="tabs">
-                <button class="tablink active" onclick="openTab('Store', this)" id="defaultOpen">Store</button>
-                <button class="tablink" onclick="openTab('Blog', this)" id="blogchart">Blog</button>
+                <button style="opacity: 0;position:absolute" class="tablink active" onclick="openTab('Store', this)" id="defaultOpen">Store</button>
+                <!-- <button class="tablink" onclick="openTab('Blog', this)" id="blogchart">Blog</button> -->
             </div>
             <div id="Store" class="tabcontent" style="position: relative;">
                 <canvas id="storeChart" style="width:100%;max-width:600px"></canvas>
@@ -124,14 +124,14 @@
                 </div>
                 {%endif%}
             </div>
-            <div id="Blog" class="tabcontent" style="position:relative">
+            <!-- <div id="Blog" class="tabcontent" style="position:relative">
                 <canvas id="blogChart" style="width:100%;max-width:600px"></canvas>
                 {%if not blog%}
                     <div class="overlay">
                         Request a blog
                     </div>
                 {%endif%}
-            </div>
+            </div> -->
         </div>
     </aside>
 
@@ -430,9 +430,22 @@
         // Get the element with id="defaultOpen" and click on it
         document.getElementById("defaultOpen").click();
 
-        // Store Chart
-        var storeXValues = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-        var storeYValues = [55, 49, 44, 24, 15, 60, 70, 80, 90, 100, 110, 120];
+        // Array to hold view counts (this will be populated by data from Django)
+        var storeXValues = [];
+        var storeYValues = [];
+
+        // Loop to populate storeYValues with the data passed from the Django template
+        {% for chart in store.chart_set.all %}
+        // Push the views for each month into storeYValues
+            storeXValues.push("{{ chart.date|date:'b' }}");
+            storeYValues.push({{ chart.views|default:0 }});
+        {% endfor %}
+
+        // Padding with zeroes for the remaining months (if not all months are filled)
+        // while (storeYValues.length < 12) {
+        //     storeYValues.push(0);  // Add 0 for missing months
+        // }
+        //console.log(storeYValues)
         var storeBarColors = ["red", "green","blue","orange","brown", "red", "green","blue","orange","brown", "red", "green"];
 
         new Chart("storeChart", {
@@ -448,7 +461,7 @@
                 legend: {display: false},
                 title: {
                     display: true,
-                    text: "Store Views 2024"
+                    text: "Store Views : " + new Date().getFullYear()
                 }
             }
         });
