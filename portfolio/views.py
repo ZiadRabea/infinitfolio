@@ -19,6 +19,14 @@ def home(request):
         blog = request.user.profile.blog
     except:
         blog = None
+    try:
+        website = request.user.profile.website
+    except:
+        website = None
+    
+    if request.user.is_authenticated and not website:
+        return redirect("/create")
+    
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
     if request.user.is_authenticated:
@@ -78,7 +86,7 @@ def create(request):
         website = request.user.profile.website
     except Exception:
         website = None
-    if website : return redirect("/Error") 
+    if website : return redirect("/") 
     if request.method == "POST":
         form = CreateWebsite(request.POST, request.FILES)
         if form.errors:

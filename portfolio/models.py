@@ -8,7 +8,7 @@ class Website(models.Model):
     unique_name = models.SlugField(max_length=500)
     user = models.OneToOneField(Profile, on_delete=models.CASCADE, blank=True)
     is_active = models.BooleanField(default=False)
-    cv_url = models.URLField()
+    cv_url = models.URLField(null=True, blank=True)
     full_name = models.CharField(max_length=100)
     profile_pic = models.ImageField(upload_to="profile_pictures", storage=MediaCloudinaryStorage)
     current_job = models.CharField(max_length=500)
@@ -59,7 +59,7 @@ class Post(models.Model):
     likes = models.ManyToManyField(Website, blank=True, related_name="likes")
     dislikes = models.ManyToManyField(Website, blank=True, related_name="dislikes")
     image = models.ImageField(upload_to="posts", storage=MediaCloudinaryStorage, null="true", blank="true")
-
+    
     class Meta:
         ordering = ["-date"]
     
