@@ -99,10 +99,10 @@
       <form action="#" method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
-        <label for="name">Website name</label>
+        <label for="name">Website-Handle</label>
         {{ form.unique_name }}
 
-        <label for="name">Full name</label>
+        <label for="name">Full Name</label>
         {{ form.full_name }}
 
         <label for="profile_picture">Profile Picture</label>
@@ -114,13 +114,13 @@
         <label for="background_image" style="color:darkgray">CV URL</label>
         {{ form.cv_url }}
 
-        <label for="current_job">Current Job</label>
+        <label for="current_job">Job Title</label>
         {{ form.current_job }}
 
         <label for="email">Email</label>
         {{ form.email }}
 
-        <label for="phone">Phone</label>
+        <label for="phone" style="color:darkgray">Phone</label>
         {{ form.phone }}
 
         <label for="intro">Self-Introduction</label>

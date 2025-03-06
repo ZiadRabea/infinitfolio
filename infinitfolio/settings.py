@@ -24,7 +24,7 @@ DEFAULT_CHARSET = 'utf-8'
 SECRET_KEY = 'django-insecure-1%w#r^7%f@!f189@puxnjs=6pekvnivc3sc!1qclsa*5&^mred'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*", ".vercel.app"]
 
@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'portfolio',
     'blog',
     'store',
-    'menu'
+    'menu',
+    'markdown_deux'
 ]
 
 MIDDLEWARE = [

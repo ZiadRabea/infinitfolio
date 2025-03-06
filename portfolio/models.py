@@ -5,7 +5,7 @@ from cloudinary_storage.storage import MediaCloudinaryStorage
 
 
 class Website(models.Model):
-    unique_name = models.SlugField(max_length=500)
+    unique_name = models.SlugField(max_length=500, unique=True)
     user = models.OneToOneField(Profile, on_delete=models.CASCADE, blank=True)
     is_active = models.BooleanField(default=False)
     cv_url = models.URLField(null=True, blank=True)
@@ -17,7 +17,7 @@ class Website(models.Model):
     age = models.IntegerField()
     analytics = models.CharField(max_length=200, null=True, blank=True)
     adsense = models.CharField(max_length=200, null=True, blank=True)
-    phone = models.CharField(max_length=13)
+    phone = models.CharField(max_length=20, null=True, blank=True)
     fb = models.URLField(null=True, blank=True)
     insta = models.URLField(blank=True, null=True)
     tele = models.URLField(blank=True, null=True)
