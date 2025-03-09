@@ -19,7 +19,7 @@
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ store.name }} | All Products</title>
+    <title>{{ store.title }} | All Products</title>
     <link rel="icon" href="{% static 'imgs/infinitfolio.png' %}" type="image/png">
     <!-- Add Font Awesome for icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
@@ -35,7 +35,7 @@
             {% else %}
                 <img src="https://cdn.pixabay.com/photo/2020/04/17/19/48/city-5056657_1280.png" alt="ZSChool Logo">
             {% endif %}
-            <h1 class="desktop-500">{{ store.name }}</h1>
+            <h1 class="desktop-500">{{ store.title }}</h1>
             <!-- Store view count added below store name -->
         </div>
         <nav>
