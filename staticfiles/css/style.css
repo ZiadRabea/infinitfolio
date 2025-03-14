@@ -564,6 +564,9 @@ a {
         height: 100vh;
         padding-top: 20px;
     }
+    .modal-content{
+        width:90%;
+    }
     aside .container{
         background: var(--header-bg) !important;
     }
@@ -736,3 +739,13 @@ button.loading::after {
     background: #1fe629;
 }
 .tablink.active{background: #1fe629 !important;}
+
+@media (max-width: 500px)  {
+    .post{
+        width: 98%;
+    }
+    .add-post .add {
+        width:98%;
+        font-size: 13px;
+    }
+}
