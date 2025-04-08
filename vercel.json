@@ -9,6 +9,12 @@
   "routes": [
     {
       "src": "/(.*)",
+      "dest": "infinitfolio/wsgi.py"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
       "headers": [
         {
           "key": "X-Frame-Options",
@@ -18,8 +24,7 @@
           "key": "Content-Security-Policy",
           "value": "frame-ancestors *"
         }
-      ],
-      "dest": "infinitfolio/wsgi.py"
+      ]
     }
   ]
 }
