@@ -3,31 +3,13 @@
     {
       "src": "infinitfolio/wsgi.py",
       "use": "@vercel/python",
-      "config": {
-        "maxLambdaSize": "15mb",
-        "runtime": "python3.9"
-      }
+      "config": {"maxLambdaSize" : "15mb", "runtime": "python3.9"}
     }
   ],
-  "rewrites": [
+  "routes": [
     {
-      "source": "/(.*)",
-      "destination": "infinitfolio/wsgi.py"
-    }
-  ],
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "Content-Security-Policy",
-          "value": "frame-ancestors"
-        },
-        {
-          "key": "X-Frame-Options",
-          "value": "ALLOWALL"
-        }
-      ]
+      "src": "/(.*)",
+      "dest": "infinitfolio/wsgi.py"
     }
   ]
 }

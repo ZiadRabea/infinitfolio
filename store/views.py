@@ -3,6 +3,7 @@ import requests
 from django.core.paginator import Paginator
 from urllib.parse import urlencode, urlparse, parse_qs
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.clickjacking import xframe_options_exempt
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 import random
@@ -14,7 +15,7 @@ from datetime import timedelta
 from .filters import *
 # Create your views here.
 
-
+@xframe_options_exempt
 def store(request, slug):
     store = Store.objects.get(name=slug)
     products = Product.objects.filter(store = store)
