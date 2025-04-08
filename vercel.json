@@ -25,7 +25,7 @@
         },
         {
           "key": "X-Frame-Options",
-          "value": "ALLOW-ALL"
+          "value": "ALLOWALL"
         }
       ]
     }
