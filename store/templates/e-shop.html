@@ -3,227 +3,223 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <title>{{ product.name }} | Details</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="{% static 'imgs/infinitfolio.png' %}" type="image/png">
-    <style>
-        /* General Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <title>{{ product.name }} | Details</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="{% static 'imgs/infinitfolio.png' %}" type="image/png">
+  <style>
+    /* CSS Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            font-family: 'Roboto', Arial, sans-serif;
-            background-color: #121212;
-            color: #e0e0e0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
+    /* Custom Properties for our New Design */
+    :root {
+      --primary-color: #6A0DAD;       /* A powerful purple */
+      --primary-color-hover: #5E0BA8;  /* A slightly darker shade for hover states */
+      --accent-color: #ff6f61;         /* Coral accent for action highlights */
+      --bg-color: #ffffff;             /* Clean light background */
+      --card-bg: #f1f1f1;              /* Soft gray card background */
+      --text-color: #333333;           /* Primary text color */
+      --sub-text: #777777;             /* Subtle text for descriptions */
+      --border-radius: 12px;
+      --transition-speed: 0.3s;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
 
-        .container {
-            max-width: 1200px;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+    /* Base Styles */
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
 
-        /* Product card */
-        .product-card {
-            background-color: #1f1f1f;
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-            max-width: 400px;
-            width: 100%;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: transform 0.3s ease-in-out;
-        }
+    /* Main container: product card with image and details */
+    .product-wrapper {
+      max-width: 1000px;
+      width: 100%;
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      display: flex;
+      flex-direction: row;
+    }
 
-        .product-card:hover {
-            transform: translateY(-12px);
-            box-shadow: 0 16px 50px rgba(0, 0, 0, 0.3);
-        }
+    /* Product Image Section */
+    .product-image-container {
+      flex: 1 1 40%;
+      position: relative;
+      overflow: hidden;
+    }
 
-        /* Image */
-        .product-image {
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
+    .product-image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-speed) ease;
+    }
 
-        .product-image:hover {
-            transform: scale(1.05);
-        }
+    .product-image-container:hover img {
+      transform: scale(1.05);
+    }
 
-        /* Product name */
-        .product-name {
-            font-size: 24px;
-            font-weight: bold;
-            color: #00e350;
-            margin-bottom: 10px;
-        }
+    /* Product Details Section */
+    .product-details {
+      flex: 1 1 60%;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background-color: var(--bg-color);
+    }
 
-        /* Description */
-        .product-description {
-            font-size: 14px;
-            color: #bbb;
-            line-height: 1.5;
-            margin-bottom: 20px;
-            flex-grow: 1;
-        }
+    .product-title {
+      font-size: 32px;
+      margin-bottom: 10px;
+      color: var(--primary-color);
+    }
 
-        /* Price */
-        .product-price {
-            margin-bottom: 20px;
-            font-size: 18px;
-        }
+    .price-section {
+      margin: 20px 0;
+      font-size: 22px;
+      font-weight: 500;
+    }
 
-        .original-price {
-            text-decoration: line-through;
-            color: #ff5c5c;
-            margin-right: 10px;
-        }
+    .original-price {
+      text-decoration: line-through;
+      color: var(--sub-text);
+      margin-right: 15px;
+      font-size: 20px;
+    }
 
-        .discounted-price {
-            color: #00e350;
-            font-weight: bold;
-        }
+    .discounted-price {
+      color: var(--accent-color);
+      font-weight: bold;
+      font-size: 24px;
+    }
 
-        /* Button */
-        .cta-button {
-            padding: 12px 25px;
-            background-color: #00e350;
-            color: #121212;
-            font-size: 16px;
-            font-weight: bold;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            text-align: center;
-            transition: background-color 0.3s, transform 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
+    .description {
+      font-size: 16px;
+      margin: 20px 0;
+      color: var(--sub-text);
+    }
 
-        .cta-button:hover {
-            background-color: #00b33c;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-        }
+    .cta-button {
+      background: var(--primary-color);
+      color: #fff;
+      padding: 15px 30px;
+      border: none;
+      border-radius: var(--border-radius);
+      font-size: 18px;
+      cursor: pointer;
+      transition: background var(--transition-speed) ease, transform var(--transition-speed) ease;
+      width: fit-content;
+    }
 
-        /* Icon Section */
-        .admin-icons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
+    .cta-button:hover {
+      background: var(--primary-color-hover);
+      transform: translateY(-3px);
+    }
 
-        .icon {
-            font-size: 20px;
-            color: #bbb;
-            transition: color 0.3s, transform 0.3s;
-        }
+    /* Admin icons styling */
+    .admin-icons {
+      display: flex;
+      gap: 20px;
+      margin-top: 30px;
+    }
 
-        .icon:hover {
-            color: #fff;
-            transform: scale(1.1);
-        }
+    .admin-icons a {
+      font-size: 24px;
+      color: var(--sub-text);
+      transition: color var(--transition-speed) ease, transform var(--transition-speed) ease;
+      text-decoration: none;
+    }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .product-card {
-                max-width: 100%;
-                padding: 15px;
-            }
+    .admin-icons a:hover {
+      color: var(--primary-color);
+      transform: scale(1.1);
+    }
 
-            .product-name {
-                font-size: 20px;
-            }
-
-            .product-description {
-                font-size: 13px;
-            }
-
-            .cta-button {
-                font-size: 14px;
-                padding: 10px 20px;
-            }
-
-            .product-price {
-                font-size: 16px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .product-card {
-                padding: 10px;
-            }
-
-            .product-name {
-                font-size: 18px;
-            }
-
-            .product-description {
-                font-size: 12px;
-            }
-
-            .cta-button {
-                font-size: 12px;
-                padding: 8px 16px;
-            }
-        }
-    </style>
+    /* Responsiveness adjustments */
+    @media (max-width: 768px) {
+      .product-wrapper {
+        flex-direction: column;
+      }
+      .product-image-container {
+        height: 300px;
+      }
+      .product-details {
+        padding: 20px;
+      }
+      .product-title {
+        font-size: 28px;
+      }
+      .price-section {
+        font-size: 20px;
+      }
+      .description {
+        font-size: 15px;
+      }
+      .cta-button {
+        font-size: 16px;
+        padding: 12px 25px;
+      }
+    }
+  </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="product-card">
-            {% if product.cover_image %}
-                <img class="product-image" src="{{ product.cover_image.url }}" alt="{{ product.name }} Cover Image">
-            {% else %}
-                <img class="product-image" src="{{ product.image_link }}" alt="{{ product.name }} Cover Image">
-            {% endif %}
-            <div class="product-name">{{ product.name }}</div>
-            <div class="product-price">
-                {% if product.original_price %}
-                    <span class="original-price">{{ product.original_price }}</span>
-                    <span class="discounted-price">{{ product.price }}</span>
-                {% else %}
-                    <span class="discounted-price">{{ product.price }}</span>
-                {% endif %}
-            </div>
-            <div class="product-description">{{ product.description }}</div>
-            {% if not product.affiliate_link %}
-                <button class="cta-button" onclick="addToCart()">Contact Seller</button>
-            {% else %}
-                <button class="cta-button" onclick="window.open('{{ product.affiliate_link }}')">Get Now</button>
-            {% endif %}
-            {% if store.user == user.profile %}
-                <div class="admin-icons">
-                    <a href="{{ product.id }}/edit" title="Edit" class="icon">✎</a>
-                    <a href="{{ product.id }}/delete" title="Delete" class="icon" onclick="return confirm('Are you sure you want to delete this product?');">🗑️</a>
-                </div>
-            {% endif %}
-        </div>
+  <div class="product-wrapper">
+    <div class="product-image-container">
+      {% if product.cover_image %}
+        <img src="{{ product.cover_image.url }}" alt="{{ product.name }} Cover Image">
+      {% else %}
+        <img src="{{ product.image_link }}" alt="{{ product.name }} Cover Image">
+      {% endif %}
     </div>
+    <div class="product-details">
+      <div>
+        <h1 class="product-title">{{ product.name }}</h1>
+        <div class="price-section">
+          {% if product.original_price %}
+            <span class="original-price">{{ product.original_price }}</span>
+            <span class="discounted-price">{{ product.price }}</span>
+          {% else %}
+            <span class="discounted-price">{{ product.price }}</span>
+          {% endif %}
+        </div>
+        <p class="description">{{ product.description }}</p>
+      </div>
+      <div>
+        {% if not product.affiliate_link %}
+          <button class="cta-button" onclick="addToCart()">Contact Seller</button>
+        {% else %}
+          <button class="cta-button" onclick="window.open('{{ product.affiliate_link }}')">Get Now</button>
+        {% endif %}
 
-    <script>
-        function addToCart() {
-            window.open("https://wa.me/{{ store.phone }}?text=Hi, I am interested in {{product.name}} | infinitfolio.site/stores/{{product.store.name}}/products/{{product.id}}");
-        }
-    </script>
+        {% if store.user == user.profile %}
+          <div class="admin-icons">
+            <a href="{{ product.id }}/edit" title="Edit">✎</a>
+            <a href="{{ product.id }}/delete" title="Delete" onclick="return confirm('Are you sure you want to delete this product?');">🗑️</a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function addToCart() {
+      window.open("https://wa.me/{{ store.phone }}?text=Hi, I am interested in {{product.name}} | infinitfolio.site/stores/{{product.store.name}}/products/{{product.id}}");
+    }
+  </script>
 </body>
-
 </html>

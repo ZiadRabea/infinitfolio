@@ -31,7 +31,7 @@
     <div class="header desktop-header">
         <div class="logo">
             {% if store.logo %}
-                <img src="{{ store.logo.url }}" alt="ZSChool Logo">
+                <img src="{{ store.logo.url }}" alt="{{store.name}} Logo">
             {% else %}
                 <img src="https://cdn.pixabay.com/photo/2020/04/17/19/48/city-5056657_1280.png" alt="ZSChool Logo">
             {% endif %}
@@ -99,9 +99,9 @@
                     {{ product.price }}
                 </span>
                 {% if product.cover_image %}
-                    <img class="product-cover" src="{{ product.cover_image.url }}" width="250px" height="250px" alt="Product Image">
+                    <img class="product-cover" src="{{ product.cover_image.url }}" width="250px" height="250px" alt="Product Image" onclick="window.open('https://infinitfolio.vercel.app/stores/{{store.name}}/products/{{product.id}}')">
                 {% else %}
-                    <img class="product-cover" src="{{ product.image_link }}" width="250px" height="250px" alt="Product Image">
+                    <img class="product-cover" src="{{ product.image_link }}" width="250px" height="250px" alt="Product Image" onclick="window.open('https://infinitfolio.vercel.app/stores/{{store.name}}/products/{{product.id}}')">
                 {% endif %}
                 <div style="display: flex; justify-content: space-evenly;">
                     <div class="button-container">

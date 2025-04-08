@@ -63,7 +63,7 @@
             {% for product in products %}
             <div class="product-card" style="position: relative;">
                 <span class="price">{{ product.price }}</span>
-                <img src="{{ product.cover_image.url }}" alt="Handmade Bag">
+                <img src="{{ product.cover_image.url }}" alt="Handmade Bag" onclick="window.open('https://infinitfolio.vercel.app/stores/{{store.name}}/products/{{product.id}}')">
                 <h3>{{ product.name }}</h3>
                 <!-- Product view count added below the product name -->
                 <div class="product-view-count"><i class="fas fa-eye"></i> : {{ product.views}}</div>

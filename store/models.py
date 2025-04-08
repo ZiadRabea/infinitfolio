@@ -13,7 +13,7 @@ class Store(models.Model):
     title = models.CharField(max_length=500)
     description = models.TextField(max_length=1000)
     amazon_affiliate_id = models.CharField(max_length=100, null=True, blank=True)
-    phone = models.CharField(max_length=12)
+    phone = models.CharField(max_length=20)
     email = models.EmailField()
     approved = models.BooleanField(default=False)
     logo = models.ImageField(upload_to="store_logos", storage=MediaCloudinaryStorage, null=True)
