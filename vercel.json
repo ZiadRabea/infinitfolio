@@ -9,10 +9,10 @@
       }
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/(.*)",
-      "dest": "infinitfolio/wsgi.py"
+      "source": "/(.*)",
+      "destination": "infinitfolio/wsgi.py"
     }
   ],
   "headers": [
