@@ -36,7 +36,7 @@ class Product(models.Model):
     price = models.CharField(max_length=9)
     cls = models.ForeignKey("Category", on_delete=models.CASCADE, null=True, blank=True)
     store = models.ForeignKey(Store, on_delete=models.CASCADE)
-    views = models.IntegerField(default=0)
+    views = models.IntegerField(default=0, null=True, blank=True)
 
     def increment_views(self):
         """Increment views for this product"""
