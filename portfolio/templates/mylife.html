@@ -98,8 +98,8 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      margin: 20px auto 0;
-      max-width: 600px;
+      margin: 80px auto 0;
+      max-width: fit-content;
       backdrop-filter: blur(10px);
       background: rgba(255,255,255,0.2);
       border-radius: 50px;
@@ -119,13 +119,18 @@
       outline: none;
       color: var(--text-color);
       font-size: 1em;
-      padding: 8px;
+      padding: 10px;
       margin: 0 10px;
       border-radius: 25px;
       appearance: none;
     }
+    .search-section input {
+      width:500px;
+    }
     .search-section select {
       min-width: 120px;
+      max-width: 120px;
+      text-align: center
     }
     .search-section button {
       background: #4CAF50;
