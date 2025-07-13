@@ -140,7 +140,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ.get("сloudinary_app"),
+    'CLOUD_NAME': os.environ.get("cloudianry_app_name"),
     'API_KEY': os.environ.get("cloudinary_api_key"),
     'API_SECRET': os.environ.get("cloudinary_secret_key")
 }
