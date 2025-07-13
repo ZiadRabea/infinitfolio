@@ -1,0 +1,289 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinitfolio | Talents</title>
+    <link rel="icon" href="{% static 'imgs/infinitfolio.png' %}" type="image/png">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N37B2KNWMJ"></script>
+
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-N37B2KNWMJ');
+    </script>
+
+    <!-- Adsense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7827616110280134"
+    crossorigin="anonymous"></script>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        /* Header */
+        .header {
+            background-color: #28a745;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .header .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .header nav {
+            display: flex;
+            gap: 15px;
+        }
+
+        .header nav a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .header nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* Hamburger Menu for Mobile */
+        .hamburger-menu {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .hamburger-menu div {
+            width: 30px;
+            height: 4px;
+            background-color: #fff;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .hamburger-menu.active div:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger-menu.active div:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-menu.active div:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* Main Content */
+        .main-content {
+            display: flex;
+            width: 100%;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: #e9f5ee;
+            padding: 20px;
+            height: 100vh;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #28a745;
+            margin-bottom: 10px;
+            text-decoration: none;
+        }
+
+        .sidebar a:hover {
+            text-decoration: underline;
+        }
+
+        /* Blog Grid */
+        .blog-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            align-items: stretch; /* Ensures all items stretch to the same height */
+        }
+
+        .blog-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            height: 100%; /* Makes sure the card stretches to fill available height */
+        }
+
+        .blog-card .content {
+            padding: 10px;
+            flex-grow: 1; /* Makes the content stretch to fill the card */
+        }
+
+        .blog-card .content img {
+            width: 100%;
+            height: 200px;;
+        }
+
+        .blog-card .content h3 {
+            font-size: 18px;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .blog-card .content p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Mobile Sidebar */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: -300px;
+                width: 250px;
+                height: 100%;
+                background-color: #e9f5ee;
+                padding: 20px;
+                transition: transform 0.3s ease;
+            }
+
+            .sidebar.show {
+                transform: translateX(300px);
+            }
+
+            .hamburger-menu {
+                display: flex;
+            }
+
+            .blog-grid {
+                padding: 10px;
+            }
+
+            .main-content {
+                flex-direction: column;
+            }
+        }
+
+        /* Form Styling */
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: block;
+            font-size: 16px;
+        }
+
+        input[type="text"] {
+            width: 90%;
+            margin:0 auto;
+            padding: 8px;
+            margin: 10px 0 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        input[type="submit"] {
+            background-color: #28a745;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width:100%;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+
+        /* Mobile Form Adjustments */
+        @media (max-width: 768px) {
+            form {
+                width: 90%;
+                margin: 20px auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">Talents</div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/blogs/posts">Posts</a>
+            <a href="/blogs">Blogs</a>
+        </nav>
+        <!-- Hamburger Menu for Mobile -->
+        <div class="hamburger-menu" onclick="toggleSidebar()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <aside class="sidebar" id="sidebar">
+            <form method="get">
+                {% csrf_token %}
+                <label for="title">Search By Skill:</label>
+                {{ filter.form.skill }}
+                <input type="submit" value="Search">
+            </form>
+        </aside>
+        <section class="blog-grid">
+            {% for cv in cvs %}
+            <a href="/{{ cv.unique_name }}" style="color: darkslategray; text-decoration: none;">
+                <div class="blog-card">
+                    <div class="content">
+                        <img src="{{ cv.profile_pic.url }}" alt="Video Thumbnail" width="300" height="250">
+                        <h3>{{ cv.full_name }}</h3>
+                        <p>{{ cv.about }}</p>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </section>
+    </div>
+
+    <script>
+        // Toggle sidebar visibility and hamburger menu shape
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const menu = document.querySelector('.hamburger-menu');
+
+            sidebar.classList.toggle('show');
+            menu.classList.toggle('active');
+        }
+        document.getElementById("id_skill").placeholder = "Skill 🔎";
+    </script>
+</body>
+</html>

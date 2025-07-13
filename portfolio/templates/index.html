@@ -1,0 +1,227 @@
+{% load static %}
+{% load markdown_deux_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlignOS | Home</title>
+    <link rel="icon" href="{% static 'imgs/infinitfolio.png' %}" type="image/png">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N37B2KNWMJ"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-N37B2KNWMJ');
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=1.2.0">
+    <!-- SimpleMDE CSS for Markdown Editor -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+</head>
+<body>
+    <section class="header">
+        <div class="top-header">
+            <div class="logo">
+                <img src="https://infinitfolio.vercel.app/static/images/logo.png" alt="" width="50" height="50" style="margin-left: 20px;">
+                <h2 class="title"></h2>
+            </div>
+            <nav>
+                <a href="/productivity"><div><i class="fas fa-tasks"></i></div></a>
+                <a href="/talents/find"><div><i class="fas fa-briefcase"></i></div></a>
+                <a href="/notifications">
+                    <div class="relative">
+                        <i class="fas fa-envelope"></i>
+                        {% if notifications %}
+                            <span class="noti-count">{{ notifications.count }}</span>
+                        {% endif %}
+                    </div>
+                </a>
+            </nav>
+            <div class="theme-toggle" style="margin-right: 20px;">
+                <button id="toggleTheme">🌙</button>
+            </div>
+            <div class="hamburger-menu" onclick="toggleSidebar()">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        <div class="bottom-header">
+            <div class="quote">
+                <i class="fa fa-arrow-circle-left" id="poke-left"></i>
+                <span id="quote-text">"There's no shortcut to a place worth going"</span>
+                <i class="fa fa-arrow-circle-right" id="poke-right"></i>
+            </div>
+        </div>
+    </section>
+
+    <aside class="suggestions" id="sidebar">
+        <div class="container first">
+            <div class="timer">
+                <i class="fas fa-clock clock"></i><br>
+                <span id="timer">00:00:00</span></p>
+            </div>
+        </div>
+        <div class="container middle">
+            <div class="sugestions">
+                <a href="https://ocw.mit.edu/courses/9-13-the-human-brain-spring-2019/">
+                    <div class="suggestion">
+                        <img class="image" src="https://ocw.mit.edu/courses/9-13-the-human-brain-spring-2019/6a08eddd73159f17c840c47b8e052a02_MIT9_13S19.jpg" alt="Brain">
+                        Neuroscience MIT OCW
+                        <h2 class="title"></h2>
+                    </div>
+                </a>
+                <a href="https://www.youtube.com/watch?v=ox0jskq9RLo">
+                    <div class="suggestion">
+                        <img class="image" src="https://res.cloudinary.com/z-apps/image/upload/v1/media/posts/%D9%85%D8%B4_%D9%84%D8%A7%D8%B2%D9%85_%D8%AA%D9%83%D9%88%D9%86_%D9%85%D8%A8%D8%B1%D9%85%D8%AC_1_qhvvhs" alt="">
+                        Assembly in 1h (Arabic)
+                        <h2 class="title"></h2>
+                    </div>
+                </a>
+                <a href="">
+                    <div class="suggestion">
+                        <img class="image" src="https://play-lh.googleusercontent.com/zvxb6-R-WBKhlfm0dbQZDUssZ9HnSjrQaUI_zgPOM9mkcAHwYOQjD42Dx7bD_BOvoQ" alt="">
+                        Stanford RL Course
+                        <h2 class="title"></h2>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="container last">
+            <div class="sugestions">
+                <a href="https://ziadrabea.github.io/infinitfolio-frontend/">
+                    <div class="suggestion">
+                        <i class="fas fa-info"></i> About US
+                    </div>
+                </a>
+                <a href="mailto:infinitfolio.gmail.com">
+                    <div class="suggestion">
+                        <i class="fas fa-phone"></i> Contact US
+                    </div>
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <aside class="suggestions desktop" style="left: 5px;">
+        <div class="container first">
+            <div class="timer">
+                <img height="75" width="75" style="border-radius: 100%;" 
+                     src="{% if user.profile.website.profile_pic %}{{ user.profile.website.profile_pic.url }}{% else %}https://th.bing.com/th/id/OIP.hmLglIuAaL31MXNFuTGBgAHaHa?rs=1&pid=ImgDetMain{% endif %}" 
+                     alt="" class="profilepic"><br>
+                <p><span id="timer">{{ user.profile.website.full_name }}</span></p>
+                <p class="profile_description">
+                    {{ user.profile.website.about }}
+                </p>
+            </div>
+        </div>
+        <br>
+    </aside>
+    <section class="home">
+        <div class="add-post">
+            <div class="add">
+                <a href="{% if user.is_authenticated %}{{ user.profile.website.unique_name }}{% else %}/accounts/login{% endif %}">
+                    <img src="{% if user.profile.website.profile_pic %}{{ user.profile.website.profile_pic.url }}{% else %}https://th.bing.com/th/id/OIP.hmLglIuAaL31MXNFuTGBgAHaHa?rs=1&pid=ImgDetMain{% endif %}" alt="">
+                </a>
+                <div class="post-form">
+                    Bring your thoughts to the world ✨
+                </div>
+            </div>
+        </div>
+        {% for post in posts %}
+            <div class="post">
+                <div class="post-header">
+                    <a href="/{{ post.profile.unique_name }}">
+                        <img src="{% if post.profile.profile_pic %}{{ post.profile.profile_pic.url }}{% else %}https://th.bing.com/th/id/OIP.hmLglIuAaL31MXNFuTGBgAHaHa?rs=1&pid=ImgDetMain{% endif %}" alt="" class="profilepic">
+                        <h2 class="username">{{ post.profile.full_name }}</h2>
+                    </a>
+                    {% if post.profile == user.profile.website %}
+                        <div class="options" style="display: flex; justify-content: space-evenly;">
+                            <a href="/posts/{{ post.id }}/edit"><i class="fas fa-edit edit-icon"></i></a>
+                            <a href="/posts/{{ post.id }}/delete" onclick="return confirm('Are you sure you want to delete this post?');">
+                                <i class="fa-solid fa-trash trash-icon"></i>
+                            </a>
+                        </div>
+                    {% else %}
+                        <div class="options">
+                            <i class="fas fa-copy edit-icon" onclick="copy('{{ post.text }}')"></i>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="content">
+                    <!-- Render post text as Markdown using django-markdown-deux -->
+                    <div class="markdown-view">
+                        {{ post.text|markdown }}
+                    </div>
+                </div>
+                <div class="image">
+                    {% if post.image %} 
+                        <img src="{{ post.image.url }}" alt="">
+                    {% endif %}
+                </div>
+                <div class="actions">
+                    <a href="/posts/{{ post.id }}/like">
+                        <div class="like" {% if user.profile.website in post.likes.all %} onclick="this.style.color = '#fff'" {% else %} onclick="this.style.color = '#0f0'" {% endif %} style="{% if user.profile.website in post.likes.all %}color:green{% endif %}">
+                            <i class="fas fa-thumbs-up"></i> | {{ post.likes.count }}
+                        </div>
+                    </a>
+                    <a href="/posts/{{ post.id }}/dislike">
+                        <div class="dislike" {% if user.profile.website in post.dislikes.all %} onclick="this.style.color = '#fff'" {% else %} onclick="this.style.color = '#f00'" {% endif %} style="{% if user.profile.website in post.dislikes.all %}color:red{% endif %}">
+                            <i class="fas fa-thumbs-down"></i> | {{ post.dislikes.count }}
+                        </div>
+                    </a>
+                    <a href="/posts/{{ post.id }}">
+                        <div class="comment" style="color:burlywood">
+                            <i class="fas fa-comment"></i> | {{ post.comment_set.count }}
+                        </div>
+                    </a>
+                    <div class="share" id="sharebtn">
+                        <i class="fas fa-share-alt"></i>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        <div class="paginator">
+            <span class="step-links">
+                {% if posts.has_previous %}
+                    <a href="?page={{ posts.previous_page_number }}"><li class="fas fa-arrow-left"></li></a>
+                {% endif %}
+                <span class="current">
+                    Post {{ posts.number }}
+                </span>
+                {% if posts.has_next %}
+                    <a href="?page={{ posts.next_page_number }}"><li class="fas fa-arrow-right"></li></a>
+                {% endif %}
+            </span>
+        </div>
+    </section>
+    <!-- Enhanced Modal for Creating a Post -->
+    <div id="postModal" style="align-items:center; justify-content:center;" class="modal">
+        <form method="post" enctype="multipart/form-data" class="modal-content enhanced-form" style="height: fit-content;margin:0;">
+            {% csrf_token %}
+            <div class="modal-header" style="position: relative; width: 90%;">
+                <h2 style="width: 100%; text-align: center;">Create Post</h2>
+                <span style="position: absolute; right: 5px;top:0" class="close-btn">&times;</span>
+            </div>
+            <div class="modal-body">
+                <!-- Markdown Editor Textarea -->
+                <textarea placeholder="What's on your mind?" id="postContent" name="text"></textarea>
+                <div class="file-upload" style="position: relative;">
+                    <label for="image-upload" class="upload-label">
+                        <i class="fa-solid fa-upload"></i> Upload Image
+                    </label>
+                    <input type="file" id="image-upload" class="hidden-upload" accept="image/*" name="image">
+                </div>
+            </div>
+            <div class="modal-footer" style="margin-top: 20px; width:100%; text-align:center;">
+                <button style="width:90%;" type="submit" class="submit-post">Post</button>
+            </div>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+    <script src="{%static 'js/main.js'%}?v=0.0.6"></script>
+</body>
+</html>

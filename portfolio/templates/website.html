@@ -1,0 +1,963 @@
+{%load static%}
+{% if website.is_active %}
+  <!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N37B2KNWMJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-N37B2KNWMJ');
+    </script>
+    
+    <!-- Adsense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7827616110280134"
+    crossorigin="anonymous"></script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{website.full_name}}</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{%static 'css/website/aos.css' %}" rel="stylesheet">
+    <link href="{%static 'css/website/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{%static 'css/website/main.css' %}" rel="stylesheet">
+    <link rel="icon" href="/static/imgs/infinitfolio.png" type="image/png">
+    <noscript>
+      <style type="text/css">
+        [data-aos] {
+            opacity: 1 !important;
+
+        }
+           .cont{
+                background:none;
+            }
+            #body{
+                transition:all 1.5s ease;
+            }
+            header{
+                z-index:10;
+            }
+            a{
+            color:black
+            }
+            #titles{
+                font-size:80px;
+                font-family:algerian;
+                margin:0 auto;
+                position:absolute;
+                top:30%;
+                color:white;
+                width:100%;
+                text-align:center;
+                z-index:3;
+                transition:all 1.5s ease-in-out;
+            }
+            @media only screen and (max-width: 500px) {
+                #titles{
+                font-size:50px;
+                }
+            }
+            #main_div{
+                transition: all 1.5s ease-in-out;
+            }
+            textarea{
+                width:100%;
+                height: 150px;
+                resize: none;
+            }
+            iframe{
+                width:90%;
+                margin:0 auto;
+                display: block;
+            }
+            @media screen and (max-width:500px){
+                iframe{
+                    width: 100%;
+                }
+            }
+            .center{
+                display: flex;
+                align-content: center;
+                justify-content: center;
+            }
+            .title {
+                font-weight: bold;
+                font-size: 35px;
+                display: flex;
+                justify-content: center;
+                font-family: cursive;
+                margin-bottom: 3px;
+            }
+            .first-name, .last-name {
+                display: inline-block;
+            }
+            .first-name {
+                margin-right: 15px;
+                margin-top: var(--spasing);
+            }
+            :root {
+                --color-e-p: #fafafa;
+                --color-button: #243cb1;
+                --width: 220px;
+                --height: 40px;
+                --spasing: 20px;
+                --min-border: 1px solid #ddd;
+            }
+            .box{
+                background-color: #fdb;
+                display: block;
+                padding: 20px;
+            }
+            .a label, .birthday {
+                display: block;
+                color: #656b73;
+                margin-bottom: 7px;
+                margin-top: 6px;
+                text-align: left
+            }
+            .a input {
+                display: block;
+                width: var(--width);
+                height: var(--height);
+                background-color: var(--color-e-p);
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                padding: 10px;
+            }
+            button, input, optgroup, select, textarea {
+                font-family: inherit;
+                font-size: 100%;
+                line-height: 1.15;
+                margin: 0;
+            }
+            #id_Email, #id_Title{
+                width: 100% !important;
+            }
+            .submit {
+                display: block;
+                background-color: var(--color-button);
+                color: white;
+                margin-top: var(--spasing);
+                width: 100%;
+                height: 35px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                font-weight: bold;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            @media screen and (max-width:535px){
+                .first-name, .last-name, #first, #last{
+                    width: 100%;
+                }
+                 .a input {
+                     width: 100%;
+                }
+            }
+      </style>
+
+    </noscript>
+  </head>
+  <body id="top">
+    <header>
+      <div class="profile-page sidebar-collapse">
+        <nav class="navbar navbar-expand-lg fixed-top navbar-transparent bg-primary" color-on-scroll="400">
+          <div class="container">
+            <div class="navbar-translate"><a class="navbar-brand" href="/" rel="tooltip">Create similar</a>
+              <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-bar bar1"></span><span class="navbar-toggler-bar bar2"></span><span class="navbar-toggler-bar bar3"></span></button>
+            </div>
+            <div class="collapse navbar-collapse justify-content-end" id="navigation">
+              <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link smooth-scroll" href="#about">About</a></li>
+                <li class="nav-item"><a class="nav-link smooth-scroll" href="#skill">Skills</a></li>
+                <li class="nav-item"><a class="nav-link smooth-scroll" href="#portfolio">Certificates</a></li>
+                <li class="nav-item"><a class="nav-link smooth-scroll" href="#experience">Projects</a></li>
+                <li class="nav-item"><a class="nav-link smooth-scroll" href="#contact">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <div class="page-content" id="body">
+      <div>
+<div class="profile-page" id="main_div">
+  <div class="wrapper">
+    <div class="page-header page-header-small" filter-color="green">
+      <div class="page-header-image" data-parallax="true" style="background-image: url('https://images.pexels.com/photos/1103970/pexels-photo-1103970.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')"></div>
+      <div class="container">
+        <div class="content-center">
+          <div class="cc-profile-image"><a href="#"><img src="{{website.profile_pic.url}}" alt="Image"/></a></div>
+          <div class="h2 title">{{website.full_name}}</div>
+          <p class="category text-white">{{website.current_job}}</p><a class="btn btn-primary smooth-scroll mr-2" href="#contact" data-aos="zoom-in" data-aos-anchor="data-aos-anchor">Contact</a><a class="btn btn-primary" href="{{website.cv_url}}" data-aos="zoom-in" data-aos-anchor="data-aos-anchor">Download CV</a>
+        </div>
+      </div>
+      <div class="section">
+        <div class="container">
+          <div class="button-container"><a class="btn btn-default btn-round btn-lg btn-icon" href="#" onclick="visit('{{website.fb}}')" rel="tooltip" title="Follow me on Facebook"><i class="fa fa-facebook"></i></a><a class="btn btn-default btn-round btn-lg btn-icon" href="#" onclick="visit('{{website.wp}}')" rel="tooltip" title="Contact-me on WP"><i class="fa fa-whatsapp"></i></a><a class="btn btn-default btn-round btn-lg btn-icon" href="#" onclick="visit('{{website.tele}}')" rel="tooltip" title="Contact me on Telegram"><i class="fa fa-telegram"></i></a><a class="btn btn-default btn-round btn-lg btn-icon" href="#" onclick="visit('{{website.insta}}')" rel="tooltip" title="Follow me on Instagram"><i class="fa fa-instagram"></i></a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="section" id="about">
+  <div class="container">
+    <div class="card" data-aos="fade-up" data-aos-offset="10">
+      <div class="row">
+        <div class="col-lg-6 col-md-12">
+          <div class="card-body">
+            <div class="h4 mt-0 title">About</div>
+            <p style="text-align:justify"> {{website.about}} </p>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-12">
+          <div class="card-body">
+            <div class="h4 mt-0 title">Basic Information</div>
+            <div class="row">
+              <div class="col-sm-4"><strong class="text-uppercase">Age:</strong></div>
+              <div class="col-sm-8">{{website.age}}</div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-sm-4"><strong class="text-uppercase">Email:</strong></div>
+              <div class="col-sm-8">{{website.email}}</div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-sm-4"><strong class="text-uppercase">Phone:</strong></div>
+              {%if website.phone%}
+                <div class="col-sm-8">{{website.phone}}</div>
+              {%else%}
+                <div class="col-sm-8">DNE</div>
+              {%endif%}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="section" id="skill">
+  <div class="container">
+    <div class="h4 text-center mb-4 title">Professional Skills</div>
+    <div class="card" data-aos="fade-up" data-aos-anchor-placement="top-bottom">
+      <div class="card-body">
+        <div class="row">
+          {%for skill in skills%}
+            {% if forloop.counter0|divisibleby:"2" %}
+              </div><div class="row">
+            {% endif %}
+            <div class="col-md-6">
+              <div class="progress-container progress-primary"><span class="progress-badge">{{skill.skill}}</span>
+                <div class="progress">
+                  <div class="progress-bar progress-bar-primary" data-aos="progress-full" data-aos-offset="10" data-aos-duration="2000" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{skill.mastery}}%;"></div><span class="progress-value">{{skill.mastery}}%</span>
+                </div>
+              </div>
+            </div>
+          {%endfor%}
+          {%if user.profile == website.user%}
+          <a href = "/{{website.unique_name}}/skills" style="text-decoration:none; width:100%;"><button style="width:100%; font-size:25px; border-radius:20px;" class="btn btn-primary smooth-scroll mr-2 aos-init aos-animate">+</button></a>
+          {%endif%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="section" id="portfolio">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 ml-auto mr-auto">
+        <div class="h4 text-center mb-4 title">Certificates</div>
+        <div class="nav-align-center">
+          <ul class="nav nav-pills nav-pills-primary" role="tablist">
+            <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#web-development" role="tablist"><i class="fa fa-laptop" aria-hidden="true"></i></a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#graphic-design" role="tablist"><i class="fa fa-code"></i></a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Photography" role="tablist"><i class="fa fa-camera" aria-hidden="true"></i></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="tab-content gallery mt-5">
+      <div class="tab-pane active" id="web-development">
+        <div class="ml-auto mr-auto">
+          <div class="row">
+            <div class="col-md-6">
+              {%for cert in certs%}
+               {% if forloop.counter0 != 0 and forloop.counter0|divisibleby:2 %}
+                  </div><div class="col-md-6">
+                  {% endif %}
+              <div class="cc-porfolio-image img-raised" data-aos="fade-up" data-aos-anchor-placement="top-bottom">
+                  <figure class="cc-effect"><img src="{{cert.cert.url}}" alt="Image"/>
+                    <figcaption>
+                      <div class="h4">Certificate</div>
+                      <p>Certificate</p>
+                    </figcaption>
+                  </figure></div>
+                {%endfor%}
+              {%if user.profile == website.user%}
+              <a href = "/{{website.unique_name}}/certs" style="text-decoration:none; width:100%;"><button style="width:100%; font-size:25px; border-radius:20px;" class="btn btn-primary smooth-scroll mr-2 aos-init aos-animate">+</button></a>
+              {%endif%}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="section" id="experience">
+  <div class="container cc-experience">
+    <div class="h4 text-center mb-4 title">Projects</div>
+    {%for project in projects%}
+      <div class="card">
+        <div class="row">
+          <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50" data-aos-duration="500">
+            <div class="card-body cc-experience-header">
+              <p>{{project.title}}</p>
+              <div class="h5">{{project.title}}</div>
+            </div>
+          </div>
+          <div class="col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
+            <div class="card-body">
+              <div class="h5">{{project.title}}</div>
+              <p>{{project.about}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    {%endfor%}
+    {%if user.profile == website.user%}
+    <a href = "/{{website.unique_name}}/projects" style="text-decoration:none; width:100%;"><button style="width:100%; font-size:25px; border-radius:20px;" class="btn btn-primary smooth-scroll mr-2 aos-init aos-animate">+</button></a>
+    {%endif%}
+  </div>
+</div>
+<div class="section">
+  <div class="container cc-education">
+    <div class="h4 text-center mb-4 title">Work Experience</div>
+
+    {%for work in works%}
+    <div class="card">
+      <div class="row">
+        <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50" data-aos-duration="500">
+          <div class="card-body cc-education-header">
+            <p>{{work.job}}</p>
+            <div class="h5">{{work.job}}</div>
+          </div>
+        </div>
+        <div class="col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
+          <div class="card-body">
+            <div class="h5">{{work.job}}</div>
+            <p class="category">{{work.years}}+ years of experience</p>
+            <p>{{work.about}}.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    {%endfor%}
+    {%if user.profile == website.user%}
+    <a href = "/{{website.unique_name}}/work" style="text-decoration:none; width:100%;"><button style="width:100%; font-size:25px; border-radius:20px;" class="btn btn-primary smooth-scroll mr-2 aos-init aos-animate">+</button></a>
+    {%endif%}
+  </div>
+</div>
+  </div>
+</div>
+<div class="section" id="contact">
+  <div class="cc-contact-information" style="background-image: url('images/pexels-olga-neptuna-2078774.jpg')">
+    <div class="container">
+      <div class="cc-contact">
+        <div class="row">
+          <div class="col-md-9">
+            <div class="card mb-0" data-aos="zoom-in">
+              <div class="h4 text-center title">Contact Me</div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="card-body">
+                    <form action="https://formspree.io/bd119906@email.com" method="POST">
+                      <div class="p pb-3"><strong>Feel free to contact me </strong></div>
+                      <div class="row mb-3">
+                        <div class="col">
+                          <div class="input-group"><span class="input-group-addon"><i class="fa fa-user-circle"></i></span>
+                            <input class="form-control" type="text" name="name" placeholder="Name" required="required"/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <div class="col">
+                          <div class="input-group"><span class="input-group-addon"><i class="fa fa-file-text"></i></span>
+                            <input class="form-control" type="text" name="Subject" placeholder="Subject" required="required"/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <div class="col">
+                          <div class="input-group"><span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                            <input class="form-control" type="email" name="_replyto" placeholder="E-mail" required="required"/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <div class="col">
+                          <div class="form-group">
+                            <textarea class="form-control" name="message" placeholder="Your Message" required="required"></textarea>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <button class="btn btn-primary" type="submit">Send</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card-body">
+                    <p class="mb-0"><strong>Date of birth </strong></p>
+                    <p class="pb-2">_____</p>
+                    <p class="mb-0"><strong>Phone</strong></p>
+                        <p class="pb-2">{{website.phone}}</p>
+                    <p class="mb-0"><strong>Email</strong></p>
+                    <p>{{website.email}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <footer class="footer">
+      <div class="container text-center"><a class="cc-facebook btn btn-link" href="#" onclick="visit('{{website.fb}}')"><i class="fa fa-facebook fa-2x " aria-hidden="true"></i></a><a class="cc-twitter btn btn-link " href="#" onclick="visit('{{website.wp}}')"><i class="fa fa-whatsapp fa-2x " aria-hidden="true"></i></a><a class="cc-google-plus btn btn-link" href="#" onclick="visit('{{website.tele}})"><i class="fa fa-telegram fa-2x" aria-hidden="true"></i></a><a class="cc-instagram btn btn-link" href="#" onclick="visit('{{website.insta}}')"><i class="fa fa-instagram fa-2x " aria-hidden="true"></i></a></div>
+    </footer>
+    <script src="{%static 'js/core/jquery.3.2.1.min.js'%}"></script>
+    <script src="{%static 'js/core/popper.min.js'%}"></script>
+    <script src="{%static 'js/core/bootstrap.min.js'%}"></script>
+    <script src="{%static 'js/now-ui-kit.js'%}"></script>
+    <script src="{%static 'js/aos.js'%}"></script>
+    <script src="{%static 'scripts/main.js'%}"></script>
+      <script>
+        function visit(x){
+          window.open(x);
+        };
+      </script>
+    </body>
+</html>
+
+{% elif user.profile == website.user %}
+  <!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{website.full_name}}</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{%static 'css/website/aos.css' %}" rel="stylesheet">
+    <link href="{%static 'css/website/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{%static 'css/website/main.css' %}" rel="stylesheet">
+    <link rel="icon" href="/static/imgs/infinitfolio.png" type="image/png">
+
+    <noscript>
+      <style type="text/css">
+        [data-aos] {
+            opacity: 1 !important;
+
+        }
+           .cont{
+                background:none;
+            }
+            #body{
+                transition:all 1.5s ease;
+            }
+            header{
+                z-index:10;
+            }
+            a{
+            color:black
+            }
+            #titles{
+                font-size:80px;
+                font-family:algerian;
+                margin:0 auto;
+                position:absolute;
+                top:30%;
+                color:white;
+                width:100%;
+                text-align:center;
+                z-index:3;
+                transition:all 1.5s ease-in-out;
+            }
+            @media only screen and (max-width: 500px) {
+                #titles{
+                font-size:50px;
+                }
+            }
+            #main_div{
+                transition: all 1.5s ease-in-out;
+            }
+            textarea{
+                width:100%;
+                height: 150px;
+                resize: none;
+            }
+            iframe{
+                width:90%;
+                margin:0 auto;
+                display: block;
+            }
+            @media screen and (max-width:500px){
+                iframe{
+                    width: 100%;
+                }
+            }
+            .center{
+                display: flex;
+                align-content: center;
+                justify-content: center;
+            }
+            .title {
+                font-weight: bold;
+                font-size: 35px;
+                display: flex;
+                justify-content: center;
+                font-family: cursive;
+                margin-bottom: 3px;
+            }
+            .first-name, .last-name {
+                display: inline-block;
+            }
+            .first-name {
+                margin-right: 15px;
+                margin-top: var(--spasing);
+            }
+            :root {
+                --color-e-p: #fafafa;
+                --color-button: #243cb1;
+                --width: 220px;
+                --height: 40px;
+                --spasing: 20px;
+                --min-border: 1px solid #ddd;
+            }
+            .box{
+                background-color: #fdb;
+                display: block;
+                padding: 20px;
+            }
+            .a label, .birthday {
+                display: block;
+                color: #656b73;
+                margin-bottom: 7px;
+                margin-top: 6px;
+                text-align: left
+            }
+            .a input {
+                display: block;
+                width: var(--width);
+                height: var(--height);
+                background-color: var(--color-e-p);
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                padding: 10px;
+            }
+            button, input, optgroup, select, textarea {
+                font-family: inherit;
+                font-size: 100%;
+                line-height: 1.15;
+                margin: 0;
+            }
+            #id_Email, #id_Title{
+                width: 100% !important;
+            }
+            .submit {
+                display: block;
+                background-color: var(--color-button);
+                color: white;
+                margin-top: var(--spasing);
+                width: 100%;
+                height: 35px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                font-weight: bold;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            @media screen and (max-width:535px){
+                .first-name, .last-name, #first, #last{
+                    width: 100%;
+                }
+                 .a input {
+                     width: 100%;
+                }
+            }
+            /* .flashmsg{
+
+            } */
+      </style>
+
+    </noscript>
+  </head>
+  <body id="top">
+  <div class="flashmsg" style="position:fixed; top:65px; width:100%; padding:20px; border:2px solid red; background:#fd000078;z-index:100;border-radius:50px;color:#FFF; font-weight:bold">Website is not Published <a href="/{{website.unique_name}}/publish">Publish now</a> </div>
+    <header>
+      <div class="profile-page sidebar-collapse">
+        <nav class="navbar navbar-expand-lg fixed-top navbar-transparent bg-primary" color-on-scroll="400">
+          <div class="container">
+            <div class="navbar-translate"><a class="navbar-brand" href="/" rel="tooltip">Create similar</a>
+              <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-bar bar1"></span><span class="navbar-toggler-bar bar2"></span><span class="navbar-toggler-bar bar3"></span></button>
+            </div>
+            <div class="collapse navbar-collapse justify-content-end" id="navigation">
+              <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link smooth-scroll" href="#about">About</a></li>
+                <li class="nav-item"><a class="nav-link smooth-scroll" href="#skill">Skills</a></li>
+                <li class="nav-item"><a class="nav-link smooth-scroll" href="#portfolio">Certificates</a></li>
+                <li class="nav-item"><a class="nav-link smooth-scroll" href="#experience">Projects</a></li>
+                <li class="nav-item"><a class="nav-link smooth-scroll" href="#contact">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <div class="page-content" id="body">
+      <div>
+<div class="profile-page" id="main_div">
+  <div class="wrapper">
+    <div class="page-header page-header-small" filter-color="green">
+      <div class="page-header-image" data-parallax="true" style="background-image: url('https://images.pexels.com/photos/1103970/pexels-photo-1103970.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')"></div>
+      <div class="container">
+        <div class="content-center">
+          <div class="cc-profile-image"><a href="#"><img src="{{website.profile_pic.url}}" alt="Image"/></a></div>
+          <div class="h2 title">{{website.full_name}}</div>
+          <p class="category text-white">{{website.current_job}}</p><a class="btn btn-primary smooth-scroll mr-2" href="#contact" data-aos="zoom-in" data-aos-anchor="data-aos-anchor">Contact</a><a class="btn btn-primary" href="{{website.cv_url}}" data-aos="zoom-in" data-aos-anchor="data-aos-anchor">Download CV</a>
+        </div>
+      </div>
+      <div class="section">
+        <div class="container">
+          <div class="button-container"><a class="btn btn-default btn-round btn-lg btn-icon" href="#" onclick="visit('{{website.fb}}')" rel="tooltip" title="Follow me on Facebook"><i class="fa fa-facebook"></i></a><a class="btn btn-default btn-round btn-lg btn-icon" href="#" onclick="visit('{{website.wp}}')" rel="tooltip" title="Contact-me on WP"><i class="fa fa-whatsapp"></i></a><a class="btn btn-default btn-round btn-lg btn-icon" href="#" onclick="visit('{{website.tele}}')" rel="tooltip" title="Contact me on Telegram"><i class="fa fa-telegram"></i></a><a class="btn btn-default btn-round btn-lg btn-icon" href="#" onclick="visit('{{website.insta}}')" rel="tooltip" title="Follow me on Instagram"><i class="fa fa-instagram"></i></a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="section" id="about">
+  <div class="container">
+    <div class="card" data-aos="fade-up" data-aos-offset="10">
+      <div class="row">
+        <div class="col-lg-6 col-md-12">
+          <div class="card-body">
+            <div class="h4 mt-0 title">About</div>
+            <pre> {{website.about}} </pre>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-12">
+          <div class="card-body">
+            <div class="h4 mt-0 title">Basic Information</div>
+            <div class="row">
+              <div class="col-sm-4"><strong class="text-uppercase">Age:</strong></div>
+              <div class="col-sm-8">{{website.age}}</div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-sm-4"><strong class="text-uppercase">Email:</strong></div>
+              <div class="col-sm-8">{{website.email}}</div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-sm-4"><strong class="text-uppercase">Phone:</strong></div>
+              <div class="col-sm-8">{{website.phone}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="section" id="skill">
+  <div class="container">
+    <div class="h4 text-center mb-4 title">Professional Skills</div>
+    <div class="card" data-aos="fade-up" data-aos-anchor-placement="top-bottom">
+      <div class="card-body">
+        <div class="row">
+          {%for skill in skills%}
+            {% if forloop.counter0|divisibleby:"2" %}
+              </div><div class="row">
+            {% endif %}
+            <div class="col-md-6">
+              <div class="progress-container progress-primary"><span class="progress-badge">{{skill.skill}}</span>
+                <div class="progress">
+                  <div class="progress-bar progress-bar-primary" data-aos="progress-full" data-aos-offset="10" data-aos-duration="2000" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{skill.mastery}}%;"></div><span class="progress-value">{{skill.mastery}}%</span>
+                </div>
+              </div>
+            </div>
+          {%endfor%}
+        {%if user.profile == website.user%}
+        <a href = "/{{website.unique_name}}/skills" style="text-decoration:none; width:100%;"><button style="width:100%; font-size:25px; border-radius:20px;" class="btn btn-primary smooth-scroll mr-2 aos-init aos-animate">+</button></a>
+        {%endif%}
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="section" id="portfolio">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 ml-auto mr-auto">
+        <div class="h4 text-center mb-4 title">Portfolio</div>
+        <div class="nav-align-center">
+          <ul class="nav nav-pills nav-pills-primary" role="tablist">
+            <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#web-development" role="tablist"><i class="fa fa-laptop" aria-hidden="true"></i></a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#graphic-design" role="tablist"><i class="fa fa-code"></i></a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Photography" role="tablist"><i class="fa fa-camera" aria-hidden="true"></i></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="tab-content gallery mt-5">
+      <div class="tab-pane active" id="web-development">
+        <div class="ml-auto mr-auto">
+          <div class="row">
+            <div class="col-md-6">
+              {%for cert in certs%}
+               {% if forloop.counter0 != 0 and forloop.counter0|divisibleby:2 %}
+                  </div><div class="col-md-6">
+                  {% endif %}
+              <div class="cc-porfolio-image img-raised" data-aos="fade-up" data-aos-anchor-placement="top-bottom">
+                  <figure class="cc-effect"><img src="{{cert.cert.url}}" alt="Image"/>
+                    <figcaption>
+                      <div class="h4">Certificate</div>
+                      <p>Certificate</p>
+                    </figcaption>
+                  </figure></div>
+                {%endfor%}
+                {%if user.profile == website.user%}
+                <a href = "/{{website.unique_name}}/certs" style="text-decoration:none; width:100%;"><button style="width:100%; font-size:25px; border-radius:20px;" class="btn btn-primary smooth-scroll mr-2 aos-init aos-animate">+</button></a>
+                {%endif%}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane" id="graphic-design" role="tabpanel">
+        <div class="ml-auto mr-auto">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="cc-porfolio-image img-raised" data-aos="fade-up" data-aos-anchor-placement="top-bottom"><a href="#graphic-design">
+                  <figure class="cc-effect"><img src="images/graphic-design-1.jpg" alt="Image"/>
+                    <figcaption>
+                      <div class="h4">Robotics</div>
+                      <p>Programming</p>
+                    </figcaption>
+                  </figure></a></div>
+              <div class="cc-porfolio-image img-raised" data-aos="fade-up" data-aos-anchor-placement="top-bottom"><a href="#graphic-design">
+                  <figure class="cc-effect"><img src="images/graphic-design-2.jpg" alt="Image"/>
+                    <figcaption>
+                      <div class="h4">Web development</div>
+                      <p>Programming</p>
+                    </figcaption>
+                  </figure></a></div>
+            </div>
+            <div class="col-md-6">
+              <div class="cc-porfolio-image img-raised" data-aos="fade-up" data-aos-anchor-placement="top-bottom"><a href="#graphic-design">
+                  <figure class="cc-effect"><img src="images/graphic-design-3.jpg" alt="Image"/>
+                    <figcaption>
+                      <div class="h4">AI / ML</div>
+                      <p>Programming</p>
+                    </figcaption>
+                  </figure></a></div>
+              <div class="cc-porfolio-image img-raised" data-aos="fade-up" data-aos-anchor-placement="top-bottom"><a href="#graphic-design">
+                  <figure class="cc-effect"><img src="images/graphic-design-4.jpg" alt="Image"/>
+                    <figcaption>
+                      <div class="h4">Desktop Apps</div>
+                      <p>Programming</p>
+                    </figcaption>
+                  </figure></a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane" id="Photography" role="tabpanel">
+        <div class="ml-auto mr-auto">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="cc-porfolio-image img-raised" data-aos="fade-up" data-aos-anchor-placement="top-bottom"><a href="#Photography">
+                  <figure class="cc-effect"><img src="images/photography-1.jpg" alt="Image"/>
+                    <figcaption>
+                      <div class="h4">Pic1</div>
+                      <p>Image</p>
+                    </figcaption>
+                  </figure></a></div>
+              <div class="cc-porfolio-image img-raised" data-aos="fade-up" data-aos-anchor-placement="top-bottom"><a href="#Photography">
+                  <figure class="cc-effect"><img src="images/photography-3.jpg" alt="Image"/>
+                    <figcaption>
+                      <div class="h4">Pic2</div>
+                      <p>Image</p>
+                    </figcaption>
+                  </figure></a></div>
+            </div>
+            <div class="col-md-6">
+              <div class="cc-porfolio-image img-raised" data-aos="fade-up" data-aos-anchor-placement="top-bottom"><a href="#Photography">
+                  <figure class="cc-effect"><img src="images/photography-2.jpg" alt="Image"/>
+                    <figcaption>
+                      <div class="h4">pic3</div>
+                      <p>Image</p>
+                    </figcaption>
+                  </figure></a></div>
+              <div class="cc-porfolio-image img-raised" data-aos="fade-up" data-aos-anchor-placement="top-bottom"><a href="#Photography">
+                  <figure class="cc-effect"><img src="images/photography-4.jpg" alt="Image"/>
+                    <figcaption>
+                      <div class="h4">pic4</div>
+                      <p>Image</p>
+                    </figcaption>
+                  </figure></a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="section" id="experience">
+  <div class="container cc-experience">
+    <div class="h4 text-center mb-4 title">Projects</div>
+    {%for project in projects%}
+      <div class="card">
+        <div class="row">
+          <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50" data-aos-duration="500">
+            <div class="card-body cc-experience-header">
+              <p>{{project.title}}</p>
+              <div class="h5">{{project.title}}</div>
+            </div>
+          </div>
+          <div class="col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
+            <div class="card-body">
+              <div class="h5">{{project.title}}</div>
+              <p>{{project.about}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    {%endfor%}
+    {%if user.profile == website.user%}
+    <a href = "/{{website.unique_name}}/projects" style="text-decoration:none; width:100%;"><button style="width:100%; font-size:25px; border-radius:20px;" class="btn btn-primary smooth-scroll mr-2 aos-init aos-animate">+</button></a>
+    {%endif%}
+  </div>
+</div>
+<div class="section">
+  <div class="container cc-education">
+    <div class="h4 text-center mb-4 title">Work Experience</div>
+
+    {%for work in works%}
+    <div class="card">
+      <div class="row">
+        <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50" data-aos-duration="500">
+          <div class="card-body cc-education-header">
+            <p>{{work.job}}</p>
+            <div class="h5">{{work.job}}</div>
+          </div>
+        </div>
+        <div class="col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
+          <div class="card-body">
+            <div class="h5">{{work.job}}</div>
+            <p class="category">{{work.years}}+ years of experience</p>
+            <p>{{work.about}}.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    {%endfor%}
+    {%if user.profile == website.user%}
+    <a href = "/{{website.unique_name}}/work" style="text-decoration:none; width:100%;"><button style="width:100%; font-size:25px; border-radius:20px;" class="btn btn-primary smooth-scroll mr-2 aos-init aos-animate">+</button></a>
+    {%endif%}
+  </div>
+</div>
+  </div>
+</div>
+<div class="section" id="contact">
+  <div class="cc-contact-information" style="background-image: url('images/pexels-olga-neptuna-2078774.jpg')">
+    <div class="container">
+      <div class="cc-contact">
+        <div class="row">
+          <div class="col-md-9">
+            <div class="card mb-0" data-aos="zoom-in">
+              <div class="h4 text-center title">Contact Me</div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="card-body">
+                    <form action="https://formspree.io/bd119906@email.com" method="POST">
+                      <div class="p pb-3"><strong>Feel free to contact me </strong></div>
+                      <div class="row mb-3">
+                        <div class="col">
+                          <div class="input-group"><span class="input-group-addon"><i class="fa fa-user-circle"></i></span>
+                            <input class="form-control" type="text" name="name" placeholder="Name" required="required"/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <div class="col">
+                          <div class="input-group"><span class="input-group-addon"><i class="fa fa-file-text"></i></span>
+                            <input class="form-control" type="text" name="Subject" placeholder="Subject" required="required"/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <div class="col">
+                          <div class="input-group"><span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                            <input class="form-control" type="email" name="_replyto" placeholder="E-mail" required="required"/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <div class="col">
+                          <div class="form-group">
+                            <textarea class="form-control" name="message" placeholder="Your Message" required="required"></textarea>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <button class="btn btn-primary" type="submit">Send</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card-body">
+                    <p class="mb-0"><strong>Date of birth </strong></p>
+                    <p class="pb-2">_____</p>
+                    <p class="mb-0"><strong>Phone</strong></p>
+                        <p class="pb-2">{{website.phone}}</p>
+                    <p class="mb-0"><strong>Email</strong></p>
+                    <p>{{website.email}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <footer class="footer">
+      <div class="container text-center"><a class="cc-facebook btn btn-link" href="#" onclick="visit('{{website.fb}}')"><i class="fa fa-facebook fa-2x " aria-hidden="true"></i></a><a class="cc-twitter btn btn-link " href="#" onclick="visit('{{website.wp}}')"><i class="fa fa-whatsapp fa-2x " aria-hidden="true"></i></a><a class="cc-google-plus btn btn-link" href="#" onclick="visit('{{website.tele}})"><i class="fa fa-telegram fa-2x" aria-hidden="true"></i></a><a class="cc-instagram btn btn-link" href="#" onclick="visit('{{website.insta}}')"><i class="fa fa-instagram fa-2x " aria-hidden="true"></i></a></div>
+    </footer>
+    <script src="{%static 'js/core/jquery.3.2.1.min.js'%}"></script>
+    <script src="{%static 'js/core/popper.min.js'%}"></script>
+    <script src="{%static 'js/core/bootstrap.min.js'%}"></script>
+    <script src="{%static 'js/now-ui-kit.js'%}"></script>
+    <script src="{%static 'js/aos.js'%}"></script>
+    <script src="{%static 'scripts/main.js'%}"></script>
+      <script>
+        function visit(x){
+          window.open(x);
+        };
+      </script>
+    </body>
+</html>
+
+{% else %}
+  You don't have access to this website!
+{% endif %}

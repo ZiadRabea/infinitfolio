@@ -1,0 +1,113 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Infinitfolio | Notifications</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static 'imgs/infinitfolio.png' %}" type="image/png">
+    <link rel="stylesheet" href="{%static 'css/style.css'%}?v=1.0.4">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="icon" href="{% static 'imgs/infinitfolio.png' %}" type="image/png">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N37B2KNWMJ"></script>
+
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-N37B2KNWMJ');
+    </script>
+    <style>
+        :root {
+            --background-color: #0c0c0c;
+            --card-color: #1c1c1c;
+            --text-color: #ffffff;
+            --highlight-color: #a0a0a0;
+        }
+        a{
+            color:none;
+            text-decoration: none;
+        }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            margin: 20px 0;
+        }
+
+        .notifications {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        .notification {
+            background-color: var(--card-color);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .notification:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .notification h2 {
+            margin: 0 0 10px;
+            font-size: 1.2rem;
+        }
+
+        .notification p {
+            margin: 0;
+            color: var(--highlight-color);
+        }
+
+        @media (max-width: 768px) {
+            .notifications {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Notifications</h1>
+    <div class="notifications">
+        {%for notification in notifications%}
+        <a style="color:white" href="{{notification.url}}"><div class="notification">
+            <h2>{{notification.sender.full_name}}</h2>
+            <p>{{notification.content}}</p>
+        </div></a>
+        {%endfor%}
+    </div>
+    <div class="paginator" style="border-radius: 20px;background-color: #1c1c1c;">
+        <span class="step-links">
+            {% if notifications.has_previous %}
+                <a href="?page={{ notifications.previous_page_number }}"><li class="fas fa-arrow-left"></li></a>
+            {% endif %}
+    
+            <span class="current">
+                Notification Set {{ notifications.number }}
+            </span>
+    
+            {% if notifications.has_next %}
+                <a href="?page={{ notifications.next_page_number }}"><li class="fas fa-arrow-right"></li></a>
+            {% endif %}
+        </span>
+    </div>
+</body>
+</html>

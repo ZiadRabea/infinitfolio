@@ -1,0 +1,16 @@
+asgiref==3.8.1
+Django==5.1
+django-filter==24.3
+psycopg2-binary
+python-decouple==3.4
+cloudinary==1.41.0
+django-cloudinary-storage==0.3.0
+whitenoise==5.2.0
+sqlparse==0.5.1
+tzdata==2024.1
+pillow==10.4.0
+django-filter==24.3
+requests
+urllib3
+beautifulsoup4
+django_markdown_deux

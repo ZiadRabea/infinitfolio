@@ -1,0 +1,275 @@
+*{
+    box-sizing: border-box;
+}
+html, body{
+    margin:0;
+    padding: 0;
+    scroll-behavior: smooth;
+    user-select: none;
+}
+.body{
+    background-image: url(../../imgs/bg.jpg);
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+a{
+    text-decoration: none;
+}
+::-webkit-scrollbar{
+    width:5px;
+    }
+::-webkit-scrollbar-thumb{
+    border-radius:3px;
+}
+::-webkit-scrollbar-thumb:hover{
+    background: #000;
+}
+.main_div{
+    background-image: url(../imgs/bg1.jpg);
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    height: 800px;
+    margin: 0;
+    padding: 0;
+    opacity: .4
+}
+header{
+    background: #0000008a;
+    position: fixed;
+    width: 100%;
+    z-index: 2;
+}
+nav ul{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:4px;
+    margin: 0;
+}
+#nav_li{
+    display: none;
+}
+nav #mobile_ul{
+    height: auto;
+    display: block;
+}
+nav #mobile_ul{
+    display: none;
+}
+nav #mobile_ul li{
+    display: block;
+    font-size: 20px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+    margin:10px;
+    padding: 10px;
+}
+header nav ul li{
+    display: inline-block;
+    font-family: fantasy;
+    margin-left: 20px;
+    font-size: 20px;
+    color:aliceblue;
+    transition: all 1.5s ease-in-out;
+}
+header nav ul li:hover{
+    color: black;
+    border-bottom: 1px solid red
+}
+.logo:hover{
+    border: none;
+}
+.demo{
+    background: purple;
+    border: 5px groove;
+    font-size:30px;
+    border-top-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    padding: 3px;
+    transition: all 1.5s ease;
+}
+.demo:hover{
+    transform: scale(1.1)
+}
+.about{
+    width:80%;
+    margin:0 auto;
+    border:5px groove;
+    border-bottom-right-radius:50px;
+    border-top-left-radius:50px;
+    background-color:darkorchid
+}
+#about h1{
+    text-align: center;
+    font-family: fantasy;
+    padding:3px;
+    border-top:1px solid #000;
+    border-bottom: 1px solid #000;
+    width:90%;
+    margin:0 auto;
+    margin-top: 4px;
+}
+#about p{
+    font-size: 25px;
+}
+#conact {
+    background: #222222de;
+    height: auto;
+    padding: 30px 0;
+}
+.title {
+    text-align: center;
+    letter-spacing: 5px;
+    position: relative;
+    font-weight: 500;
+    font-size: 3rem;
+    width: fit-content;
+    height: 70px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    color:aliceblue
+}
+h1.title::after {
+    content: "";
+    position: absolute;
+    width: 50px;
+    height: 8px;
+    border-radius: 10px;
+    background-color: #8231cd;
+    bottom: 5px
+}
+.careers{
+    height: 500px;
+    background-image: url("../images/ranslation.jpg");
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+}
+.careers h1, .heading{
+    background-color: #00000091;
+    color: white;
+    font-family: sans-serif;
+    font-size: 50px;
+    text-align: center;
+}
+.career{
+    display: inline-block;
+    background: white;
+    border-radius: 12px;
+    position: relative;
+    max-width:250px;
+    word-wrap: break-word;
+    transition: all 1.5s ease;
+}
+.grid{
+     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:4px;
+    margin: 0;
+}
+h2{
+    text-align: center;
+}
+.career:hover{
+    transform:rotate3d(3, 21, 3, 360deg);
+}
+.apps{
+    width:60%;
+    margin:0 auto;
+    background: none;
+    height: auto;
+}
+.app_img{
+    width: 200px; 
+    height: 150px;
+}
+@media screen and (max-width:1070px){
+    .careers{
+        height: auto
+    }
+    .grid{
+        display: block;
+        width: 60%;;
+        margin: 0 auto;
+    }
+    .career{
+        margin:10px;
+    }
+}
+@media screen and (max-width:925px){
+    .careers{
+        height: auto
+    }
+    .grid{
+        display: block;
+        width: 70%;;
+        margin: 0 auto;
+    }
+    .career{
+        margin:10px;
+    }
+     .apps{
+        width: 100%;
+    }
+}
+@media screen and (max-width:795px){
+    .grid{
+        display: block;
+        width: 80%;;
+        margin: 0 auto;
+    }
+}
+@media screen and (max-width:710px){
+    .main_div{
+        opacity: 1
+    }
+}
+@media screen and (max-width:695px){
+    .grid{
+        display: block;
+        width: 90%;;
+        margin: 0 auto;
+    }
+    .about{
+        width: 100%;
+    }
+       .grid{
+        display: block;
+        width: 90%;;
+        margin: 0 auto;
+    }
+    .about{
+        width: 100%;
+    }
+}
+@media screen and (max-width:620px){
+    .grid{
+        width:100%;
+    }
+}
+@media screen and (max-width:600px){
+    .main_div{
+        background-position: right
+    }
+    .removable{
+        display: none;
+    }
+    #nav_li{
+        display: block
+    }
+    #about h1{
+        border-top: none;
+    }
+}
+@media screen and (max-width:560px){
+    .grid{
+        text-align: center;
+    }
+}
+

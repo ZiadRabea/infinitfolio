@@ -1,0 +1,653 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="{% static 'imgs/infinitfolio.png' %}" type="image/png">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N37B2KNWMJ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-N37B2KNWMJ');
+  </script>
+  <!-- Adsense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7827616110280134"
+    crossorigin="anonymous"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=1.0.5">
+  <title>Productivity Dashboard</title>
+  <style>
+    /* -------------------- Light Mode Variables -------------------- */
+    :root {
+      --background-color: #f2f4f7;
+      --text-color: #333;
+      --header-bg: #f0f0f0;
+      --subheader-bg: #e0e0e0;
+      --priority-bg: #fff;
+      --priority-text: #fff;
+      --priority-button: #fff;
+      --priority-bg-first: #FF4500;
+      --priority-bg-second: #FF6347;
+      --priority-bg-third: #FF7F50;
+    }
+
+    /* -------------------- Global Styles -------------------- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .top-header {
+      background: var(--header-bg);
+    }
+    .top-header nav a {
+      color: #1c1e21;
+    }
+    .top-header nav a:hover {
+      color: #4CAF50;
+    }
+    .bottom-header {
+      background: var(--subheader-bg);
+      color: #4CAF50;
+    }
+    h1 {
+      color: #4CAF50;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .priority-list, .course-list, .todo-list {
+      background-color: var(--priority-bg);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .priority-list h2, .course-list h2, .todo-list h2 {
+      margin-top: 0;
+      color: #333;
+    }
+    .priority-list ul, .course-list ul, .todo-list ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    #toggleTheme{
+        background-color: transparent;
+        border:none;
+        font-size: 20px;
+        cursor:pointer
+    }
+    /* ================= Search Section Styles ================= */
+    .search-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 80px auto 0;
+      max-width: fit-content;
+      backdrop-filter: blur(10px);
+      background: rgba(255,255,255,0.2);
+      border-radius: 50px;
+      padding: 10px 20px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      transition: background 0.3s ease;
+      position: relative;
+      z-index: 1;
+    }
+    .search-section:hover {
+      background: rgba(255,255,255,0.3);
+    }
+    .search-section select,
+    .search-section input {
+      background: rgba(255,255,255,0.6);
+      border: none;
+      outline: none;
+      color: var(--text-color);
+      font-size: 1em;
+      padding: 10px;
+      margin: 0 10px;
+      border-radius: 25px;
+      appearance: none;
+    }
+    .search-section input {
+      width:500px;
+    }
+    .search-section select {
+      min-width: 120px;
+      max-width: 120px;
+      text-align: center
+    }
+    .search-section button {
+      background: #4CAF50;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 1em;
+      color: #fff;
+      transition: transform 0.2s ease;
+    }
+    .search-section button:hover {
+      transform: scale(1.05);
+    }
+    body.dark-mode .search-section {
+      background: rgba(30,30,30,0.4);
+    }
+    body.dark-mode .search-section select,
+    body.dark-mode .search-section input {
+      background: rgba(30,30,30,0.6);
+      color: var(--text-color);
+    }
+    .priority-list li {
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 5px;
+      font-weight: bold;
+      color: var(--priority-text);
+      background-color: #FF5722;
+      text-align: center;
+      transition: transform 0.2s ease;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .priority-list li:first-child {
+      font-size: 1.5em;
+      background-color: var(--priority-bg-first);
+    }
+    .priority-list li:nth-child(2) {
+      font-size: 1.3em;
+      background-color: var(--priority-bg-second);
+    }
+    .priority-list li:nth-child(3) {
+      font-size: 1.1em;
+      background-color: var(--priority-bg-third);
+    }
+    .priority-list li button, .course-list li button {
+      background: none;
+      border: none;
+      color: var(--priority-button);
+      font-size: 1.2em;
+      cursor: pointer;
+    }
+    input {
+      border: 0;
+      outline: none;
+    }
+    .course-list li {
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 5px;
+      background-color: #f4f4f9;
+      border: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .course-list li img {
+      width: 50px;
+      height: 50px;
+      border-radius: 5px;
+      object-fit: cover;
+    }
+    .course-list li a {
+      color: #2196F3;
+      text-decoration: none;
+    }
+    .course-list li a:hover {
+      text-decoration: underline;
+    }
+    .todo-list input, #priorityInput {
+      padding: 10px;
+      width: 100%;
+      margin-bottom: 10px;
+      border: none;
+      outline: none;
+      border-radius: 5px;
+      font-size: 1em;
+
+    }
+    .todo-list li {
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 5px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background-color 0.2s ease;
+    }
+    .todo-list li.completed {
+      text-decoration: line-through;
+      color: #888;
+      background-color: #f0f0f0;
+    }
+    .todo-list li input[type="checkbox"] {
+      cursor: pointer;
+      width: 16px;
+      height: 16px;
+      margin: 0;
+    }
+    .todo-list li button {
+      margin-left: auto;
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    .progress-bar {
+      margin-top: 20px;
+      background-color: #e0e0e0;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 10px;
+      background-color: #4CAF50;
+      width: 0;
+      transition: width 0.3s ease;
+    }
+    .progress-text {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #666;
+    }
+    .course-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .course-form input {
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+    .course-form button {
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+    }
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+      .todo-list {
+        grid-column: span 1;
+      }
+      h1 {
+        font-size: 1.5em;
+      }
+      .priority-list li, .course-list li, .todo-list li {
+        font-size: 0.9em;
+      }
+      .course-form input, .todo-list input {
+        font-size: 0.9em;
+      }
+    }
+    @media (max-width: 600px) {
+      .container {
+        display: block;
+        padding: 10px;
+      }
+      .priority-list, .course-list, .todo-list {
+        width: 100%;
+        display: block;
+        margin-bottom: 10px;
+      }
+    }
+    /* -------------------- Dark Mode Styles -------------------- */
+    body.dark-mode {
+      --background-color: #121212;
+      --text-color: #e0e0e0;
+      --header-bg: #333;
+      --subheader-bg: #222;
+      --priority-bg: #1e1e1e;
+    }
+    body.dark-mode .priority-list,
+    body.dark-mode .course-list,
+    body.dark-mode .todo-list {
+      background-color: var(--priority-bg);
+      border-color: #444;
+    }
+    body.dark-mode .course-list li {
+      background-color: #2a2a2a;
+    }
+    body.dark-mode .todo-list li {
+      background-color: #1e1e1e;
+      border: 1px solid #444;
+    }
+    body.dark-mode input{
+        background:#1e1e1e;
+        color:white;
+    }
+    body.dark-mode .top-header nav a{
+        color:white
+    }
+  </style>
+</head>
+<body>
+  <section class="header" style="position: static;">
+    <div class="top-header">
+      <div class="logo" style="display: flex; align-items: center;">
+        <img src="https://infinitfolio.vercel.app/static/images/logo.png" alt="Logo" width="50" height="50" style="margin-left: 20px;">
+      </div>
+      <nav>
+        <a href="/"><div><i class="fas fa-home"></i></div></a>
+        <a href="/blogs"><div><i class="fa-solid fa-newspaper"></i></div></a>
+        <a href="/talents/find"><div><i class="fas fa-briefcase"></i></div></a>
+      </nav>
+      <!-- Theme Toggle Button -->
+      <div class="theme-toggle" style="margin-right: 20px;">
+        <button id="toggleTheme">🌙</button>
+      </div>
+    </div>
+    <div class="bottom-header" style="position: static;">
+      <div class="quote" style="text-align: center; padding: 10px;">
+        <i class="fa fa-arrow-circle-left" id="poke-left" style="cursor: pointer;"></i>
+        <span id="quote-text" style="margin: 0 10px;">"There's no shortcut to a place worth going"</span>
+        <i class="fa fa-arrow-circle-right" id="poke-right" style="cursor: pointer;"></i>
+      </div>
+    </div>
+  </section>
+      <div class="search-section">
+      <select id="engineSelect">
+        <option value="https://www.google.com/search?q=">Google</option>
+        <option value="https://www.bing.com/search?q=">Bing</option>
+        <option value="https://duckduckgo.com/?q=">DuckDuckGo</option>
+      </select>
+      <input type="text" id="searchInput" placeholder="Type to search..." onkeydown="if(event.key==='Enter') doSearch()">
+      <button onclick="doSearch()">Search</button>
+    </div>
+  </section>
+  <div class="container" style="margin-top: 50px;">
+    <!-- Top Left: Priorities -->
+    <div class="priority-list">
+      <h2>Top Priorities</h2>
+      <ul id="priorityList"></ul>
+      <input type="text" id="priorityInput" placeholder="Add a priority...">
+    </div>
+
+    <!-- Top Right: Courses -->
+    <div class="course-list">
+      <h2>Courses I'm Learning</h2>
+      <form class="course-form" id="courseForm">
+        <input type="text" id="courseName" placeholder="Course Name" required>
+        <input type="url" id="courseUrl" placeholder="Course URL" required>
+        <input type="url" id="courseImage" placeholder="Course Image URL" required>
+        <button type="submit">Add Course</button>
+      </form>
+      <ul id="courseList"></ul>
+    </div>
+
+    <!-- Bottom: To-Do List -->
+    <div class="todo-list" style="grid-column: span 2;">
+      <h2>Daily To-Do List - <span id="currentDate"></span></h2>
+      <ul id="todoList"></ul>
+      <input type="text" id="todoInput" placeholder="Add a new task...">
+      <div class="progress-bar">
+        <div class="progress-bar-fill" id="progressBarFill"></div>
+      </div>
+      <div class="progress-text" id="progressText">0% completed</div>
+    </div>
+  </div>
+
+  <script>
+    // -------------------- Theme Toggle Script --------------------
+    const toggleThemeBtn = document.getElementById('toggleTheme');
+    // Check localStorage for a saved theme preference
+    if (localStorage.getItem('theme') === 'dark') {
+      document.body.classList.add('dark-mode');
+      toggleThemeBtn.textContent = '☀️';
+    }
+    toggleThemeBtn.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      if (document.body.classList.contains('dark-mode')) {
+        toggleThemeBtn.textContent = '☀️';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        toggleThemeBtn.textContent = '🌙';
+        localStorage.setItem('theme', 'light');
+      }
+    });
+
+    // Optional: Placeholder for the hamburger menu functionality
+    function toggleSidebar() {
+      console.log("Sidebar toggled");
+    }
+
+    // -------------------- To-Do List Functionality --------------------
+    // Display the current date
+    const currentDate = document.getElementById('currentDate');
+    const date = new Date();
+    currentDate.textContent = date.toLocaleDateString();
+
+    const todoInput = document.getElementById('todoInput');
+    const todoList = document.getElementById('todoList');
+    let todos = JSON.parse(localStorage.getItem('todos')) || [];
+
+    function renderTodos() {
+      todoList.innerHTML = '';
+      todos.forEach((todo, index) => {
+        const li = document.createElement('li');
+        li.className = todo.completed ? 'completed' : '';
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.checked = todo.completed;
+        checkbox.onclick = () => toggleComplete(index);
+        li.appendChild(checkbox);
+        li.appendChild(document.createTextNode(todo.text));
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Delete';
+        deleteBtn.onclick = () => deleteTodo(index);
+        li.appendChild(deleteBtn);
+        todoList.appendChild(li);
+      });
+      updateProgress();
+    }
+
+    function addTodo() {
+      const todoText = todoInput.value.trim();
+      if (todoText !== '') {
+        todos.push({ text: todoText, completed: false });
+        localStorage.setItem('todos', JSON.stringify(todos));
+        todoInput.value = '';
+        renderTodos();
+      }
+    }
+
+    function deleteTodo(index) {
+      todos.splice(index, 1);
+      localStorage.setItem('todos', JSON.stringify(todos));
+      renderTodos();
+    }
+
+    function toggleComplete(index) {
+      todos[index].completed = !todos[index].completed;
+      localStorage.setItem('todos', JSON.stringify(todos));
+      renderTodos();
+    }
+
+    function updateProgress() {
+      const completed = todos.filter(todo => todo.completed).length;
+      const total = todos.length;
+      const progress = total > 0 ? (completed / total) * 100 : 0;
+      document.getElementById('progressBarFill').style.width = `${progress}%`;
+      document.getElementById('progressText').textContent = `${Math.round(progress)}% completed`;
+    }
+
+    todoInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        addTodo();
+      }
+    });
+
+    // -------------------- Priorities Functionality --------------------
+    const priorityInput = document.getElementById('priorityInput');
+    const priorityList = document.getElementById('priorityList');
+    let priorities = JSON.parse(localStorage.getItem('priorities')) || [];
+
+    function renderPriorities() {
+      priorityList.innerHTML = '';
+      priorities.forEach((priority, index) => {
+        const li = document.createElement('li');
+        li.textContent = priority;
+        const deleteBtn = document.createElement('button');
+        deleteBtn.innerHTML = '&times;';
+        deleteBtn.onclick = () => deletePriority(index);
+        li.appendChild(deleteBtn);
+        priorityList.appendChild(li);
+      });
+    }
+
+    function addPriority() {
+      const priorityText = priorityInput.value.trim();
+      if (priorityText !== '') {
+        priorities.push(priorityText);
+        localStorage.setItem('priorities', JSON.stringify(priorities));
+        priorityInput.value = '';
+        renderPriorities();
+      }
+    }
+
+    function deletePriority(index) {
+      priorities.splice(index, 1);
+      localStorage.setItem('priorities', JSON.stringify(priorities));
+      renderPriorities();
+    }
+
+    priorityInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        addPriority();
+      }
+    });
+
+    // -------------------- Courses Functionality --------------------
+    const courseForm = document.getElementById('courseForm');
+    const courseList = document.getElementById('courseList');
+    let courses = JSON.parse(localStorage.getItem('courses')) || [];
+
+    function renderCourses() {
+      courseList.innerHTML = '';
+      courses.forEach((course, index) => {
+        const li = document.createElement('li');
+        const img = document.createElement('img');
+        img.src = course.image;
+        img.alt = course.name;
+        const link = document.createElement('a');
+        link.href = course.url;
+        link.textContent = course.name;
+        link.target = "_blank";
+        const deleteBtn = document.createElement('button');
+        deleteBtn.innerHTML = '&times;';
+        deleteBtn.onclick = () => deleteCourse(index);
+        li.appendChild(img);
+        li.appendChild(link);
+        li.appendChild(deleteBtn);
+        courseList.appendChild(li);
+      });
+    }
+
+    function addCourse(event) {
+      event.preventDefault();
+      const courseName = document.getElementById('courseName').value.trim();
+      const courseUrl = document.getElementById('courseUrl').value.trim();
+      const courseImage = document.getElementById('courseImage').value.trim();
+      if (courseName && courseUrl && courseImage) {
+        courses.push({ name: courseName, url: courseUrl, image: courseImage });
+        localStorage.setItem('courses', JSON.stringify(courses));
+        courseForm.reset();
+        renderCourses();
+      }
+    }
+
+    function deleteCourse(index) {
+      courses.splice(index, 1);
+      localStorage.setItem('courses', JSON.stringify(courses));
+      renderCourses();
+    }
+
+    courseForm.addEventListener('submit', addCourse);
+
+    // -------------------- Initial Render --------------------
+    renderTodos();
+    renderPriorities();
+    renderCourses();
+
+    // -------------------- Quotes Functionality --------------------
+    const quotes = [
+      "\"Great Minds Often take the road less traveled\"",
+      "\"The journey of a 1,000 mi. begins with a single step\"",
+      "\"Success is not final, failure is not fatal\"",
+      "\"Believe you can and you're halfway there\"",
+      "\"There's no shortcut to a place worth going\"",
+    ];
+
+    let currentIndex = 0;
+    const quoteText = document.getElementById("quote-text");
+    const pokeLeft = document.getElementById("poke-left");
+    const pokeRight = document.getElementById("poke-right");
+
+    function updateQuote(index) {
+      quoteText.style.opacity = 0;
+      quoteText.style.transform = "translateY(20px)";
+      setTimeout(() => {
+        quoteText.textContent = quotes[index];
+        quoteText.style.opacity = 1;
+        quoteText.style.transform = "translateY(0)";
+      }, 500);
+    }
+
+    function startAutoLoop() {
+      setInterval(() => {
+        currentIndex = (currentIndex + 1) % quotes.length;
+        updateQuote(currentIndex);
+      }, 50000);
+    }
+
+    pokeLeft.addEventListener("click", () => {
+      currentIndex = (currentIndex - 1 + quotes.length) % quotes.length;
+      updateQuote(currentIndex);
+    });
+
+    pokeRight.addEventListener("click", () => {
+      currentIndex = (currentIndex + 1) % quotes.length;
+      updateQuote(currentIndex);
+    });
+
+    updateQuote(currentIndex);
+    startAutoLoop();
+
+    function doSearch() {
+      const engine = document.getElementById('engineSelect').value;
+      const query = encodeURIComponent(document.getElementById('searchInput').value.trim());
+      if (query) {
+        window.location.href = engine + query;
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,269 @@
+/* Global Styles */
+body {
+    background-color: #121212;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header Styles */
+.header {
+    background: #1e1e1e;
+    padding: 20px;
+    text-align: center;
+    color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+    font-size: 36px;
+    margin: 0;
+}
+
+.header h2 {
+    font-size: 18px;
+    color: #00e350;
+    margin: 5px 0 0;
+}
+
+/* Main container */
+.container {
+    max-width: 960px;
+    margin: 80px auto 20px;
+    padding: 20px;
+}
+
+/* Product grid */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+/* Product container */
+.product-container {
+    position: relative;
+    background-color: #1f1f1f;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transition: transform 0.3s ease;
+    padding: 15px; /* Add padding for better spacing */
+}
+/* Product hover effect */
+.product-container:hover {
+    transform: scale(1.05);
+}
+
+/* Product cover image */
+.product-cover {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 2px solid #333;
+}
+
+/* Product title */
+.product-title {
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #333;
+    margin: 0;
+}
+
+/* Button container */
+.button-container {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.arrow-button {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    border-radius: 50%;
+    position: absolute;
+    bottom:-20px;
+    right:-20px;
+}
+
+.arrow-button:hover {
+    background-color: #218838;
+}
+
+/* Add Product Button */
+.plus-button {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.plus-button:hover {
+    background-color: #218838;
+}
+
+/* Alert and banner */
+.brand-container {
+    display: flex;
+    justify-content: center;
+    background: #f900006b;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.brand-container h2 {
+    color: white;
+    font-size: 18px;
+}
+
+/* Alert container for store status */
+.alert {
+    background: rgba(0, 227, 80, 0.3);
+    border: 1px solid green;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    margin: 20px auto;
+}
+
+.alert a {
+    color: green;
+}
+
+.alert.red {
+    background: rgba(227, 0, 0, 0.3);
+    border: 1px solid red;
+}
+
+/* Empty product state */
+.empty-products {
+    text-align: center;
+    padding: 50px;
+    background-color: #333;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.empty-products i {
+    font-size: 50px;
+    color: #28a745;
+}
+
+.empty-products p {
+    font-size: 18px;
+    margin-top: 15px;
+    color: #bbb;
+}
+
+/* Filter form */
+.filter-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #1e1e1e;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.filter-form label {
+    color: #bbb;
+    font-size: 16px;
+}
+
+.filter-form select {
+    padding: 5px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    background: #121212;
+    color: white;
+    font-size: 14px;
+}
+
+.filter-button {
+    padding: 5px 10px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.filter-button:hover {
+    background: #218838;
+}
+
+/* Add Product Button */
+.add-product-btn {
+    background-color: #28a745;
+    color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+.add-product-btn:hover {
+    background-color: #218838;
+}
+
+/* New product icon */
+.add-product-btn i {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+#id_description{
+    padding: 5px; border: 1px solid #333; border-radius: 5px; background: #121212; color: white;
+}
+.topics{
+    display:none
+}
+#products_btn, #affiliates_btn{
+    width:40%;
+    cursor: pointer;
+    background:#28a745 ;
+    border: none;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    border-radius:5px;
+    padding:5px;
+}
+#products_btn:hover, #affiliates_btn:hover{
+    background:#218838;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+} 
+.floating-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #007bff;
+    color: white;
+    padding: 15px;
+    border-radius: 50%;
+    font-size: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    transition: 0.3s;
+}
+.floating-btn:hover {
+    background: #0056b3;
+}
+#products_btn{
+    background:#218838;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+}
+#affiliates{
+    display: none;
+}
