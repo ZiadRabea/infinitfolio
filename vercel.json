@@ -11,5 +11,6 @@
       "src": "/(.*)",
       "dest": "alignos/wsgi.py"
     }
-  ]
+  ],
+  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
 }
