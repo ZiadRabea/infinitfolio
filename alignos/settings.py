@@ -158,22 +158,4 @@ EMAIL_PORT = 587
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-"""
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'HOST': 'aws-0-eu-central-1.pooler.supabase.com',
-        'USER': 'postgres.uyvnzzkwfaanyvbebgcq',
-        'PASSWORD': 'Zs_2005^1975*',
-        'PORT':'6543'
-    }
-}
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-"""
