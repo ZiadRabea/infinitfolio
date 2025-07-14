@@ -43,7 +43,7 @@ def invite(request, id):
             login(request, user)
             u = request.user.profile
             p.invited.add(u)
-            p.coins += 0.1
+            #p.coins += 0.1
             p.save()
             return redirect(f'/')
     else:
