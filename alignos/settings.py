@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'alignos.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
+print(os.environ.get("db_password")=="Zs_20051975*")
 
 DATABASES = {
     'default': {
