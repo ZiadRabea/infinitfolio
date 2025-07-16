@@ -78,24 +78,14 @@ WSGI_APPLICATION = 'alignos.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': os.environ.get("db_name"),
-#         'HOST': os.environ.get("db_host"),
-#         'USER': os.environ.get("db_user"),
-#         'PASSWORD': os.environ.get("db_password"),
-#         'PORT': os.environ.get("db_port"),
-#     }
-# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'HOST': 'aws-0-eu-central-1.pooler.supabase.com',
-        'USER': 'postgres.gftgplhdpbpwpfacwdqg',
-        'PASSWORD': 'Zs_2005^1975*',
-        'PORT':'6543'
+        'NAME': os.environ.get("db_name"),
+        'HOST': os.environ.get("db_host"),
+        'USER': os.environ.get("db_user"),
+        'PASSWORD': os.environ.get("db_password"),
+        'PORT': os.environ.get("db_port"),
     }
 }
 # Password validation
@@ -149,7 +139,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': "de6ugcwgm",
+    'CLOUD_NAME': os.environ.get("cloudianry_app_nam"),
     'API_KEY': os.environ.get("cloudinary_api_key"),
     'API_SECRET': os.environ.get("cloudinary_secret_key")
 }
